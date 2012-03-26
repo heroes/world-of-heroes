@@ -86,7 +86,7 @@ g_data = {
 		boss: {
 			info: {
 				"nbrOfFrames": 7,
-				"pivoty": 100,
+				"pivoty": 180,
 				"framerate": 4,
 				"pivotx": 240,
 				"events": []
