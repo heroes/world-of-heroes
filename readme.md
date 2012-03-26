@@ -1,7 +1,7 @@
-#大侠的世界#
-基于html5技术的一个Q版rgb类小游戏
-游戏背景：
-由于剧情：
+#锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷#
+锟斤拷锟斤拷html5锟斤拷锟斤拷锟斤拷一锟斤拷Q锟斤拷rgb锟斤拷小锟斤拷戏
+锟斤拷戏锟斤拷锟斤拷锟斤拷
+锟斤拷锟节撅拷锟介：
 
-##线上地址##
-http//heroes.github.com/wrold-of-heroes
+##锟斤拷锟较碉拷址##
+http://heroes.github.com/wrold-of-heroes
