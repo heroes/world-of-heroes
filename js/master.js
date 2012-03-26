@@ -254,6 +254,7 @@ Laro.register('PD', function (La) {
 
 		this.bloodBarW = 80;
 		this.bloodBarH = 6;
+		this.bloodBarOffset = 0;
 
 		//cfg
 		this.r_attack = 40;
@@ -293,10 +294,10 @@ Laro.register('PD', function (La) {
 			ctx.save();
 			ctx.globalAlpha = 0.7;
 			ctx.fillStyle = '#000';
-			ctx.fillRect(this.x - this.bloodBarW/2-2, this.y-this.height-2, this.bloodBarW+4, this.bloodBarH+4);
+			ctx.fillRect(this.x - this.bloodBarW/2-2, this.y-this.height-2+this.bloodBarOffset, this.bloodBarW+4, this.bloodBarH+4);
 			
 			ctx.fillStyle = 'green';
-			ctx.fillRect(this.x - this.bloodBarW/2, this.y-this.height, this.bloodBarW*this.heath/this.fullHeath, this.bloodBarH)
+			ctx.fillRect(this.x - this.bloodBarW/2, this.y-this.height+this.bloodBarOffset, this.bloodBarW*this.heath/this.fullHeath, this.bloodBarH)
 			ctx.restore();
 		},
 		getAnimation: function (id) {

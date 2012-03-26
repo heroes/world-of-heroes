@@ -260,6 +260,9 @@ Laro.register('PD', function (La) {
 
 					//补血
 					this.host.nowLife += 80;
+					if (this.host.nowLife >= this.host.life) {
+						this.host.nowLife = this.host.life;
+					}
 				}
 			}
 		},

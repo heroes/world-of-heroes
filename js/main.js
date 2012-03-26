@@ -163,9 +163,16 @@ Laro.register('PD', function (La) {
 		var name = result.Name,
 			score = result.Score;
 		var cvs = document.getElementById('big_skill');
-		cvs.style['display'] = 'none';
-		PD.$loop.$.resume();
-		PD.$role.setState(6);
+		if (name == 'star') {
+			cvs.style['display'] = 'none';
+			PD.$loop.$.resume();
+			PD.$role.setState(6);
+		} else {
+			// 技能释放失败
+			cvs.style['display'] = 'none';
+			PD.$loop.$.resume();
+		}
+
 	}
 
 });
@@ -485,6 +492,8 @@ Laro.register('PD.$states', function (La) {
 			for (var i = 0; i < PD.$monsters.length; i ++) {
 				var mo = PD.$monsters[i];
 				mo.update(dt);
+				if (mo.x < 50) {mo.x = 50}
+				if (mo.x > 900) {mo.x = 900}
 			}
 			
 		},
@@ -573,6 +582,7 @@ Laro.register('PD.$states', function (La) {
 			PD.$boss.id = 'boss';
 			PD.$boss.heath = PD.$boss.fullHeath = 2000;
 			PD.$boss.bloodBarW = 200;
+			PD.$boss.bloodBarOffset = -80;
 			
 			this.createMonsters(3);
 			
@@ -594,8 +604,9 @@ Laro.register('PD.$states', function (La) {
 			var hasNear = false;
 			for (var i = 0; i < PD.$monsters.length; i ++) {
 				var mo = PD.$monsters[i];
-	
 				mo.update(dt);
+				if (mo.x < 50) {mo.x = 50}
+				if (mo.x > 900) {mo.x = 900}
 			}
 
 		},
@@ -622,10 +633,11 @@ Laro.register('PD.$states', function (La) {
 			
 			// 画控制人物的圆饼
 			PD.showCircle && this.drawPie(render);
-			PD.$role.draw(render);
+			
 			PD.$boss.draw(render);
+			PD.$role.draw(render);
 			this.drawMonsters(render);
-
+			
 		},
 		drawPie: function (render) {
 			var x = PD.roleMousedown ? PD.MOUSEDOWN_X : PD.pieX;
