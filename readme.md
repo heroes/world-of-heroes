@@ -7,4 +7,4 @@
 
 
 ##线上地址##
-http://heroes.github.com/wrold-of-heroes
+http://heroes.github.com/world-of-heroes
