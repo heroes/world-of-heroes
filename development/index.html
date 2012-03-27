@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,3 +56,63 @@ onload = function () {
 </script>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>大侠的世界</title>
+<style>
+html,body {
+	margin: 0;
+	padding: 0;
+	background: #333;
+}
+canvas, #canvas {
+
+	display:block;
+	text-align: center;
+}
+.wrap {
+	width: 960px;
+	height: 640px;
+
+}
+#big_skill {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	background: #000;
+	opacity: 0.7;
+	display: none;
+}
+img {display: none}
+</style>
+
+</head>
+
+<body>
+<div class="wrap" style="position:relative">
+	<div id="canvas">loading</div>
+	<canvas width="960" height="640" id="big_skill"></canvas>
+</div>
+<img id="load-image" style="display:none" src="resources/images/load.png" />
+
+<script src="js/laro.0.1.js"></script>
+<script src="js/jcanvas.0.1.js"></script>
+<script src="js/role.js"></script>
+<script src="js/master.js"></script>
+<script src="js/gesture/dollar.js"></script>
+<script src="js/gesture/big_skill.js"></script>
+
+<script src="js/g_data.js"></script>
+<script src="js/main.js"></script>
+<script>
+onload = function () {
+	PD.init('canvas', 960, 640);
+}
+</script>
+</body>
+</html>
+>>>>>>> 990e9949f78e764a5658fc1a5531703f822cb1ce
