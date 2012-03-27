@@ -15,7 +15,7 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this._t += dt;
-			this.anim.renderMirrored = !PD.roleFaceRight;
+			this.anim.renderMirrored = (this.host.x < PD.$role.x);
 			this.anim.update(dt);
 		},
 		draw: function (render) {
@@ -54,7 +54,7 @@ Laro.register('PD', function (La) {
 		
 		},
 		update: function (dt) {
-			this.anim.renderMirrored = !PD.roleFaceRight;
+			this.anim.renderMirrored = (this.host.x < PD.$role.x);
 			this.anim.update(dt);
 			this.speed = 100*dt;
 			
@@ -101,7 +101,7 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this._t += dt;
-			this.anim.renderMirrored = !PD.roleFaceRight;
+			this.anim.renderMirrored = (this.host.x < PD.$role.x);
 			this.anim.update(dt);
 
 			if (this._t >= this.anim.getLength()) {
@@ -144,7 +144,7 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this._t += dt;
-			this.anim.renderMirrored = !PD.roleFaceRight;
+			this.anim.renderMirrored = (this.host.x < PD.$role.x);
 			this.anim.update(dt);
 			
 
