@@ -36,6 +36,8 @@ Laro.register('PD.$states', function (La) {
 				'images/skillanim/skill2.png',
 				'images/monster/left.png',
 				'images/comic/comic1.jpg',
+				'images/comic/comic2.jpg',
+				'images/comic/comic3.jpg',
 				'images/start-bg.jpg',
 				'images/start-btn.png',
 				'images/end.jpg',
