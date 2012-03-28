@@ -112,10 +112,10 @@ Laro.register('PD.$states', function (La) {
 			//get resources 放在全局 PD 里，以便其他类调用
 			
 			this.cameras = [
-				[0,0,920,560],
-				[920,0,744,560],
-				[920,560,744,668],
-				[0,560,920,668]
+				[0,0,960,640],
+				[704,0,960,640],
+				[704,640,960,640],
+				[0,640,960,640]
 			];
 			this.currentCamera = 0;
 			this.nextCamera = 1;
