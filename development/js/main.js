@@ -30,6 +30,9 @@ Laro.register('PD', function (La) {
 		this.stage = new La.$stage(this.canvas);
 		this.stage.CONFIG.isClear = false;
 
+		//标记当前精灵
+		this.currentRole = '';
+
 		this.stage.addEventListener('mouseup', function (x, y) {
 			if ((PD.$role && PD.$role.fsm.currentState != 1)
 				|| (PD.$role && PD.$role.fsm.currentState == 1 && PD.roleMousedown)) {

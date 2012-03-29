@@ -51,7 +51,7 @@ Laro.register('PD', function (La) {
 			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
 		},
 		transition: function () {
-			PD.startMove && this.host.setState(1);
+			PD.currentRole == this.host.id && PD.startMove && this.host.setState(1);
 		}
 	});
 	
@@ -340,7 +340,8 @@ Laro.register('PD', function (La) {
 		6, this.R_BigSkill
 	]
 	
-	this.Role = La.Class(function (x, y, width, height) {
+	this.Role = La.Class(function (id, x, y, width, height) {
+		this.id = id;
 		this.x = x;
 		this.y = y;
 		this.width = width || 106;
@@ -378,11 +379,13 @@ Laro.register('PD', function (La) {
 			if (PD.mouseOnIcon) {return}
 			PD.roleMousedown = true;
 			PD.showCircle = true;
+			PD.currentRole = id;
 		});
 		this.checkSprite.addEventListener('touchstart', function (x, y) {
 			if (PD.mouseOnIcon) {return }
 			PD.roleMousedown = true;
 			PD.showCircle = true;
+			PD.currentRole = id;
 		});
 		//this.checkSprite.addEventListener('mouseup', function () { PD.roleMousedown = false });
 		//this.checkSprite.addEventListener('touchend', function () { PD.roleMousedown = false });

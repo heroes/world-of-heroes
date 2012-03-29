@@ -271,8 +271,11 @@ Laro.register('PD.$states', function (La) {
 			PD.textures['skill_rain'] = PD.$res.getImage('skill_rain');
 			PD.textures['boss'] = PD.$res.getImage('boss');
 
-			PD.$role = new PD.Role(100, 400);
+			PD.$role = new PD.Role('role', 100, 400);
 			PD.$role.setState(0);
+
+			PD.$role2 = new PD.Role('role2', 500, 400);
+			PD.$role2.setState(0);
 			
 			this.createMonsters(2);
 			
@@ -315,6 +318,7 @@ Laro.register('PD.$states', function (La) {
 		update: function (dt) {
 			this._t += 0;
 			PD.$role.update(dt);
+			PD.$role2.update(dt);
 			this.updateMonsters(dt);
 		},
 		draw: function (render) {
@@ -326,6 +330,7 @@ Laro.register('PD.$states', function (La) {
 			// 画控制人物的圆饼
 			PD.showCircle && this.drawPie(render);
 			PD.$role.draw(render);
+			PD.$role2.draw(render);
 			this.drawMonsters(render);
 
 		},
@@ -381,7 +386,7 @@ Laro.register('PD.$states', function (La) {
 			PD.textures['GO'] = PD.$res.getImage('GO');
 			PD.textures['skill_rain'] = PD.$res.getImage('skill_rain');
 
-			PD.$role = new PD.Role(200, 400);
+			PD.$role = new PD.Role('role', 200, 400);
 			PD.$role.setState(0);
 			
 			PD.$boss = new PD.Boss(800, 400);
