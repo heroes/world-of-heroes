@@ -271,10 +271,10 @@ Laro.register('PD.$states', function (La) {
 			PD.textures['skill_rain'] = PD.$res.getImage('skill_rain');
 			PD.textures['boss'] = PD.$res.getImage('boss');
 
-			PD.$role = new PD.Role('role', 100, 400);
+			PD.$role = new PD.Role('$role', 100, 400);
 			PD.$role.setState(0);
 
-			PD.$role2 = new PD.Role('role2', 500, 400);
+			PD.$role2 = new PD.Role('$role2', 500, 400);
 			PD.$role2.setState(0);
 			
 			this.createMonsters(2);
@@ -344,7 +344,7 @@ Laro.register('PD.$states', function (La) {
 			var ctx = render.context;
 			ctx.save();
 			ctx.beginPath();
-			ctx.moveTo(PD.$role.x, PD.$role.y);
+			ctx.moveTo(PD[PD.currentRole].x, PD[PD.currentRole].y);
 			ctx.lineTo(x, y);
 			ctx.closePath();
 			ctx.strokeStyle = '#fff';
@@ -386,7 +386,7 @@ Laro.register('PD.$states', function (La) {
 			PD.textures['GO'] = PD.$res.getImage('GO');
 			PD.textures['skill_rain'] = PD.$res.getImage('skill_rain');
 
-			PD.$role = new PD.Role('role', 200, 400);
+			PD.$role = new PD.Role('$role', 200, 400);
 			PD.$role.setState(0);
 			
 			PD.$boss = new PD.Boss(800, 400);

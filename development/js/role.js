@@ -400,7 +400,7 @@ Laro.register('PD', function (La) {
 		},
 		draw: function (render) {
 			
-			PD.showCircle && this.drawCircle(render);
+			PD.currentRole == this.id && PD.showCircle && this.drawCircle(render);
 			this.fsm.draw(render);
 			this.drawBloodBar(render);
 		},
