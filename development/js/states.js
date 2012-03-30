@@ -263,7 +263,7 @@ this.Comic3 = La.BaseState.extend(function () {
 				[0,0,960,640],
 				[303,0,960,640],
 				[0,640,594,396],
-				[396,594,621,414],
+				[594,396,621,414],
 				[290,1035,970,646]
 			];
 			this.currentCamera = 0;
@@ -306,7 +306,7 @@ this.Comic3 = La.BaseState.extend(function () {
 		},
 		transition: function () {
 			if (this.nextCamera == this.cameras.length) {
-				this.host.setState(1);
+				this.host.setState(4);
 			}
 		}
 	})
