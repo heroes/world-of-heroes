@@ -114,9 +114,9 @@ Laro.register('PD.$states', function (La) {
 			this.cameras = [
 				[0,0,960,640],
 				[704,0,960,640],
-				[704,640,960,640],
+				[704,606,960,640],
 				[0,560,960,640],
-				[0,640,960,640]
+				[0,606,960,640]
 			];
 			this.currentCamera = 0;
 			this.nextCamera = 1;
