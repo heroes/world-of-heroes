@@ -236,6 +236,81 @@ this.Comic2 = La.BaseState.extend(function () {
 			}
 		}
 	})
+
+//第三幅漫画
+this.Comic3 = La.BaseState.extend(function () {
+	}).methods({
+		enter: function (msg, fromState) {
+			console.log('comic3');
+			for (var i = 0; i < PD.stage.children.length; i ++) {
+			var child = PD.stage.children[i];
+			if (child.type == 'skillIcon') {
+				PD.stage.children.splice(i, 1);
+				i --;
+			}
+			}
+			//PD.curRole = '';
+			//PD.toggleSkillIcon();
+			this._t = 0;
+			this.delay = 2;
+			this.frameCount = 2;
+
+			PD.loader.loadedImages['images/comic/comic3.jpg'];
+			PD.textures['comic3'] = PD.loader.loadImage('images/comic/comic3.jpg');
+			//get resources 放在全局 PD 里，以便其他类调用
+			
+			this.cameras = [
+				[0,0,960,640],
+				[303,0,960,640],
+				[0,640,594,396],
+				[396,594,621,414],
+				[290,1035,970,646]
+			];
+			this.currentCamera = 0;
+			this.nextCamera = 1;
+			this.currentArr = this.cameras[this.currentCamera].slice(0);
+		},
+		leave: function () {
+			
+		},
+		update: function (dt) {
+			this._t += dt;
+			if(this._t > this.delay){
+				if(this.delay){
+					this.delay = 0;
+					this._t = 0;
+				}
+
+				if(this.currentArr[0] == this.cameras[this.nextCamera][0] &&
+					this.currentArr[1] == this.cameras[this.nextCamera][1] &&
+					this.currentArr[2] == this.cameras[this.nextCamera][2] &&
+					this.currentArr[3] == this.cameras[this.nextCamera][3]
+				){
+					if(this._t >= this.frameCount*2){
+						this.currentCamera += 1;
+						this.nextCamera+= 1;
+						this._t = 0;
+						console.log(this.nextCamera);			
+					}
+				}else{
+					for(var i = 0;i < 4;i++){
+						this.currentArr[i] = this.cameras[this.currentCamera][i] + (this._t/this.frameCount>=1? 1 :this._t/this.frameCount) * (this.cameras[this.nextCamera][i] - this.cameras[this.currentCamera][i]);
+					}
+				}
+			}
+		},
+		draw: function (render) {
+			var rw = render.getWidth(),
+				rh = render.getHeight();
+			render.context.drawImage(PD.textures['comic3'], this.currentArr[0],this.currentArr[1],this.currentArr[2],this.currentArr[3],0,0,rw,rh)
+		},
+		transition: function () {
+			if (this.nextCamera == this.cameras.length) {
+				this.host.setState(1);
+			}
+		}
+	})
+	
 	this.Begin = La.BaseState.extend(function () {
 	
 	}).methods({
@@ -438,7 +513,7 @@ this.Comic2 = La.BaseState.extend(function () {
 	}).methods({
 		enter: function (msg, fromState) {
 			console.log('stage1');
-
+			next_tag= 8;//将下一场景设置为漫画三
 			this._t = 0;
 			//get resources 放在全局 PD 里，以便其他类调用
 			PD.textures['map1'] = PD.$res.getImage('map1');
@@ -598,7 +673,8 @@ Laro.register('PD.$fsm', function (La) {
 		4, PD.$states.END,
 		5, PD.$states.Stage2,
 		6, PD.$states.GoNext,
-		7, PD.$states.Comic2
+		7, PD.$states.Comic2,
+		8, PD.$states.Comic3
 	];
 	//stateModes
 	this.stateModes = {
