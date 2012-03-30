@@ -17,7 +17,7 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this._t += dt;
-			this.anim.renderMirrored = !PD.roleFaceRight;
+			this.anim.renderMirrored = !this.host.roleFaceRight;
 			this.anim.update(dt);
 			if (this._t > this.length) {
 				this.checkNearMonster();
@@ -43,7 +43,7 @@ Laro.register('PD', function (La) {
 				}
 			}
 			if (hasNear) {
-				PD.roleFaceRight = (this.host.x < mm.x);
+				this.host.roleFaceRight = (this.host.x < mm.x);
 				this.host.setState(3, mm);
 			}
 		},
@@ -51,7 +51,7 @@ Laro.register('PD', function (La) {
 			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
 		},
 		transition: function () {
-			PD.currentRole == this.host.id && PD.startMove && this.host.setState(1);
+			PD.currentRole == this.host.id && this.host.startMove && this.host.setState(1);
 		}
 	});
 	
@@ -70,14 +70,14 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this.speed = 200*dt;
-			this.anim.renderMirrored = !PD.roleFaceRight;
+			this.anim.renderMirrored = !this.host.roleFaceRight;
 			this.anim.update(dt);
 			
-			this.dis = Math.sqrt(Math.pow(PD.pieX - this.host.x, 2) + Math.pow(PD.pieY - this.host.y, 2));
+			this.dis = Math.sqrt(Math.pow(this.host.pieX - this.host.x, 2) + Math.pow(this.host.pieY - this.host.y, 2));
 			
 			//var angle = Math.atan((PD.MOUSEDOWN_X - this.host.x)/(PD.MOUSEDOWN_Y - this.host.y));
-			var spy = this.speed*(PD.pieY - this.host.y)/this.dis;
-			var spx = this.speed*(PD.pieX - this.host.x)/this.dis;
+			var spy = this.speed*(this.host.pieY - this.host.y)/this.dis;
+			var spx = this.speed*(this.host.pieX - this.host.x)/this.dis;
 			
 			this.host.x += spx;
 			if (this.host.y + spy < 168) {
@@ -91,10 +91,10 @@ Laro.register('PD', function (La) {
 			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
 		},
 		transition: function () {
-			if (this.dis <= 4 || Math.abs(this.host.x-PD.pieX) <= 2) {
+			if (this.dis <= 4 || Math.abs(this.host.x-this.host.pieX) <= 2) {
 				this.host.setState(0);
-				PD.startMove = false;
-				PD.showCircle = false;
+				this.host.startMove = false;
+				this.host.showCircle = false;
 			}
 		}
 	});
@@ -109,14 +109,14 @@ Laro.register('PD', function (La) {
 			this._t = 0;
 			this.host.nowLife -= msg.attack;
 			this.host.nowLife = this.host.nowLife >=0 ? this.host.nowLife : 0;
-			PD.roleFaceRight = msg.roleFace;
+			this.host.roleFaceRight = msg.roleFace;
 		},
 		leave: function () {
 		
 		},
 		update: function (dt) {
 			this._t += dt;
-			this.anim.renderMirrored = !PD.roleFaceRight;
+			this.anim.renderMirrored = !this.host.roleFaceRight;
 			this.anim.update(dt);
 		},
 		draw: function (render) {
@@ -153,7 +153,7 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this._t += dt;
-			this.anim.renderMirrored = !PD.roleFaceRight;
+			this.anim.renderMirrored = !this.host.roleFaceRight;
 			this.anim.update(dt);
 			if (this.anim.currentFrame == 2) {
 				this.msg.x += ((this.host.x > this.msg.x) ? -5 : 5);
@@ -209,7 +209,7 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this._t += dt;
-			this.anim.renderMirrored = !PD.roleFaceRight;
+			this.anim.renderMirrored = !this.host.roleFaceRight;
 			this.anim.update(dt);
 			
 		},
@@ -271,7 +271,7 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this._t += dt;
-			this.anim.renderMirrored = !PD.roleFaceRight;
+			this.anim.renderMirrored = !this.host.roleFaceRight;
 			this.anim.update(dt);
 
 			if(this.anim.currentFrame == 3){
@@ -351,7 +351,9 @@ Laro.register('PD', function (La) {
 		
 		this.life = 1000;
 		this.nowLife = 1000;
-		
+		//人物方向
+		this.roleFaceRight = 1;
+
 		this.animHash = {};
 		
 		this.fsm = new La.AppFSM(this, statesList);
@@ -378,14 +380,14 @@ Laro.register('PD', function (La) {
 		this.checkSprite.addEventListener('mousedown', function (x, y) {
 			if (PD.mouseOnIcon) {return}
 			PD.roleMousedown = true;
-			PD.showCircle = true;
 			PD.currentRole = id;
+			PD[PD.currentRole].showCircle = true;
 		});
 		this.checkSprite.addEventListener('touchstart', function (x, y) {
 			if (PD.mouseOnIcon) {return }
 			PD.roleMousedown = true;
-			PD.showCircle = true;
 			PD.currentRole = id;
+			PD[PD.currentRole].showCircle = true;
 		});
 		//this.checkSprite.addEventListener('mouseup', function () { PD.roleMousedown = false });
 		//this.checkSprite.addEventListener('touchend', function () { PD.roleMousedown = false });
@@ -400,7 +402,7 @@ Laro.register('PD', function (La) {
 		},
 		draw: function (render) {
 			
-			PD.currentRole == this.id && PD.showCircle && this.drawCircle(render);
+			PD.currentRole == this.id && this.showCircle && this.drawCircle(render);
 			this.fsm.draw(render);
 			this.drawBloodBar(render);
 		},

@@ -273,9 +273,6 @@ Laro.register('PD.$states', function (La) {
 
 			PD.$role = new PD.Role('$role', 100, 400);
 			PD.$role.setState(0);
-
-			PD.$role2 = new PD.Role('$role2', 500, 400);
-			PD.$role2.setState(0);
 			
 			this.createMonsters(2);
 			
@@ -318,7 +315,6 @@ Laro.register('PD.$states', function (La) {
 		update: function (dt) {
 			this._t += 0;
 			PD.$role.update(dt);
-			PD.$role2.update(dt);
 			this.updateMonsters(dt);
 		},
 		draw: function (render) {
@@ -328,15 +324,14 @@ Laro.register('PD.$states', function (La) {
 			render.drawImage(PD.textures['map1'], cx, cy, 0, 1, 1, false, false);
 			
 			// 画控制人物的圆饼
-			PD.showCircle && this.drawPie(render);
+			PD.currentRole && PD[PD.currentRole].showCircle && this.drawPie(render);
 			PD.$role.draw(render);
-			PD.$role2.draw(render);
 			this.drawMonsters(render);
 
 		},
 		drawPie: function (render) {
-			var x = PD.roleMousedown ? PD.MOUSEDOWN_X : PD.pieX;
-			var y = PD.roleMousedown ? PD.MOUSEDOWN_Y : PD.pieY;
+			var x = PD.roleMousedown ? PD.MOUSEDOWN_X : PD[PD.currentRole].pieX;
+			var y = PD.roleMousedown ? PD.MOUSEDOWN_Y : PD[PD.currentRole].pieY;
 			if (y < 170) { y = 170 }
 			
 			render.drawImage(PD.textures['pie'], x, y, 0, 1, 1, false, false);
@@ -354,9 +349,9 @@ Laro.register('PD.$states', function (La) {
 			
 			// 判断 左右
 			if (x >= PD.$role.x) {
-				PD.roleFaceRight = 1;
+				PD[PD.currentRole].roleFaceRight = 1;
 			} else {
-				PD.roleFaceRight = 0;
+				PD[PD.currentRole].roleFaceRight = 0;
 			}
 		},
 		transition: function () {
@@ -388,6 +383,9 @@ Laro.register('PD.$states', function (La) {
 
 			PD.$role = new PD.Role('$role', 200, 400);
 			PD.$role.setState(0);
+
+			PD.$role2 = new PD.Role('$role2', 500, 400);
+			PD.$role2.setState(0);
 			
 			PD.$boss = new PD.Boss(800, 400);
 			PD.$boss.id = 'boss';
@@ -433,6 +431,7 @@ Laro.register('PD.$states', function (La) {
 		update: function (dt) {
 			this._t += 0;
 			PD.$role.update(dt);
+			PD.$role2.update(dt);
 			PD.$boss.update(dt);
 			this.updateMonsters(dt);
 		},
@@ -443,16 +442,17 @@ Laro.register('PD.$states', function (La) {
 			render.drawImage(PD.textures['map2'], cx, cy, 0, 1, 1, false, false);
 			
 			// 画控制人物的圆饼
-			PD.showCircle && this.drawPie(render);
+			PD.currentRole && PD[PD.currentRole].showCircle && this.drawPie(render);
 			
 			PD.$boss.draw(render);
 			PD.$role.draw(render);
+			PD.$role2.draw(render);
 			this.drawMonsters(render);
 			
 		},
 		drawPie: function (render) {
-			var x = PD.roleMousedown ? PD.MOUSEDOWN_X : PD.pieX;
-			var y = PD.roleMousedown ? PD.MOUSEDOWN_Y : PD.pieY;
+			var x = PD.roleMousedown ? PD.MOUSEDOWN_X : PD[PD.currentRole].pieX;
+			var y = PD.roleMousedown ? PD.MOUSEDOWN_Y : PD[PD.currentRole].pieY;
 			if (y < 170) { y = 170 }
 			
 			render.drawImage(PD.textures['pie'], x, y, 0, 1, 1, false, false);
@@ -460,7 +460,7 @@ Laro.register('PD.$states', function (La) {
 			var ctx = render.context;
 			ctx.save();
 			ctx.beginPath();
-			ctx.moveTo(PD.$role.x, PD.$role.y);
+			ctx.moveTo(PD[PD.currentRole].x, PD[PD.currentRole].y);
 			ctx.lineTo(x, y);
 			ctx.closePath();
 			ctx.strokeStyle = '#fff';
@@ -469,10 +469,10 @@ Laro.register('PD.$states', function (La) {
 			ctx.restore();
 			
 			// 判断 左右
-			if (x >= PD.$role.x) {
-				PD.roleFaceRight = 1;
+			if (x >= PD[PD.currentRole].x) {
+				PD[PD.currentRole].roleFaceRight = 1;
 			} else {
-				PD.roleFaceRight = 0;
+				PD[PD.currentRole].roleFaceRight = 0;
 			}
 		},
 		transition: function () {
@@ -513,3 +513,45 @@ Laro.register('PD.$states', function (La) {
 	})
 });
 
+//状态管理
+Laro.register('PD.$fsm', function (La) {
+	var pkg = this;
+
+	var statesList = [
+		0, PD.$states.Loading,
+		1, PD.$states.Comic1,
+		2, PD.$states.Stage1,
+		3, PD.$states.Begin,
+		4, PD.$states.END,
+		5, PD.$states.Stage2,
+		6, PD.$states.GoNext
+	];
+	//stateModes
+	this.stateModes = {
+		kStateActive: 0,
+		kTransitionOut: 1,
+		kTransitionIn: 2
+	};
+	this.stateMode = this.stateModes.kStateActive;
+	
+
+	this.init = function () {
+		this.$ = new La.AppFSM(this, statesList);
+		this.setState(0);
+	};
+	this.setState = function (state, msg, suspendCurrent) {
+		this.newState = state;
+		this.newMessage = msg;
+
+		if (suspendCurrent || state == -1 || this.$.isSuspended(state)) {
+			this.$.setState(state, msg, suspendCurrent);
+		} else {
+			var st = PD.screenTransitionDefaultOut;
+			st.reset();
+
+			this.stateMode = this.stateModes.kTransitionOut;
+			PD.screenTransition = st;
+		}
+	}
+	
+});

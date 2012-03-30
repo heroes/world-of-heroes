@@ -37,10 +37,10 @@ Laro.register('PD', function (La) {
 			if ((PD.$role && PD.$role.fsm.currentState != 1)
 				|| (PD.$role && PD.$role.fsm.currentState == 1 && PD.roleMousedown)) {
 				if (PD.roleMousedown) {
-					PD.startMove = true;
+					PD[PD.currentRole].startMove = true;
+					PD[PD.currentRole].pieX = x;
+					PD[PD.currentRole].pieY = y;
 				}
-				PD.pieX = x;
-				PD.pieY = y;
 			}
 			
 			PD.roleMousedown = false;
@@ -49,10 +49,10 @@ Laro.register('PD', function (La) {
 			if ((PD.$role && PD.$role.fsm.currentState != 1)
 				|| (PD.$role && PD.$role.fsm.currentState == 1 && PD.roleMousedown)) {
 				if (PD.roleMousedown) {
-					PD.startMove = true;
+					PD[PD.currentRole].startMove = true;
+					PD[PD.currentRole].pieX = x;
+					PD[PD.currentRole].pieY = y;
 				}
-				PD.pieX = x;
-				PD.pieY = y;
 			}
 			PD.roleMousedown = false;
 		});
@@ -158,7 +158,6 @@ Laro.register('PD', function (La) {
 	
 	this.loader = new La.ResourceLoader();
 	
-	this.roleFaceRight = 1;
 	
 	this.$monsters = [];
 	
@@ -257,47 +256,6 @@ Laro.register('PD.$res', function (La) {
 })
 
 
-Laro.register('PD.$fsm', function (La) {
-	var pkg = this;
-
-	var statesList = [
-		0, PD.$states.Loading,
-		1, PD.$states.Comic1,
-		2, PD.$states.Stage1,
-		3, PD.$states.Begin,
-		4, PD.$states.END,
-		5, PD.$states.Stage2,
-		6, PD.$states.GoNext
-	];
-	//stateModes
-	this.stateModes = {
-		kStateActive: 0,
-		kTransitionOut: 1,
-		kTransitionIn: 2
-	};
-	this.stateMode = this.stateModes.kStateActive;
-	
-
-	this.init = function () {
-		this.$ = new La.AppFSM(this, statesList);
-		this.setState(0);
-	};
-	this.setState = function (state, msg, suspendCurrent) {
-		this.newState = state;
-		this.newMessage = msg;
-
-		if (suspendCurrent || state == -1 || this.$.isSuspended(state)) {
-			this.$.setState(state, msg, suspendCurrent);
-		} else {
-			var st = PD.screenTransitionDefaultOut;
-			st.reset();
-
-			this.stateMode = this.stateModes.kTransitionOut;
-			PD.screenTransition = st;
-		}
-	}
-	
-});
 
 // looper
 Laro.register('PD.$loop', function (La) {
