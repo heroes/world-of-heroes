@@ -1,4 +1,4 @@
-
+var next_tag=7;
 Laro.register('PD.$states', function (La) {
 	var pkg = this;
 
@@ -162,7 +162,80 @@ Laro.register('PD.$states', function (La) {
 			}
 		}
 	})
+this.Comic2 = La.BaseState.extend(function () {
+	}).methods({
+		enter: function (msg, fromState) {
+			console.log('comic2');
+			for (var i = 0; i < PD.stage.children.length; i ++) {
+			var child = PD.stage.children[i];
+			if (child.type == 'skillIcon') {
+				PD.stage.children.splice(i, 1);
+				i --;
+			}
+			}
+			//PD.curRole = '';
+			//PD.toggleSkillIcon();
+			this._t = 0;
+			this.delay = 2;
+			this.frameCount = 2;
 
+			PD.loader.loadedImages['images/comic/comic2.jpg'];
+			PD.textures['comic2'] = PD.loader.loadImage('images/comic/comic2.jpg');
+			//get resources 放在全局 PD 里，以便其他类调用
+			
+			this.cameras = [
+				[0,0,960,640],
+				[0,300,960,640],
+				[704,0,960,640],
+				[0,560,960,640],
+				[704,606,960,640],
+				[0,1248,960,600],
+				[704,1248,960,600]
+			];
+			this.currentCamera = 0;
+			this.nextCamera = 1;
+			this.currentArr = this.cameras[this.currentCamera].slice(0);
+		},
+		leave: function () {
+			
+		},
+		update: function (dt) {
+			this._t += dt;
+			if(this._t > this.delay){
+				if(this.delay){
+					this.delay = 0;
+					this._t = 0;
+				}
+
+				if(this.currentArr[0] == this.cameras[this.nextCamera][0] &&
+					this.currentArr[1] == this.cameras[this.nextCamera][1] &&
+					this.currentArr[2] == this.cameras[this.nextCamera][2] &&
+					this.currentArr[3] == this.cameras[this.nextCamera][3]
+				){
+					if(this._t >= this.frameCount*2){
+						this.currentCamera += 1;
+						this.nextCamera+= 1;
+						this._t = 0;
+						console.log(this.nextCamera);			
+					}
+				}else{
+					for(var i = 0;i < 4;i++){
+						this.currentArr[i] = this.cameras[this.currentCamera][i] + (this._t/this.frameCount>=1? 1 :this._t/this.frameCount) * (this.cameras[this.nextCamera][i] - this.cameras[this.currentCamera][i]);
+					}
+				}
+			}
+		},
+		draw: function (render) {
+			var rw = render.getWidth(),
+				rh = render.getHeight();
+			render.context.drawImage(PD.textures['comic2'], this.currentArr[0],this.currentArr[1],this.currentArr[2],this.currentArr[3],0,0,rw,rh)
+		},
+		transition: function () {
+			if (this.nextCamera == this.cameras.length) {
+				this.host.setState(5);
+			}
+		}
+	})
 	this.Begin = La.BaseState.extend(function () {
 	
 	}).methods({
@@ -507,7 +580,7 @@ Laro.register('PD.$states', function (La) {
 		},
 		transition: function () {
 			if (this.pos >= this.rw) {
-				this.host.setState(5)
+				this.host.setState(next_tag)
 			}
 		}
 	})
@@ -524,7 +597,8 @@ Laro.register('PD.$fsm', function (La) {
 		3, PD.$states.Begin,
 		4, PD.$states.END,
 		5, PD.$states.Stage2,
-		6, PD.$states.GoNext
+		6, PD.$states.GoNext,
+		7, PD.$states.Comic2
 	];
 	//stateModes
 	this.stateModes = {
