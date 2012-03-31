@@ -756,7 +756,7 @@ this.Comic3 = La.BaseState.extend(function () {
 			this.rw = PD.render.getWidth();
 			this.rh = PD.render.getHeight();
 			this.pos = 0;
-			if (this.nn < 2) this.nn += 1;
+			if (this.nn < 3) this.nn += 1;
 		},
 		leave: function () {
 			
