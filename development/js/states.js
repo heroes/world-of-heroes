@@ -638,6 +638,7 @@ this.Comic3 = La.BaseState.extend(function () {
 			//get resources 放在全局 PD 里，以便其他类调用
 			PD.textures['map1'] = PD.$res.getImage('map1');
 			PD.textures['map2'] = PD.$res.getImage('map2');
+			PD.textures['map3'] = PD.$res.getImage('map3');
 			PD.textures['circle'] = PD.$res.getImage('circle');
 			PD.textures['pie'] = PD.$res.getImage('pie');
 			PD.textures['skill1'] = PD.$res.getImage('skill1');
@@ -707,7 +708,7 @@ this.Comic3 = La.BaseState.extend(function () {
 			var cx = render.getWidth()/2,
 				cy = render.getHeight()/2;
 
-			render.drawImage(PD.textures['map2'], cx, cy, 0, 1, 1, false, false);
+			render.drawImage(PD.textures['map3'], cx, cy, 0, 1, 1, false, false);
 			
 			// 画控制人物的圆饼
 			PD.currentRole && PD[PD.currentRole].showCircle && this.drawPie(render);
