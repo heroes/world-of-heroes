@@ -391,9 +391,9 @@ this.Comic3 = La.BaseState.extend(function () {
 			render.context.drawImage(PD.textures['end'], 0, 0, rw, rh);
 		},
 		transition: function () {
-			if (PD.isBegin) {
-				this.host.setState(1);
-			}
+			//if (PD.isBegin) {
+				//this.host.setState(0);
+			//}
 		}
 	})
 
