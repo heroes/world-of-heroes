@@ -23,6 +23,7 @@ Laro.register('PD.$states', function (La) {
 			var images = [
 				'images/map.jpg',
 				'images/BG2.jpg',
+				'images/BG3.jpg',
 				'images/role/role-right.png',
 				'images/circle.png',
 				'images/pie.png',
@@ -513,6 +514,125 @@ this.Comic3 = La.BaseState.extend(function () {
 	}).methods({
 		enter: function (msg, fromState) {
 			console.log('stage1');
+			next_tag= 9;//将下一场景设置为场景3
+			this._t = 0;
+			//get resources 放在全局 PD 里，以便其他类调用
+			PD.textures['map1'] = PD.$res.getImage('map1');
+			PD.textures['map2'] = PD.$res.getImage('map2');
+			PD.textures['circle'] = PD.$res.getImage('circle');
+			PD.textures['pie'] = PD.$res.getImage('pie');
+			PD.textures['skill1'] = PD.$res.getImage('skill1');
+			PD.textures['skill2'] = PD.$res.getImage('skill2');
+			PD.textures['skill3'] = PD.$res.getImage('skill3');
+			PD.textures['skill4'] = PD.$res.getImage('skill4');
+			PD.textures['skill5'] = PD.$res.getImage('skill5');
+			PD.textures['skill_hl'] = PD.$res.getImage('skill_hl');
+			PD.textures['GO'] = PD.$res.getImage('GO');
+			PD.textures['skill_rain'] = PD.$res.getImage('skill_rain');
+
+			PD.$role = new PD.Role('$role', 200, 400);
+			PD.$role.setState(0);
+
+			PD.$role2 = new PD.Role('$role2', 500, 400);
+			PD.$role2.setState(0);
+			
+			PD.$boss = new PD.Boss(800, 400);
+			PD.$boss.id = 'boss';
+			PD.$boss.heath = PD.$boss.fullHeath = 2000;
+			PD.$boss.bloodBarW = 200;
+			PD.$boss.bloodBarOffset = -80;
+			
+			this.createMonsters(3);
+			
+			// add skill icon
+			PD.curRole = 'one';
+			PD.toggleSkillIcon();
+
+		},
+		createMonsters: function (n) {
+			for (var i = 0; i < n ; i ++) {
+				var x = Math.random()* 900,
+					y = Math.random()*400 + 200;
+				PD.$monsters.push(new PD.Master(x, y));
+			}
+			PD.$monsters.push(PD.$boss);
+		},
+		updateMonsters: function (dt) {
+			PD.$monsters.sort(function (a, b) { return a.y - b.y });
+			var hasNear = false;
+			for (var i = 0; i < PD.$monsters.length; i ++) {
+				var mo = PD.$monsters[i];
+				mo.update(dt);
+				if (mo.x < 50) {mo.x = 50}
+				if (mo.x > 900) {mo.x = 900}
+			}
+
+		},
+		drawMonsters: function (render) {
+			for (var i = 0; i < PD.$monsters.length; i ++) {
+				var mo = PD.$monsters[i];
+				mo.draw(render);
+			}
+		},
+		leave: function () {
+			
+		},
+		update: function (dt) {
+			this._t += 0;
+			PD.$role.update(dt);
+			PD.$role2.update(dt);
+			PD.$boss.update(dt);
+			this.updateMonsters(dt);
+		},
+		draw: function (render) {
+			var cx = render.getWidth()/2,
+				cy = render.getHeight()/2;
+
+			render.drawImage(PD.textures['map2'], cx, cy, 0, 1, 1, false, false);
+			
+			// 画控制人物的圆饼
+			PD.currentRole && PD[PD.currentRole].showCircle && this.drawPie(render);
+			
+			PD.$boss.draw(render);
+			PD.$role.draw(render);
+			PD.$role2.draw(render);
+			this.drawMonsters(render);
+			
+		},
+		drawPie: function (render) {
+			var x = PD.roleMousedown ? PD.MOUSEDOWN_X : PD[PD.currentRole].pieX;
+			var y = PD.roleMousedown ? PD.MOUSEDOWN_Y : PD[PD.currentRole].pieY;
+			if (y < 170) { y = 170 }
+			
+			render.drawImage(PD.textures['pie'], x, y, 0, 1, 1, false, false);
+			// 连接线
+			var ctx = render.context;
+			ctx.save();
+			ctx.beginPath();
+			ctx.moveTo(PD[PD.currentRole].x, PD[PD.currentRole].y);
+			ctx.lineTo(x, y);
+			ctx.closePath();
+			ctx.strokeStyle = '#fff';
+			ctx.lineWidth = 5;
+			ctx.stroke();
+			ctx.restore();
+			
+			// 判断 左右
+			if (x >= PD[PD.currentRole].x) {
+				PD[PD.currentRole].roleFaceRight = 1;
+			} else {
+				PD[PD.currentRole].roleFaceRight = 0;
+			}
+		},
+		transition: function () {
+		
+		}
+	});
+	//场景三
+	this.Stage3 = La.BaseState.extend(function () {
+	
+	}).methods({
+		enter: function (msg, fromState) {
 			next_tag= 8;//将下一场景设置为漫画三
 			this._t = 0;
 			//get resources 放在全局 PD 里，以便其他类调用
@@ -627,7 +747,6 @@ this.Comic3 = La.BaseState.extend(function () {
 		
 		}
 	});
-	
 		this.GoNext = La.BaseState.extend(function () {
 		this.nn = 0;
 	}).methods({
@@ -674,7 +793,8 @@ Laro.register('PD.$fsm', function (La) {
 		5, PD.$states.Stage2,
 		6, PD.$states.GoNext,
 		7, PD.$states.Comic2,
-		8, PD.$states.Comic3
+		8, PD.$states.Comic3,
+		9, PD.$states.Stage3
 	];
 	//stateModes
 	this.stateModes = {
