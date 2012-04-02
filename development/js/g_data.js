@@ -253,4 +253,20 @@ g_data = {
 			filename: 'images/skillanim/skill2.png'
 		}
 	},
+			
+		role2_wait: {
+			info: {
+				"nbrOfFrames": 3,
+				"pivoty": 150,
+				"framerate": 4,
+				"pivotx": 136,
+				"events": []
+			},
+			data: [
+				[0,0,186,179,0,0,186,179],
+				[187,0,373,179,187,0,373,179],
+				[374,0,560,179,374,0,560,179]
+			],
+			filename: 'images/role/role2.png'
+		}
 };

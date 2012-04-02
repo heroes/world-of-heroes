@@ -7,7 +7,6 @@ Laro.register('PD', function (La) {
 	}).methods({
 		enter: function (msg, fromState) {
 			this.anim = this.host.getAnimation('role_wait');
-			
 			this.anim.play();
 			this._t = 0;
 			this.length = this.anim.getLength();
@@ -451,6 +450,4 @@ Laro.register('PD', function (La) {
 			return this.animHash[id]; 
 		}
 	});
-	
-	
 });
