@@ -21,6 +21,18 @@ textarea {
 </div> 
 
 <textarea id="result"></textarea>
+
+<h4>仅适用于 涂片帧纵排并且 等距的情况</h4>
+图片宽: <input id="aw2" type="text" />
+图片高: <input id="ah2" type="text" />
+单位帧高: <input id="uh" type="text" />
+帧数： <input id="num2" type="text" />
+</div>
+<div>
+<input type="button" id="btn2" value="Go" />
+</div> 
+
+<textarea id="result2"></textarea>
 <script>
 var $ = function (id) {
 	return document.getElementById(id);
@@ -49,6 +61,29 @@ $('btn').onclick = function () {
 	}
 	$('result').value = ret.join(',\n');
 	
+}
+
+$('btn2').onclick=function(){
+	var width=parseInt($('aw2').value)-1,
+		height= parseInt($('ah2').value),
+		num = parseInt($('num2').value),
+		u_height=parseInt($('uh').value);
+	var ret = [];
+	for(var i=0;i<num; i++){
+		var arr = [];
+		arr.push('['+0);
+		arr.push(i*u_height);
+		arr.push(width);
+		arr.push((i+1)*u_height - 1);
+		
+		arr.push(0);
+		arr.push(i*u_height);
+		arr.push(width);
+		arr.push((i+1)*u_height - 1+']');
+		
+		ret.push(arr.join(','));
+	}
+	$('result2').value = ret.join(',\n');
 }
 </script>
 </html>

@@ -21,10 +21,12 @@ Laro.register('PD.$states', function (La) {
 			this.delayAfter = 0.5;
 
 			var images = [
+				'favicon.png',
 				'images/map.jpg',
 				'images/BG2.jpg',
 				'images/BG3.jpg',
 				'images/role/role-right.png',
+				'images/role/role2.png',
 				'images/circle.png',
 				'images/pie.png',
 				'images/skillicon/1.png',
@@ -487,6 +489,10 @@ this.Comic3 = La.BaseState.extend(function () {
 			// 连接线
 			var ctx = render.context;
 			ctx.save();
+			ctx.shadowColor = '#00FFFF';
+			ctx.shadowOffsetX = 0;
+			ctx.shadowOffsetY = 0;
+			ctx.shadowBlur = 8;
 			ctx.beginPath();
 			ctx.moveTo(PD[PD.currentRole].x, PD[PD.currentRole].y);
 			ctx.lineTo(x, y);
@@ -608,6 +614,10 @@ this.Comic3 = La.BaseState.extend(function () {
 			// 连接线
 			var ctx = render.context;
 			ctx.save();
+			ctx.shadowColor = '#00FFFF';
+			ctx.shadowOffsetX = 0;
+			ctx.shadowOffsetY = 0;
+			ctx.shadowBlur = 8;
 			ctx.beginPath();
 			ctx.moveTo(PD[PD.currentRole].x, PD[PD.currentRole].y);
 			ctx.lineTo(x, y);
@@ -729,6 +739,10 @@ this.Comic3 = La.BaseState.extend(function () {
 			var ctx = render.context;
 			ctx.save();
 			ctx.beginPath();
+			ctx.shadowColor = '#00FFFF';
+			ctx.shadowOffsetX = 0;
+			ctx.shadowOffsetY = 0;
+			ctx.shadowBlur = 8;
 			ctx.moveTo(PD[PD.currentRole].x, PD[PD.currentRole].y);
 			ctx.lineTo(x, y);
 			ctx.closePath();

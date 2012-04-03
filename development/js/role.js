@@ -294,7 +294,9 @@ Laro.register('PD', function (La) {
 		enter: function (msg, fromState) {
 			console.log('S');
 			this.anim = this.host.getAnimation('role_sskill');
+			this.anim2=this.host.getAnimation('skill_rain');
 			this.anim.play(false);
+			this.anim2.play(false);
 			this.length = this.anim.getLength();
 			this._t = 0;
 			this.pos = 0;
@@ -315,11 +317,13 @@ Laro.register('PD', function (La) {
 			this._t += dt;
 		//	this.anim.renderMirrored = !PD.roleFaceRight;
 			this.anim.update(dt);
+			this.anim2.update(dt);
 			this.pos += 200*dt;
 		},
 		draw: function (render) {
 			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
-			render.drawImage(PD.textures['skill_rain'], this.host.x - 100, this.host.y - 250 + this.pos, 0,1,1, false, false);
+			this.anim2.draw(render, this.host.x+319, this.host.y+124, 0, 1, null);
+			//render.drawImage(PD.textures['skill_rain'], this.host.x - 100, this.host.y - 250 + this.pos, 0,1,1, false, false);
 		},
 		transition: function () {
 			if (this._t > 3) {
