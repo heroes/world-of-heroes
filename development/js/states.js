@@ -233,8 +233,8 @@ this.Comic2 = La.BaseState.extend(function () {
 			var rw = render.getWidth(),
 				rh = render.getHeight();
 			console.log(PD.textures['comic2']);
-			
-			render.context.drawImage(PD.textures['comic2'], this.currentArr[0],this.currentArr[1],this.currentArr[2]-2,this.currentArr[3]-2,0,0,rw,rh)
+			render.context.drawImage(PD.textures['comic2'], 0, 0, rw, rh, 0, 0, rw, rh);
+			//render.context.drawImage(PD.textures['comic2'], this.currentArr[0],this.currentArr[1],this.currentArr[2]-2,this.currentArr[3]-2,0,0,rw,rh)
 		},
 		transition: function () {
 			if (this.nextCamera == this.cameras.length) {
