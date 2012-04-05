@@ -519,7 +519,6 @@ this.Comic3 = La.BaseState.extend(function () {
 	
 	}).methods({
 		enter: function (msg, fromState) {
-			console.log('stage1');
 			next_tag= 9;//将下一场景设置为场景3
 			this._t = 0;
 			//get resources 放在全局 PD 里，以便其他类调用
@@ -548,7 +547,7 @@ this.Comic3 = La.BaseState.extend(function () {
 			PD.$boss.bloodBarW = 200;
 			PD.$boss.bloodBarOffset = -80;
 			
-			this.createMonsters(3);
+			this.createMonsters(5);
 			
 			// add skill icon
 			PD.curRole = 'one';

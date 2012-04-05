@@ -404,7 +404,6 @@ Laro.register('PD', function (La) {
 			this.fsm.update(dt);
 		},
 		draw: function (render) {
-			
 			PD.currentRole == this.id && this.showCircle && this.drawCircle(render);
 			this.fsm.draw(render);
 			this.drawBloodBar(render);
