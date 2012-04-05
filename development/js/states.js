@@ -164,7 +164,8 @@ Laro.register('PD.$states', function (La) {
 				this.host.setState(2);
 			}
 		}
-	})
+	});
+	
 this.Comic2 = La.BaseState.extend(function () {
 	}).methods({
 		enter: function (msg, fromState) {
@@ -231,14 +232,14 @@ this.Comic2 = La.BaseState.extend(function () {
 		draw: function (render) {
 			var rw = render.getWidth(),
 				rh = render.getHeight();
-			render.context.drawImage(PD.textures['comic2'], this.currentArr[0],this.currentArr[1],this.currentArr[2],this.currentArr[3],0,0,rw,rh)
+			render.context.drawImage(PD.textures['comic2'], this.currentArr[0],this.currentArr[1],this.currentArr[2]-2,this.currentArr[3]-2,0,0,rw,rh)
 		},
 		transition: function () {
 			if (this.nextCamera == this.cameras.length) {
 				this.host.setState(5);
 			}
 		}
-	})
+	});
 
 //第三幅漫画
 this.Comic3 = La.BaseState.extend(function () {
@@ -312,7 +313,7 @@ this.Comic3 = La.BaseState.extend(function () {
 				this.host.setState(4);
 			}
 		}
-	})
+	});
 	
 	this.Begin = La.BaseState.extend(function () {
 	
@@ -371,7 +372,7 @@ this.Comic3 = La.BaseState.extend(function () {
 				this.host.setState(1);
 			}
 		}
-	})
+	});
 
 	this.END = La.BaseState.extend(function () {
 	
@@ -398,7 +399,7 @@ this.Comic3 = La.BaseState.extend(function () {
 				//this.host.setState(0);
 			//}
 		}
-	})
+	});
 
 	// Stage1
 	this.Stage1 = La.BaseState.extend(function () {
@@ -519,6 +520,7 @@ this.Comic3 = La.BaseState.extend(function () {
 	
 	}).methods({
 		enter: function (msg, fromState) {
+			console.log('stage1');
 			next_tag= 9;//将下一场景设置为场景3
 			this._t = 0;
 			//get resources 放在全局 PD 里，以便其他类调用
@@ -547,7 +549,7 @@ this.Comic3 = La.BaseState.extend(function () {
 			PD.$boss.bloodBarW = 200;
 			PD.$boss.bloodBarOffset = -80;
 			
-			this.createMonsters(5);
+			this.createMonsters(3);
 			
 			// add skill icon
 			PD.curRole = 'one';
