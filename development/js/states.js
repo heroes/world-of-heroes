@@ -188,7 +188,6 @@ this.Comic2 = La.BaseState.extend(function () {
 			//get resources 放在全局 PD 里，以便其他类调用
 			
 			this.cameras = [
-			[0,0,800,888]
 				//[0,0,960,640],
 				//[0,300,960,640],
 				//[704,0,960,640],
