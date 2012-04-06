@@ -123,12 +123,12 @@ Laro.register('PD', function (La) {
             this.checkSprite.addEventListener('mousedown', function (x, y) {
                 //判断当前技能状态
                 if (this.getState != 'await')return;
-                this.setState('acitve')；
+                this.setState('acitve');
             });
             this.checkSprite.addEventListener('touchstart', function (x, y) {
                 //判断当前技能状态
                 if (this.getState != 'await')return;
-                this.setState('acitve')；
+                this.setState('acitve');
             });
 
         }).methods({
