@@ -302,13 +302,30 @@ Laro.register('PD', function (La) {
             },
             drawBloodBar:function (render) {
                 var ctx = render.context;
+                var x = this.x - this.bloodBarW / 2;
+                var y = this.y - this.height + this.bloodBarOffset;
+                var border = 1;
                 ctx.save();
                 ctx.globalAlpha = 0.7;
-                ctx.fillStyle = '#000';
-                ctx.fillRect(this.x - this.bloodBarW / 2 - 2, this.y - this.height - 2 + this.bloodBarOffset, this.bloodBarW + 4, this.bloodBarH + 4);
+                ctx.lineCap = "round";
 
-                ctx.fillStyle = 'green';
-                ctx.fillRect(this.x - this.bloodBarW / 2, this.y - this.height + this.bloodBarOffset, this.bloodBarW * this.heath / this.fullHeath, this.bloodBarH)
+
+                ctx.beginPath();
+                ctx.lineWidth = this.bloodBarH+border*2;
+                ctx.strokeStyle = '#000';
+                ctx.moveTo(x-border,y);
+                ctx.lineTo(x+border+this.bloodBarW,y);
+                ctx.stroke();
+                ctx.closePath();
+
+                ctx.beginPath();
+                ctx.lineWidth = this.bloodBarH ;
+                ctx.strokeStyle = 'green';
+                ctx.moveTo(x,y);
+                ctx.lineTo(x+this.bloodBarW * this.heath / this.fullHeath ,y);
+                ctx.stroke();
+                ctx.closePath();
+
                 ctx.restore();
             },
             getAnimation:function (id) {

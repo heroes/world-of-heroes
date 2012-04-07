@@ -409,15 +409,32 @@ Laro.register('PD', function (La) {
 			this.drawBloodBar(render);
 		},
 		drawBloodBar: function (render) {
-			var ctx = render.context;
-			ctx.save();
-			ctx.globalAlpha = 0.7;
-			ctx.fillStyle = '#000';
-			ctx.fillRect(this.x - this.bloodBarW/2-2, this.y-this.height-20-2, this.bloodBarW+4, this.bloodBarH+4);
-			
-			ctx.fillStyle = 'green';
-			ctx.fillRect(this.x - this.bloodBarW/2, this.y-this.height-20, this.bloodBarW*this.nowLife/this.life, this.bloodBarH)
-			ctx.restore();
+            var ctx = render.context;
+            var x = this.x - this.bloodBarW / 2 ;
+            var y = this.y - this.height-20;
+            var border = 2;
+            ctx.save();
+            ctx.globalAlpha = 0.7;
+            ctx.lineCap = "round";
+
+
+            ctx.beginPath();
+            ctx.lineWidth = this.bloodBarH+border*2;
+            ctx.strokeStyle = '#000';
+            ctx.moveTo(x - border,y );
+            ctx.lineTo(x+border+this.bloodBarW,y);
+            ctx.stroke();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.lineWidth = this.bloodBarH ;
+            ctx.strokeStyle = 'green';
+            ctx.moveTo(x,y);
+            ctx.lineTo(x+ this.bloodBarW*this.nowLife/this.life ,y);
+            ctx.stroke();
+            ctx.closePath();
+
+            ctx.restore();
 		},
 		drawCircle: function (render) {
 			render.drawImage(PD.textures['circle'], this.x-this.width/2, this.y-30, 0, 0, 1, false, false)
