@@ -247,14 +247,18 @@ Laro.register('PD', function (La) {
         3, this.M_Beattacked,
         4, this.M_Dead,
         5, this.GoNext
-    ]
-
+    ];
+    //怪物的随机种类
+    var masterCat = 0;
+    var getMasterCatId = function(){
+        return masterCat++;
+    }
     this.Master = La.Class(
         function (x, y, width, height) {
             this.x = x;
             this.y = y;
 
-            this.id = 'monster';
+            this.id = 'monster_'+ getMasterCatId()%2;
 
             this.width = width || 98;
             this.height = height || 110;

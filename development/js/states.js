@@ -39,6 +39,8 @@ Laro.register('PD.$states', function (La) {
                     'images/skillanim/skill1.png',
                     'images/skillanim/skill2.png',
                     'images/monster/left.png',
+                    'images/monster/right.png',
+                    'images/monster/monster.png',
                     'images/comic/comic1.jpg',
                     'images/comic/comic2.jpg',
                     'images/comic/comic3.jpg',
@@ -96,7 +98,9 @@ Laro.register('PD.$states', function (La) {
             },
             transition:function () {
                 if (this.done && this.doneT >= 0 && this._t > this.doneT + this.delayAfter) {
-                    this.host.setState(3);
+                    //this.host.setState(3);
+                    //调试用，把前面的四格漫画屏蔽了
+                    this.host.setState(2);
                 }
             }
         });
@@ -378,9 +382,7 @@ Laro.register('PD.$states', function (La) {
             },
             transition:function () {
                 if (PD.isBegin) {
-                    //this.host.setState(1);
-                    //调试用，把前面的四格漫画屏蔽了
-                    this.host.setState(2);
+                    this.host.setState(1);
                 }
             }
         });

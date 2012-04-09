@@ -190,7 +190,7 @@ g_data = {
 		},
 		
 		// monster
-		monster: {
+		monster_0: {
 			info: {
 				"nbrOfFrames": 4,
 				"pivoty": 100,
@@ -206,6 +206,21 @@ g_data = {
 			],
 			filename: 'images/monster/left.png'
 		},
+        monster_1: {
+            info: {
+                "nbrOfFrames":3,
+                "pivoty": 100,
+                "framerate": 4,
+                "pivotx": 60,
+                "events": []
+            },
+            data: [
+                [0,0,97,109,0,0,97,109],
+                [98,0,195,109,98,0,195,109],
+                [196,0,293,109,196,0,293,109]
+            ],
+            filename: 'images/monster/monster.png'
+        },
 		
 		// skill icon
 		skill1: {
