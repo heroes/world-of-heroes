@@ -64,15 +64,31 @@ g_data = {
 		//人物2等待状态
 		role2_wait: {
 			info: {
-				"nbrOfFrames": 2,
-				"pivoty": 150,
+				"nbrOfFrames": 3,
+				"pivoty": 123,
 				"framerate": 4,
-				"pivotx": 136,
+				"pivotx": 80,
 				"events": []
 			},
 			data: [
-				[0,0,186,179,0,0,186,179],
-				[374,0,560,179,374,0,560,179]
+				[0,0,139,132,0,0,139,132],
+				[140,0,279,132,140,0,279,132],
+				[280,0,419,132,280,0,419,132]
+			],
+			filename: 'images/role/role2.png'
+		},
+		role2_run: {
+			info: {
+				"nbrOfFrames": 3,
+				"pivoty": 123,
+				"framerate": 8,
+				"pivotx": 80,
+				"events": []
+			},
+			data: [
+				[0,0,139,132,0,0,139,132],
+				[140,0,279,132,140,0,279,132],
+				[280,0,419,132,280,0,419,132]
 			],
 			filename: 'images/role/role2.png'
 		},
@@ -173,6 +189,21 @@ g_data = {
 				[3636,0,3938,181,3636,0,3938,181]
 			],
 			filename: 'images/role/role-right.png'
+		},
+		role2_attack: {
+			info: {
+				"nbrOfFrames": 3,
+				"pivoty": 123,
+				"framerate": 8,
+				"pivotx": 80,
+				"events": []
+			},
+			data: [
+				[0,0,139,132,0,0,139,132],
+				[140,0,279,132,140,0,279,132],
+				[280,0,419,132,280,0,419,132]
+			],
+			filename: 'images/role/role2.png'
 		},
 		role_attacked: {
 			info: {
