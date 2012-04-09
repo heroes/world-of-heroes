@@ -444,6 +444,10 @@ Laro.register('PD.$states', function (La) {
 
                 this.createMonsters(2);
 
+                PD.skillHash = {
+			        'one':['skill1', 'skill2']
+			    };
+
                 // add skill icon
                 PD.curRole = 'one';
                 PD.toggleSkillIcon();
@@ -539,7 +543,7 @@ Laro.register('PD.$states', function (La) {
             }
         });
 
-// 第二场景
+// 第二关
     this.Stage2 = La.BaseState.extend(
         function () {
 
@@ -565,7 +569,12 @@ Laro.register('PD.$states', function (La) {
                 PD.$role = new PD.Role('$role', 200, 400);
                 PD.$role.setState(0);
 
-                PD.$role2 = new PD.Role('$role2', 500, 400);
+                PD.skillHash = {
+			        'one':['skill1', 'skill2', 'skill3'],
+			        'two':['skill3', 'skill4', 'skill5']
+			    };
+
+                PD.$role2 = new PD.Role2('$role2', 500, 400);
                 PD.$role2.setState(0);
 
                 PD.$boss = new PD.Boss(800, 400);
