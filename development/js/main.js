@@ -112,42 +112,52 @@ Laro.register('PD', function (La) {
         }
         // 添加对应的icon
         var skillList = this.skillHash[this.curRole];
-        for (var i = 0; i < skillList.length; i++) {
-            var tid = skillList[i];
-            var skIcon = new La.$sprite(PD.stage.ctx, function () {
-                this.type = 'skillIcon';
-                this.belongTo = this.curRole;
-                this.x = 20 + i * 100;
-                this.y = 20;
-                this.width = 80;
-                this.height = 80;
-                this.draw = function (tid) {
-                    return function (render) {
-                        render.drawImage(PD.textures[tid], 0, 0, 0, 0, 1, false, false);
-                        render.drawImage(PD.textures['skill_hl'], 0, 0, 0, 0, 1, false, false);
-                    }
-                }(tid);
+        for(var n in this.skillHash){
+        	var skillList = this.skillHash[n];
+	        for (var i = 0; i < skillList.length; i++) {
+	            var tid = skillList[i];
+	            var skIcon = new La.$sprite(PD.stage.ctx, function () {
+	                this.type = 'skillIcon';
+	                this.belongTo = n;
+	                this.x = 20 + i * 100;
+	                this.y = 20;
+	                this.width = 80;
+	                this.height = 80;
+	                this.draw = function (tid) {
+	                    return function (render) {
+	                    	if(this.belongTo == PD.curRole){
+	                    		this.width = 80;
+	                    		this.height = 80;
+	                    		render.drawImage(PD.textures[tid], 0, 0, 0, 0, 1, false, false);
+	                        	render.drawImage(PD.textures['skill_hl'], 0, 0, 0, 0, 1, false, false);	
+	                    	}else{
+	                    		this.width = 0;
+	                    		this.height = 0;
+	                    	}
+	                    }
+	                }(tid);
 
-            });
-            skIcon.addEventListener('mouseover', function () {
-                document.body.style['cursor'] = 'pointer';
-                PD.mouseOnIcon = true;
-            });
-            skIcon.addEventListener('mouseout', function () {
-                document.body.style['cursor'] = 'default';
-                PD.mouseOnIcon = false;
-            });
-            skIcon.addEventListener('click', function (tid) {
-                return function () {
-                    PD.$skill[tid]();
-                }
-            }(tid));
-            skIcon.addEventListener('touchstart', function (tid) {
-                return function () {
-                    PD.$skill[tid]();
-                }
-            }(tid));
-            PD.stage.addChild(skIcon);
+	            });
+	            skIcon.addEventListener('mouseover', function () {
+	                document.body.style['cursor'] = 'pointer';
+	                PD.mouseOnIcon = true;
+	            });
+	            skIcon.addEventListener('mouseout', function () {
+	                document.body.style['cursor'] = 'default';
+	                PD.mouseOnIcon = false;
+	            });
+	            skIcon.addEventListener('click', function (tid) {
+	                return function () {
+	                    PD.$skill[tid]();
+	                }
+	            }(tid));
+	            skIcon.addEventListener('touchstart', function (tid) {
+	                return function () {
+	                    PD.$skill[tid]();
+	                }
+	            }(tid));
+	            PD.stage.addChild(skIcon);
+	        }
         }
     }
 

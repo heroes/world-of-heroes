@@ -525,11 +525,13 @@ Laro.register('PD', function (La) {
 			if (PD.mouseOnIcon) {return}
 			PD.roleMousedown = true;
 			PD.currentRole = id;
+			PD.curRole = 'one';
 			PD[PD.currentRole].showCircle = true;
 		});
 		this.checkSprite.addEventListener('touchstart', function (x, y) {
 			if (PD.mouseOnIcon) {return }
 			PD.roleMousedown = true;
+			PD.curRole = 'one';
 			PD.currentRole = id;
 			PD[PD.currentRole].showCircle = true;
 		});
@@ -652,6 +654,7 @@ Laro.register('PD', function (La) {
 		this.checkSprite.addEventListener('mousedown', function (x, y) {
 			if (PD.mouseOnIcon) {return}
 			PD.roleMousedown = true;
+			PD.curRole = 'two';
 			PD.currentRole = id;
 			PD[PD.currentRole].showCircle = true;
 		});
@@ -659,6 +662,7 @@ Laro.register('PD', function (La) {
 			if (PD.mouseOnIcon) {return }
 			PD.roleMousedown = true;
 			PD.currentRole = id;
+			PD.curRole = 'two';
 			PD[PD.currentRole].showCircle = true;
 		});
 		//this.checkSprite.addEventListener('mouseup', function () { PD.roleMousedown = false });
