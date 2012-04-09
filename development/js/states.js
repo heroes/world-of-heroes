@@ -49,6 +49,7 @@ Laro.register('PD.$states', function (La) {
                     'images/end.jpg',
                     'images/GO.png',
                     'images/s_skill.png',
+                    'images/s_skill_1.png',
                     'images/boss_left.png',
 
                     //sound

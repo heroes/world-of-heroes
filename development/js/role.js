@@ -292,9 +292,14 @@ Laro.register('PD', function (La) {
 	
 	}).methods({
 		enter: function (msg, fromState) {
-			console.log('S');
+			console.log(msg);
 			this.anim = this.host.getAnimation('role_sskill');
-			this.anim2=this.host.getAnimation('skill_rain');
+            if(msg == 'v'){
+                this.anim2=this.host.getAnimation('skill_rain_1');
+            }else{
+                this.anim2=this.host.getAnimation('skill_rain');
+            }
+			//this.anim2=this.host.getAnimation('skill_rain');
 			this.anim.play(false);
 			this.anim2.play(false);
 			this.length = this.anim.getLength();

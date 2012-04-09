@@ -168,8 +168,12 @@ Laro.register('PD', function (La) {
         if (name == 'star') {
             cvs.style['display'] = 'none';
             PD.$loop.$.resume();
-            PD.$role.setState(6);
-        } else {
+            PD.$role.setState(6,'s');
+        } if(name == 'v' ){
+            cvs.style['display'] = 'none';
+            PD.$loop.$.resume();
+            PD.$role.setState(6,'v');
+        }else {
             // 技能释放失败
             cvs.style['display'] = 'none';
             PD.$loop.$.resume();
