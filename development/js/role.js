@@ -380,7 +380,7 @@ Laro.register('PD', function (La) {
 				if (dis < 100) {
 					mo.setState(3, {
 						attack: 130,
-						offset: ((this.host.x > mo.x) ? -200 : 200)
+						offset: ((this.host.x > mo.x) ? 50 : 50)
 					});
 					//mo.x += ((this.host.x > mo.x) ? -40 : 40);
 					hasNear = true;
@@ -504,8 +504,8 @@ Laro.register('PD', function (La) {
 		this.bloodBarW = 150;
 		this.bloodBarH = 10;
 		
-		this.life = 1000;
-		this.nowLife = 1000;
+		this.life = 500;
+		this.nowLife = 500;
 		//人物方向
 		this.roleFaceRight = 1;
 
@@ -634,8 +634,8 @@ Laro.register('PD', function (La) {
 		this.bloodBarW = 150;
 		this.bloodBarH = 10;
 		
-		this.life = 800;
-		this.nowLife = 800;
+		this.life = 400;
+		this.nowLife = 400;
 		//人物方向
 		this.roleFaceRight = 1;
 
