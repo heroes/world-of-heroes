@@ -711,7 +711,7 @@ Laro.register('PD.$states', function (La) {
                 PD.$role = new PD.Role('$role', 200, 400);
                 PD.$role.setState(0);
 
-                PD.$role2 = new PD.Role('$role2', 500, 400);
+                PD.$role2 = new PD.Role2('$role2', 500, 400);
                 PD.$role2.setState(0);
 
                 PD.$boss = new PD.Boss(800, 400);
