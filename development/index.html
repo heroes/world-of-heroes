@@ -20,7 +20,7 @@ canvas, #canvas {
 .wrap {
 	width: 960px;
 	height: 640px;
-
+    overflow:hidden;
 }
 #big_skill {
 	position: absolute;
@@ -52,10 +52,10 @@ canvas, #canvas {
     background:rgba(0,0,0,0.5);
 }
 .fall_1+.mask{
-    display:block;
+
 }
 .fall_2+.mask{
-    display:block;
+
 }
 .fall_1{
     -webkit-animation-name:s_skill;
@@ -69,6 +69,7 @@ canvas, #canvas {
     }
     100%{
         top:320px;
+        left:150px;
         background:url("./resources/images/4s_skill.png") repeat-x;
     }
 }
@@ -79,6 +80,7 @@ canvas, #canvas {
     }
     100%{
         top:320px;
+        left:150px;
         background:url("./resources/images/4s_skill_1.png") repeat-x;
     }
 }
