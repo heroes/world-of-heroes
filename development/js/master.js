@@ -273,7 +273,7 @@ Laro.register('PD', function (La) {
 
             //cfg
             this.r_attack = 40;
-            this.r_run = 300;
+            this.r_run = 1000;
 
             this.animHash = {};
 
