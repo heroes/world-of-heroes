@@ -173,7 +173,7 @@ Laro.register('PD', function (La) {
 
         }).methods({
             enter:function (msg, fromState) {
-                console.log('dead')
+                console.log('dead');
                 this.anim = this.host.getAnimation(this.host.id);
                 this.anim.play();
                 this._t = 0;

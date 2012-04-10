@@ -424,13 +424,17 @@ Laro.register('PD', function (La) {
 			console.log(msg);
 			this.anim = this.host.getAnimation('role_sskill');
             if(msg == 'v'){
-                this.anim2=this.host.getAnimation('skill_rain_1');
+                //this.anim2=this.host.getAnimation('skill_rain_1');
+                document.getElementById("big_skill_1").className="big_skill fall_2";
             }else{
-                this.anim2=this.host.getAnimation('skill_rain');
+                //this.anim2=this.host.getAnimation('skill_rain');
+                document.getElementById("big_skill_1").className="big_skill fall_1";
             }
 			//this.anim2=this.host.getAnimation('skill_rain');
+
+            setTimeout(function(){document.getElementById("big_skill_1").className="big_skill"},3000);
 			this.anim.play(false);
-			this.anim2.play(false);
+			//this.anim2.play(false);
 			this.length = this.anim.getLength();
 			this._t = 0;
 			this.pos = 0;
@@ -451,12 +455,12 @@ Laro.register('PD', function (La) {
 			this._t += dt;
 		//	this.anim.renderMirrored = !PD.roleFaceRight;
 			this.anim.update(dt);
-			this.anim2.update(dt);
+			//this.anim2.update(dt);
 			this.pos += 200*dt;
 		},
 		draw: function (render) {
 			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
-			this.anim2.draw(render, this.host.x+319, this.host.y+124, 0, 1, null);
+			//this.anim2.draw(render, this.host.x+319, this.host.y+124, 0, 1, null);
 			//render.drawImage(PD.textures['skill_rain'], this.host.x - 100, this.host.y - 250 + this.pos, 0,1,1, false, false);
 		},
 		transition: function () {

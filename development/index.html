@@ -31,6 +31,57 @@ canvas, #canvas {
 	opacity: 0.7;
 	display: none;
 }
+.big_skill{
+    width:960px;
+    height:320px;
+    position:absolute;
+    left:0;
+    top:-260px;
+    z-index:10;
+    -webkit-animation-duration:1s;
+    -webkit-animation-iteration-count:infinite;
+}
+.mask{
+    display:none;
+    width:960px;
+    height:640px;
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:9;
+    background:rgba(0,0,0,0.5);
+}
+.fall_1+.mask{
+    display:block;
+}
+.fall_2+.mask{
+    display:block;
+}
+.fall_1{
+    -webkit-animation-name:s_skill;
+}
+.fall_2{
+    -webkit-animation-name:s_skill_2;
+}
+@-webkit-keyframes s_skill{
+    0%{
+        top:-320px;
+    }
+    100%{
+        top:320px;
+        background:url("./resources/images/4s_skill.png") repeat-x;
+    }
+}
+@-webkit-keyframes s_skill_2{
+    0%{
+        top:-320px;
+        background:url("./resources/images/3s_skill_1.png") repeat-x;
+    }
+    100%{
+        top:320px;
+        background:url("./resources/images/4s_skill_1.png") repeat-x;
+    }
+}
 img {display: none}
 </style>
 
@@ -39,6 +90,8 @@ img {display: none}
 <body>
 <div class="wrap" style="position:relative">
 	<div id="canvas">loading</div>
+    <div id="big_skill_1" class="big_skill"></div>
+    <div class="mask"></div>
 	<canvas width="960" height="640" id="big_skill"></canvas>
 </div>
 <img id="load-image" style="display:none" src="resources/images/load.png" />

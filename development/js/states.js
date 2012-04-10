@@ -445,7 +445,7 @@ Laro.register('PD.$states', function (La) {
                 this.createMonsters(2);
 
                 PD.skillHash = {
-			        'one':['skill1', 'skill2']
+			        'one':['skill1', 'skill2','skill3']
 			    };
 
                 // add skill icon
@@ -824,6 +824,8 @@ Laro.register('PD.$states', function (La) {
                 this.rh = PD.render.getHeight();
                 this.pos = 0;
                 if (this.nn < 3) this.nn += 1;
+                //删除大招动画
+                document.getElementById("big_skill_1").className="big_skill";
             },
             leave:function () {
 
