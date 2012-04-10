@@ -415,13 +415,19 @@ Laro.register('PD', function (La) {
 				this.host.setState(0);
 			}
 		}
-	});	
-	
+	});
+    var bigSkillLock = false;
 	this.R_BigSkill = La.BaseState.extend(function () {
 	
 	}).methods({
 		enter: function (msg, fromState) {
 			console.log(msg);
+            if(bigSkillLock){
+                alert("大招有20秒cd的，别那么快放！");
+                console.log("bigSkill is locked!");
+                return;
+            }
+            bigSkillLock = true;
 			this.anim = this.host.getAnimation('role_sskill');
             if(msg == 'v'){
                 //this.anim2=this.host.getAnimation('skill_rain_1');
@@ -432,7 +438,8 @@ Laro.register('PD', function (La) {
             }
 			//this.anim2=this.host.getAnimation('skill_rain');
 
-            setTimeout(function(){document.getElementById("big_skill_1").className="big_skill"},3000);
+            setTimeout(function(){document.getElementById("big_skill_1").className="big_skill";},3000);
+            setTimeout(function(){bigSkillLock = false;},20000);
 			this.anim.play(false);
 			//this.anim2.play(false);
 			this.length = this.anim.getLength();
