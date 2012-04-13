@@ -7,7 +7,6 @@ Laro.register('PD.$states', function (La) {
         function () {
             this.barW = 650;
             this.barH = 28;
-
         }).methods({
             enter:function (msg, fromState) {
                 console.log('loading', fromState)
@@ -54,7 +53,7 @@ Laro.register('PD.$states', function (La) {
                     'images/4s_skill.png',
                     'images/3s_skill_1.png',
                     'images/4s_skill_1.png',
-                    'images/boss_left.png',
+                    'images/monster/boss_left.png',
 
                     //sound
                     'OGG/stage1_sound.ogg',
@@ -105,7 +104,7 @@ Laro.register('PD.$states', function (La) {
                 if (this.done && this.doneT >= 0 && this._t > this.doneT + this.delayAfter) {
                     //this.host.setState(3);
                     //调试用，把前面的四格漫画屏蔽了
-                    this.host.setState(2);
+                    this.host.setState(5);
                 }
             }
         });
@@ -449,7 +448,7 @@ Laro.register('PD.$states', function (La) {
                 this.createMonsters(2);
 
                 PD.skillHash = {
-			        'one':['skill1', 'skill2','skill3']
+			        'one':['skill1', 'skill2']
 			    };
 
                 // add skill icon
@@ -575,7 +574,7 @@ Laro.register('PD.$states', function (La) {
 
                 PD.skillHash = {
 			        'one':['skill1', 'skill2', 'skill3'],
-			        'two':['skill3', 'skill4', 'skill5']
+			        'two':['skill4', 'skill5']
 			    };
 
                 PD.$role2 = new PD.Role2('$role2', 500, 400);
@@ -711,7 +710,7 @@ Laro.register('PD.$states', function (La) {
                 PD.$role = new PD.Role('$role', 200, 400);
                 PD.$role.setState(0);
 
-                PD.$role2 = new PD.Role('$role2', 500, 400);
+                PD.$role2 = new PD.Role2('$role2', 500, 400);
                 PD.$role2.setState(0);
 
                 PD.$boss = new PD.Boss(800, 400);
