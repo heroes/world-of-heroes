@@ -438,7 +438,7 @@ Laro.register('PD', function (La) {
             }
 
 //            setTimeout(function(){document.getElementById("big_skill_1").className="big_skill";},3000);
-//            setTimeout(function(){bigSkillLock = false;},20000);
+           setTimeout(function(){bigSkillLock = false;},0);
 			this.anim.play(false);
 			this.anim2.play(false);
 			this.length = this.anim.getLength();
@@ -466,7 +466,13 @@ Laro.register('PD', function (La) {
 		},
 		draw: function (render) {
 			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
+//            for(var i=0;i<2;i++){
+//                var pos = Math.random()*960;
+//                this.anim2.draw(render, this.host.x+pos, this.host.y+124, 0, 1, null);
+//            }
 			this.anim2.draw(render, this.host.x+319, this.host.y+124, 0, 1, null);
+            this.anim2.draw(render, this.host.x+640, this.host.y+124, 0, 1, null);
+            this.anim2.draw(render, this.host.x+960, this.host.y+124, 0, 1, null);
 			//render.drawImage(PD.textures['skill_rain'], this.host.x - 100, this.host.y - 250 + this.pos, 0,1,1, false, false);
 		},
 		transition: function () {
