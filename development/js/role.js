@@ -438,7 +438,7 @@ Laro.register('PD', function (La) {
             }
 
 //            setTimeout(function(){document.getElementById("big_skill_1").className="big_skill";},3000);
-           setTimeout(function(){bigSkillLock = false;},0);
+           setTimeout(function(){bigSkillLock = false;},20000);
 			this.anim.play(false);
 			this.anim2.play(false);
 			this.length = this.anim.getLength();
