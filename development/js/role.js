@@ -470,9 +470,9 @@ Laro.register('PD', function (La) {
 //                var pos = Math.random()*960;
 //                this.anim2.draw(render, this.host.x+pos, this.host.y+124, 0, 1, null);
 //            }
-			this.anim2.draw(render, this.host.x+319, this.host.y+124, 0, 1, null);
-            this.anim2.draw(render, this.host.x+640, this.host.y+124, 0, 1, null);
-            this.anim2.draw(render, this.host.x+960, this.host.y+124, 0, 1, null);
+			this.anim2.draw(render, 400, this.host.y+124, 0, 1, null);
+            this.anim2.draw(render, 800, this.host.y+124, 0, 1, null);
+            this.anim2.draw(render, 1200, this.host.y+124, 0, 1, null);
 			//render.drawImage(PD.textures['skill_rain'], this.host.x - 100, this.host.y - 250 + this.pos, 0,1,1, false, false);
 		},
 		transition: function () {
