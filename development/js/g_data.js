@@ -168,8 +168,8 @@ g_data = {
 			info: {
 				"nbrOfFrames": 4,
                 "framerate": 4,
-                "pivotx": 186,
-                "pivoty": 127,
+                "pivotx": 240,
+                "pivoty": 157,
                 "events": []
 			},
 			data: [
@@ -180,6 +180,52 @@ g_data = {
 			],
 			filename: 'images/monster/boss_left.png'
 		},
+		boss_skill1:{
+		 info: {
+				"nbrOfFrames": 3,
+                "framerate": 4,
+                "pivotx": 240,
+                "pivoty": 157,
+                "events": []
+			},
+			data: [
+				      [1452,0,1814,254,1452,0,1814,254],
+        			  [1815,0,2177,254,1815,0,2177,254],
+                      [2178,0,2540,254,2178,0,2540,254]
+			      ],
+			filename: 'images/monster/boss_left.png'	
+		},
+	light: {
+    "info": {
+        "nbrOfFrames": 2,
+        "framerate": 8,
+        "pivotx": 32,
+        "pivoty": 296,
+        "events": []
+    },
+    "data": [
+        [0,0,61,591,0,0,61,591],
+        [61,0,108,591,61,0,10,591]
+    ],
+    "filename": "images/monster/boss_skill1.png"
+    },
+		boss_skill2: {
+    info: {
+        "nbrOfFrames": 5,
+        "framerate": 2,
+        "pivotx": 240,
+        "pivoty": 157,
+        "events": []
+    },
+    "data": [
+        [0,0,362,254,0,0,362,254],
+        [363,0,725,254,363,0,725,254],
+        [726,0,1088,254,726,0,1088,254],
+        [1089,0,1451,254,1089,0,1451,254],
+        [1452,0,1814,254,1452,0,1814,254]
+    ],
+    "filename": 'images/monster/boss_lightning.png'
+      },
 		role_run: {
 			info: {
 				"nbrOfFrames": 4,

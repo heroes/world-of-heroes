@@ -54,6 +54,8 @@ Laro.register('PD.$states', function (La) {
                     'images/3s_skill_1.png',
                     'images/4s_skill_1.png',
                     'images/monster/boss_left.png',
+					'images/monster/boss_lightning.png',
+					'images/monster/boss_skill1.png',
 
                     //sound
                     'OGG/stage1_sound.ogg',
@@ -579,12 +581,11 @@ Laro.register('PD.$states', function (La) {
 
                 PD.$role2 = new PD.Role2('$role2', 500, 400);
                 PD.$role2.setState(0);
-
-                PD.$boss = new PD.Boss(800, 400);
-                PD.$boss.id = 'boss';
-                PD.$boss.heath = PD.$boss.fullHeath = 2000;
+                
+				PD.$boss = new PD.Boss(800, 400, 'boss', 2000, 80);
                 PD.$boss.bloodBarW = 200;
                 PD.$boss.bloodBarOffset = -80;
+				PD.$boss.setState(6);
 
                 this.createMonsters(3);
 

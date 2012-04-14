@@ -1,7 +1,95 @@
 /* 怪物类 */
 Laro.register('PD', function (La) {
 
-    // 怪物state Class
+    //Boss大招1
+	this.Boss_Skill_Extracting=La.BaseState.extend(
+        function () {
+
+        }).methods(
+			{
+			enter:function(msg, fromState){
+				this.anim = this.host.getAnimation('boss_skill1');
+				this.anim2 = this.host.getAnimation('light');
+                this.anim.play();
+				this.anim2.play();
+                this._t = 0;
+			},
+			leave:function(){},
+			update:function (dt) {
+                this._t += dt;
+                this.anim.renderMirrored = (this.host.x < PD.$role.x);
+                this.anim.update(dt);
+				this.anim2.update(dt);
+            },
+            draw:function (render) {
+                this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
+				this.anim2.draw(render, this.host.x, this.host.y, 0, 1, null);
+            },
+            transition:function () {
+                if(this._t>5){this.host.setState(0);}
+            }
+			}
+		);
+	    //Boss大招2
+	this.Boss_Skill2_Extracting=La.BaseState.extend(
+        function () {
+
+        }).methods(
+			{
+			enter:function (msg, fromState) {
+                this.anim = this.host.getAnimation('boss_skill2');
+                this.anim.play();
+                this._t = 0;
+            },
+            leave:function(){},
+			update:function (dt) {
+                this._t += dt;
+                this.anim.renderMirrored = (this.host.x < PD.$role.x);
+                this.anim.update(dt);
+            },
+            draw:function (render) {
+                this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
+            },
+            transition:function () {
+                if(this._t>5){this.host.setState(0);}
+            }
+			}
+		);
+	// Boss等待状态
+	this.Boss_Wait=La.BaseState.extend(
+        function (){}).methods(
+			{
+			enter:function(msg, fromState){
+				this.anim = this.host.getAnimation('boss');
+                this.anim.play();
+                this._t = 0;
+			},
+			leave:function(){},
+			update:function (dt) {
+                this._t += dt;
+                this.anim.renderMirrored = (this.host.x < PD.$role.x);
+                this.anim.update(dt);
+            },
+            draw:function (render) {
+                this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
+            },
+            transition:function () {
+                var role = PD.$role;
+                if (this.host.heath <= 0 || this.host.dead) {
+                    this.host.setState(4)
+                }
+
+                this.dis = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
+                if (this.dis - this.host.r_attack <= 0) {
+                    this.host.fsm.setState(2);
+                } else if (this.dis - this.host.r_run <= 0) {
+                    this.host.fsm.setState(1);
+                } else {
+                    this.host.fsm.setState(0);
+                }
+            }
+		}
+		);
     this.M_Wait = La.BaseState.extend(
         function () {
 
@@ -24,7 +112,6 @@ Laro.register('PD', function (La) {
             },
             transition:function () {
                 var role = PD.$role;
-
                 if (this.host.heath <= 0 || this.host.dead) {
                     this.host.setState(4)
                 }
@@ -248,6 +335,17 @@ Laro.register('PD', function (La) {
         4, this.M_Dead,
         5, this.GoNext
     ];
+	
+	var statesList2=[
+		0, this.Boss_Wait,
+        1, this.M_Run,
+        2, this.M_Attacked,
+        3, this.M_Beattacked,
+        4, this.M_Dead,
+        5, this.GoNext,
+		6, this.Boss_Skill_Extracting,
+		7, this.Boss_Skill2_Extracting
+	];
     //怪物的随机种类
     var masterCat = 0;
     var getMasterCatId = function(){
@@ -363,6 +461,121 @@ Laro.register('PD', function (La) {
                 return this.animHash[id];
             }
         });
+		//重建一个Boss类
+	    this.Boss = La.Class(
+        function (x, y, id,health,attack,width,height) {
+            this.x = x;
+            this.y = y;
+            this.id = id;
+			
+            this.width = width || 98;
+            this.height = height || 110;
+            this.heath = this.fullHeath = health;
+            this.dead = false;
 
-    this.Boss = this.Master.extend();
+            this.attack = attack;
+
+            this.bloodBarW = 80;
+            this.bloodBarH = 6;
+            this.bloodBarOffset = 0;
+
+            //cfg
+            this.r_attack = 40;
+            this.r_run = 1000;
+
+            this.animHash = {};
+
+            this.fsm = new La.AppFSM(this, statesList2);
+            this.setState(0);
+            //this.fsm.setState(0)
+			this.time_tick=0;//用来记录招式时间
+        }).methods({
+			extractSkill1:function(){
+				this.setState(6);
+			},
+			extractSkill2: function(){
+				
+			},
+            setState:function (state, msg) {
+                this.fsm.setState(state, msg);
+            },
+            update:function (dt) {
+                this.fsm.update(dt);
+                this.checkLife(dt);
+            },
+            checkLife:function (dt) {
+                if (this.heath <= 0) {
+                    this.heath = 0;
+                    this.dead = true;
+                }
+            },
+            chkrun:function () {
+
+            },
+            chkAttack:function () {
+
+            },
+            draw:function (render) {
+                this.fsm.draw(render);
+                this.drawBloodBar(render);
+            },
+            drawBloodBar:function (render) {
+                var ctx = render.context;
+                var x = this.x - this.bloodBarW / 2;
+                var y = this.y - this.height + this.bloodBarOffset;
+                var border = 1;
+                ctx.save();
+                ctx.globalAlpha = 0.7;
+                ctx.lineCap = "round";
+
+
+                ctx.beginPath();
+                ctx.lineWidth = this.bloodBarH+border*2;
+                ctx.strokeStyle = '#000';
+                ctx.moveTo(x-border,y);
+                ctx.lineTo(x+border+this.bloodBarW,y);
+                ctx.stroke();
+                ctx.closePath();
+
+                ctx.beginPath();
+                ctx.lineWidth = this.bloodBarH ;
+                ctx.strokeStyle = 'green';
+                ctx.moveTo(x,y);
+                ctx.lineTo(x+this.bloodBarW * this.heath / this.fullHeath ,y);
+                ctx.stroke();
+                ctx.closePath();
+
+                ctx.restore();
+            },
+            getAnimation:function (id) {
+                if (this.animHash[id]) {
+                    return this.animHash[id];
+                }
+                var stInfo = g_data.imageW[id],
+                    info = stInfo.info,
+                    data = stInfo.data,
+                    image = PD.loader.loadedImages[stInfo.filename];
+
+                var frames = [];
+                for (var i = 0; i < data.length; i++) {
+                    var source = data[i];
+
+                    var width = source[2] - source[0];
+                    var height = source[3] - source[1];
+
+                    var xOffset = source[0] - source[4];
+                    var yOffset = source[1] - source[5];
+
+                    var textureWidth = xOffset + width + source[6] - source[2];
+                    var textureHeight = yOffset + height + source[7] - source[3];
+
+                    frames.push(new Laro.ImageRegion(image, source[0], source[1], width, height, xOffset, yOffset, textureWidth, textureHeight));
+                }
+                ;
+
+                var anim = new Laro.Animation(info, frames);
+                this.animHash[id] = new La.AnimationHandle(anim);
+                return this.animHash[id];
+            }
+        });
 });
