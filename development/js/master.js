@@ -98,9 +98,15 @@ Laro.register('PD', function (La) {
                     this.host.setState(4)
                 }
 				//选择攻击距离自己最近的人物
-				var role = this.host.targetrole;
+				var role = PD.$role;
+				//;
                 this.dis = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
-				
+				//假如人物2存在
+				if(PD.$role2){
+				this.dis2 = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
+					this.dis=this.dis>=this.dis2?this.dis2:this.dis;
+					this.host.targetrole=this.dis>=this.dis2?PD.$role2:PD.$role;
+				}
 				if (this.dis - this.host.r_attack <= 0) {
                     this.host.fsm.setState(2);
                 } else if (this.dis - this.host.r_run <= 0) {
