@@ -56,6 +56,9 @@ Laro.register('PD.$states', function (La) {
                     'images/monster/boss_left.png',
 					'images/monster/boss_lightning.png',
 					'images/monster/boss_skill1.png',
+					
+					'images/skillanim/role_recover.png',
+					'images/skillanim/role_defense.png',
 
                     //sound
                     'OGG/stage1_sound.ogg',

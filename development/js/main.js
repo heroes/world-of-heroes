@@ -209,7 +209,33 @@ Laro.register('PD.$skill', function (La) {
         var cvs = document.getElementById('big_skill');
         cvs.style['display'] = 'block';
         PD.$loop.$.stop();
-    }
+    };
+	
+	// 大小姐技能
+	this['skill4'] = function () {
+		console.log('skill4');
+		PD.$role.nowLife = Math.min(PD.$role.nowLife + 200, PD.$role.life);
+		PD.$role2.nowLife = Math.min(PD.$role2.nowLife + 200, PD.$role2.life);
+		
+		PD.$role.aroundAnimHash['recover'].play(false);
+		PD.$role2.aroundAnimHash['recover'].play(false);
+	};
+	this['skill5'] = function () {
+		console.log('skill5');
+		PD.$role.aroundAnimHash['defense'].play();
+		PD.$role2.aroundAnimHash['defense'].play();
+		PD.$role.hurtParam = 0.5;
+		PD.$role2.hurtParam = 0.5;
+		
+		clearTimeout(this.defenseTimer);
+		this.defenseTimer = setTimeout(function () {
+			PD.$role.aroundAnimHash['defense'].stop();
+			PD.$role2.aroundAnimHash['defense'].stop();
+			
+			PD.$role.hurtParam = 1;
+			PD.$role2.hurtParam = 1;
+		}, 5000)
+	};
 });
 
 /**

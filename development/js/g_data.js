@@ -46,6 +46,51 @@ g_data = {
 			filename: 'images/pie.png'
 		},
 		
+		// 人物周围的法术效果
+		"role_recover": {
+			"info": {
+				"nbrOfFrames": 11,
+				"name": "role_recover",
+				"type": "animation",
+				"framerate": 10,
+				"pivotx": 62,
+				"pivoty": 75,
+				"events": []
+			},
+			"data": [
+				[0,0,124,150,0,0,124,150],
+				[125,0,249,150,125,0,249,150],
+				[250,0,374,150,250,0,374,150],
+				[375,0,499,150,375,0,499,150],
+				[500,0,624,150,500,0,624,150],
+				[625,0,749,150,625,0,749,150],
+				[750,0,874,150,750,0,874,150],
+				[875,0,999,150,875,0,999,150],
+				[1000,0,1124,150,1000,0,1124,150],
+				[1125,0,1249,150,1125,0,1249,150],
+				[1250,0,1374,150,1250,0,1374,150]
+			],
+			"filename": "images/skillanim/role_recover.png"
+		},
+		"role_defense": {
+			"info": {
+				"nbrOfFrames": 4,
+				"name": "role_defense",
+				"type": "animation",
+				"framerate": 10,
+				"pivotx": 46,
+				"pivoty": 26,
+				"events": []
+			},
+			"data": [
+				[0,0,92,51,0,0,92,51],
+				[93,0,185,51,93,0,185,51],
+				[186,0,278,51,186,0,278,51],
+				[279,0,371,51,279,0,371,51]
+			],
+			"filename": "images/skillanim/role_defense.png"
+		},
+		
 		// role status
 		role_wait: {
 			info: {

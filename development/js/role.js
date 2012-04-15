@@ -200,7 +200,7 @@ Laro.register('PD', function (La) {
 			this.anim.play(false);
 			this.length = this.anim.getLength();
 			this._t = 0;
-			this.host.nowLife -= msg.attack;
+			this.host.nowLife -= msg.attack * (typeof this.host.hurtParam == 'number' ? this.host.hurtParam : 1);
 			this.host.nowLife = this.host.nowLife >=0 ? this.host.nowLife : 0;
 			this.host.roleFaceRight = msg.roleFace;
 		},
@@ -515,6 +515,10 @@ Laro.register('PD', function (La) {
 		this.roleFaceRight = 1;
 
 		this.animHash = {};
+		this.aroundAnimHash = {
+			'recover': this.getAnimation('role_recover'),
+			'defense': this.getAnimation('role_defense')
+		};
 		
 		this.fsm = new La.AppFSM(this, statesList);
 		
@@ -561,11 +565,27 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this.fsm.update(dt);
+			this.updateSkillAnim(dt);
 		},
 		draw: function (render) {
 			PD.currentRole == this.id && this.showCircle && this.drawCircle(render);
 			this.fsm.draw(render);
 			this.drawBloodBar(render);
+			this.drawSkillAnim(render);
+		},
+		// 技能效果
+		updateSkillAnim: function (dt) {
+			for (var a in this.aroundAnimHash) {
+				var anim = this.aroundAnimHash[a];
+				anim.update(dt);
+			}
+		},
+		drawSkillAnim: function (render) {
+			for (var a in this.aroundAnimHash) {
+				var anim = this.aroundAnimHash[a];
+				var oy = a == 'recover' ? 60 : 30;
+				anim.playing && anim.draw(render, this.x, this.y-oy, 0, 1, false);
+			}
 		},
 		drawBloodBar: function (render) {
             var ctx = render.context;
@@ -646,6 +666,12 @@ Laro.register('PD', function (La) {
 
 		this.animHash = {};
 		
+		this.aroundAnimList = [];
+		this.aroundAnimHash = {
+			'recover': this.getAnimation('role_recover'),
+			'defense': this.getAnimation('role_defense')
+		};
+		
 		this.fsm = new La.AppFSM(this, statesList2);
 		
 		// 生成一个 标识 人物范围的 sprite
@@ -691,12 +717,30 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this.fsm.update(dt);
+			this.updateSkillAnim(dt);
 		},
 		draw: function (render) {
 			PD.currentRole == this.id && this.showCircle && this.drawCircle(render);
 			this.fsm.draw(render);
 			this.drawBloodBar(render);
+			this.drawSkillAnim(render);
 		},
+		
+		// 技能效果
+		updateSkillAnim: function (dt) {
+			for (var a in this.aroundAnimHash) {
+				var anim = this.aroundAnimHash[a];
+				anim.update(dt);
+			}
+		},
+		drawSkillAnim: function (render) {
+			for (var a in this.aroundAnimHash) {
+				var anim = this.aroundAnimHash[a];
+				var oy = a == 'recover' ? 60 : 30;
+				anim.playing && anim.draw(render, this.x, this.y-oy, 0, 1, false);
+			}
+		},
+		
 		drawBloodBar: function (render) {
             var ctx = render.context;
             var x = this.x - this.bloodBarW / 2 ;
