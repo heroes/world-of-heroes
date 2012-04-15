@@ -20,7 +20,7 @@ Laro.register('PD', function (La) {
 			leave:function(){},
 			update:function (dt) {
                 this._t += dt;
-                this.anim.renderMirrored = (this.host.x < PD.$role.x);
+                this.anim.renderMirrored = (this.host.x < this.host.targetrole.x);
                 this.anim.update(dt);
 				for(var i=0;i<6;i++){
 					this.anim2[i].update(dt);
@@ -52,7 +52,7 @@ Laro.register('PD', function (La) {
             leave:function(){},
 			update:function (dt) {
                 this._t += dt;
-                this.anim.renderMirrored = (this.host.x < PD.$role.x);
+                this.anim.renderMirrored = (this.host.x < this.host.targetrole.x);
                 this.anim.update(dt);
             },
             draw:function (render) {
@@ -78,21 +78,28 @@ Laro.register('PD', function (La) {
             },
             update:function (dt) {
                 this._t += dt;
-                this.anim.renderMirrored = (this.host.x < PD.$role.x);
+                this.anim.renderMirrored = (this.host.x < this.host.targetrole.x);
                 this.anim.update(dt);
             },
             draw:function (render) {
                 this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
             },
             transition:function () {
-                var role = PD.$role;
+                
                 if (this.host.heath <= 0 || this.host.dead) {
                     this.host.setState(4)
                 }
-
+				//选择攻击距离自己最近的人物
+				var role = PD.$role;
                 this.dis = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
-
-                if (this.dis - this.host.r_attack <= 0) {
+				if(PD.$role2){
+					var role = PD.$role2;
+					this.dis2 = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
+                	this.host.targetrole=this.dis>=this.dis2?PD.$role:PD.$role2;
+					this.dis=this.dis>=this.dis2?this.dis:this.dis2;
+				}
+				
+				if (this.dis - this.host.r_attack <= 0) {
                     this.host.fsm.setState(2);
                 } else if (this.dis - this.host.r_run <= 0) {
                     this.host.fsm.setState(1);
@@ -117,11 +124,11 @@ Laro.register('PD', function (La) {
 
             },
             update:function (dt) {
-                this.anim.renderMirrored = (this.host.x < PD.$role.x);
+                this.anim.renderMirrored = (this.host.x < this.host.targetrole.x);
                 this.anim.update(dt);
                 this.speed = 100 * dt;
 
-                var role = PD.$role;
+                var role = this.host.targetrole;
                 this.dis = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
 
                 //var angle = Math.atan((PD.MOUSEDOWN_X - this.host.x)/(PD.MOUSEDOWN_Y - this.host.y));
@@ -165,14 +172,14 @@ Laro.register('PD', function (La) {
             },
             update:function (dt) {
                 this._t += dt;
-                this.anim.renderMirrored = (this.host.x < PD.$role.x);
+                this.anim.renderMirrored = (this.host.x < this.host.targetrole.x);
                 this.anim.update(dt);
 
                 if (this._t >= this.anim.getLength()) {
                     this.animationEnd = true;
-                    PD.$role.fsm.setState(2, {
+                    this.host.targetrole.fsm.setState(2, {
                         attack:15,
-                        roleFace:(this.host.x > PD.$role.x) // 为true时，人面向右
+                        roleFace:(this.host.x > this.host.targetrole.x) // 为true时，人面向右
                     });
                 }
             },
@@ -209,12 +216,12 @@ Laro.register('PD', function (La) {
             },
             update:function (dt) {
                 this._t += dt;
-                this.anim.renderMirrored = (this.host.x < PD.$role.x);
+                this.anim.renderMirrored = (this.host.x < this.host.targetrole.x);
                 this.anim.update(dt);
 
 
                 if (this._t >= this.anim.getLength()) {
-                    var role = PD.$role;
+                    var role = this.host.targetrole;
 
                     this.animationEnd = true;
                 }
@@ -348,6 +355,8 @@ Laro.register('PD', function (La) {
             this.r_run = 1000;
 
             this.animHash = {};
+			// 设定一开始的默认攻击人物为大侠
+			this.targetrole=PD.$role;
 
             this.fsm = new La.AppFSM(this, statesList);
             this.setState(0);
@@ -401,7 +410,7 @@ Laro.register('PD', function (La) {
                 ctx.lineTo(x+this.bloodBarW * this.heath / this.fullHeath ,y);
                 ctx.stroke();
                 ctx.closePath();
-
+				
                 ctx.restore();
             },
             getAnimation:function (id) {
