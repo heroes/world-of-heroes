@@ -9,9 +9,12 @@ Laro.register('PD', function (La) {
 			{
 			enter:function(msg, fromState){
 				this.anim = this.host.getAnimation('boss_skill1');
-				this.anim2 = this.host.getAnimation('light');
+				this.anim2 =new Array(10);
+				for(var i=0;i<10;i++){
+				 this.anim2[i] = this.host.getAnimation('light');
+				 this.anim2[i].play();
+				}
                 this.anim.play();
-				this.anim2.play();
                 this._t = 0;
 			},
 			leave:function(){},
@@ -19,11 +22,14 @@ Laro.register('PD', function (La) {
                 this._t += dt;
                 this.anim.renderMirrored = (this.host.x < PD.$role.x);
                 this.anim.update(dt);
-				this.anim2.update(dt);
+				for(var i=0;i<10;i++){
+					this.anim2[i].update(dt);
+				}
             },
             draw:function (render) {
                 this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
-				this.anim2.draw(render, this.host.x, this.host.y, 0, 1, null);
+				for(var i=0;i<10;i++){
+				this.anim2[i].draw(render, Math.random()*800, Math.random()*800, 0, 1, null);}
             },
             transition:function () {
                 if(this._t>5){this.host.setState(0);}
