@@ -594,7 +594,7 @@ Laro.register('PD.$states', function (La) {
                 PD.$boss.bloodBarOffset = -80;
 				//设置每隔六秒放一次大招
 				PD.$boss.setState(0);
-				setInterval('PD.$boss.setState(6)',6000);
+				setInterval('PD.$boss.setState(6)',12000);
 
                 this.createMonsters(3);
 
