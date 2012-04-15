@@ -137,6 +137,38 @@ g_data = {
 			],
 			filename: 'images/role/role2.png'
 		},
+		//人物2技能施放状态
+		role2_skill: {
+    		info: {
+        	"nbrOfFrames": 4,
+        	"framerate": 4,
+        	"pivotx": 80,
+        	"pivoty": 123,
+        	"events": []
+    	},
+    	"data": [
+        	[0,0,139,133,0,0,139,133],
+        	[140,0,279,133,140,0,279,133],
+        	[280,0,419,133,280,0,419,133],
+        	[420,0,559,133,420,0,559,133]        	
+    	],
+    	"filename": "images/role/role2_skill.png"
+		},
+		//人物2受攻击状态
+		role2_attacked: {
+    		info: {
+        	"nbrOfFrames": 1,
+        	"framerate": 4,
+        	"pivotx": 80,
+        	"pivoty": 123,
+        	"events": []
+    	},
+    	"data": [
+        	[560,0,699,133,560,0,699,133],
+    	],
+    	"filename": "images/role/role2_skill.png"
+		},
+		
 		skill_rain: {
 			info: {
 				"nbrOfFrames": 12,

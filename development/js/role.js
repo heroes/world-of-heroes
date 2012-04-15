@@ -224,7 +224,38 @@ Laro.register('PD', function (La) {
 			}
 		}
 	});
+	this.R2_Attacked = La.BaseState.extend(function () {
 	
+	}).methods({
+		enter: function (msg, fromState) {
+			this.anim = this.host.getAnimation('role2_attacked');
+			this.anim.play(false);
+			this.length = this.anim.getLength();
+			this._t = 0;
+			this.host.nowLife -= msg.attack * (typeof this.host.hurtParam == 'number' ? this.host.hurtParam : 1);
+			this.host.nowLife = this.host.nowLife >=0 ? this.host.nowLife : 0;
+			this.host.roleFaceRight = msg.roleFace;
+		},
+		leave: function () {
+		
+		},
+		update: function (dt) {
+			this._t += dt;
+			this.anim.renderMirrored = !this.host.roleFaceRight;
+			this.anim.update(dt);
+		},
+		draw: function (render) {
+			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
+		},
+		transition: function () {
+			if(!this.host.nowLife){
+				this.host.setState(4);
+			}
+			if (this._t > this.length) {
+				this.host.setState(0);
+			}
+		}
+	});
 	// 普通攻击
 	this.R_Attack = La.BaseState.extend(function () {
 	
@@ -495,7 +526,7 @@ Laro.register('PD', function (La) {
 	var statesList2 = [
 		0, this.R2_Wait,
 		1, this.R2_Run,
-		2, this.R_Attacked,
+		2, this.R2_Attacked,
 		3, this.R2_Attack,
 		4, this.R_Skill1,
 		5, this.R_Skill2,
@@ -650,7 +681,5 @@ Laro.register('PD', function (La) {
 		}
 	});
 	
-	this.Role2 =this.Role.extend(function(){this.fsm = new La.AppFSM(this, statesList2);}).methods({
-		
-	});
+	this.Role2 =this.Role.extend(function(){this.fsm = new La.AppFSM(this, statesList2);}).methods({});
 });

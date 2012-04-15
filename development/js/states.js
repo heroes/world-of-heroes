@@ -59,6 +59,7 @@ Laro.register('PD.$states', function (La) {
 					
 					'images/skillanim/role_recover.png',
 					'images/skillanim/role_defense.png',
+					'images/role/role2_skill.png',
 
                     //sound
                     'OGG/stage1_sound.ogg',
