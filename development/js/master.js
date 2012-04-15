@@ -179,8 +179,8 @@ Laro.register('PD', function (La) {
 
                 if (this._t >= this.anim.getLength()) {
                     this.animationEnd = true;
-					this.host.targetrole.nowLife -= 15 ;
-			this.host.targetrole.nowLife = this.host.targetrole.nowLife >=0 ? this.host.targetrole.nowLife : 0;
+					this.host.targetrole.nowLife -= this.host.attack||15 ;
+			        this.host.targetrole.nowLife = this.host.targetrole.nowLife >=0 ? this.host.targetrole.nowLife : 0;
 			this.host.targetrole.roleFaceRight = this.host.x > this.host.targetrole.x;
 					//普通攻击不进入晕眩状态
                     //this.host.targetrole.fsm.setState(2, {
