@@ -9,8 +9,8 @@ Laro.register('PD', function (La) {
 			{
 			enter:function(msg, fromState){
 				this.anim = this.host.getAnimation('boss_skill1');
-				this.anim2 =new Array(10);
-				for(var i=0;i<10;i++){
+				this.anim2 =new Array(6);
+				for(var i=0;i<6;i++){
 				 this.anim2[i] = this.host.getAnimation('light');
 				 this.anim2[i].play();
 				}
@@ -22,15 +22,15 @@ Laro.register('PD', function (La) {
                 this._t += dt;
                 this.anim.renderMirrored = (this.host.x < PD.$role.x);
                 this.anim.update(dt);
-				for(var i=0;i<10;i++){
+				for(var i=0;i<6;i++){
 					this.anim2[i].update(dt);
 				}
             },
             draw:function (render) {
-				for(var i=0;i<5;i++){
+				for(var i=0;i<3;i++){
 				this.anim2[i].draw(render, Math.random()*960, Math.random()*640, 0, 1, null);}
 				this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
-				for(var j=5;j<10;j++){
+				for(var j=3;j<6;j++){
 				this.anim2[j].draw(render, Math.random()*960, Math.random()*640, 0, 1, null);}
             },
             transition:function () {
@@ -63,41 +63,7 @@ Laro.register('PD', function (La) {
             }
 			}
 		);
-	// Boss等待状态
-	this.Boss_Wait=La.BaseState.extend(
-        function (){}).methods(
-			{
-			enter:function(msg, fromState){
-				this.anim = this.host.getAnimation('boss');
-                this.anim.play();
-                this._t = 0;
-			},
-			leave:function(){},
-			update:function (dt) {
-                this._t += dt;
-                this.anim.renderMirrored = (this.host.x < PD.$role.x);
-                this.anim.update(dt);
-            },
-            draw:function (render) {
-                this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
-            },
-            transition:function () {
-                var role = PD.$role;
-                if (this.host.heath <= 0 || this.host.dead) {
-                    this.host.setState(4)
-                }
-
-                this.dis = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
-                if (this.dis - this.host.r_attack <= 0) {
-                    this.host.fsm.setState(2);
-                } else if (this.dis - this.host.r_run <= 0) {
-                    this.host.fsm.setState(1);
-                } else {
-                    this.host.fsm.setState(0);
-                }
-            }
-		}
-		);
+	
     this.M_Wait = La.BaseState.extend(
         function () {
 
@@ -345,7 +311,7 @@ Laro.register('PD', function (La) {
     ];
 	
 	var statesList2=[
-		0, this.Boss_Wait,
+		0, this.M_Wait,
         1, this.M_Run,
         2, this.M_Attacked,
         3, this.M_Beattacked,
