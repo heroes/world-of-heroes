@@ -718,10 +718,12 @@ Laro.register('PD.$states', function (La) {
                 PD.$role2.setState(0);
 
                 PD.$boss = new PD.Boss(800, 400);
-                PD.$boss.id = 'boss';
-                PD.$boss.heath = PD.$boss.fullHeath = 2000;
+				PD.$boss.id='boss';
+				PD.$boss.heath = PD.$boss.fullHeath = 2000;
+				PD.$boss.attack= 80;
                 PD.$boss.bloodBarW = 200;
                 PD.$boss.bloodBarOffset = -80;
+				PD.$boss.setState(6);
 
                 this.createMonsters(3);
 
