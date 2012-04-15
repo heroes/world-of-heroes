@@ -328,6 +328,7 @@ Laro.register('PD', function (La) {
 			}
 		}
 	});
+	//人物2施展技能状态
 	// 技能1
 	this.R_Skill1 = La.BaseState.extend(function () {
 	
@@ -528,8 +529,8 @@ Laro.register('PD', function (La) {
 		1, this.R2_Run,
 		2, this.R2_Attacked,
 		3, this.R2_Attack,
-		4, this.R_Skill1,
-		5, this.R_Skill2,
+		4, this.R2_Wait,
+		5, this.R2_Wait,
 	]
 	this.Role = La.Class(function (id, x, y, s_id,width, height) {
 		this.id = id;

@@ -25,6 +25,14 @@ Laro.register('PD', function (La) {
 				for(var i=0;i<6;i++){
 					this.anim2[i].update(dt);
 				}
+				PD.$role.fsm.setState(2, {
+                      attack:10,
+                      roleFace:(this.host.x > PD.$role.x) // 为true时，人面向右
+                });
+				PD.$role2.fsm.setState(2, {
+                      attack:10,
+                      roleFace:(this.host.x > PD.$role2.x) // 为true时，人面向右
+                });
             },
             draw:function (render) {
 				for(var i=0;i<3;i++){
@@ -34,7 +42,7 @@ Laro.register('PD', function (La) {
 				this.anim2[j].draw(render, Math.random()*960, Math.random()*640, 0, 1, null);}
             },
             transition:function () {
-                if(this._t>5){this.host.setState(0);}
+                if(this._t>2){this.host.setState(0);}
             }
 			}
 		);
@@ -171,10 +179,11 @@ Laro.register('PD', function (La) {
 
                 if (this._t >= this.anim.getLength()) {
                     this.animationEnd = true;
-                    this.host.targetrole.fsm.setState(2, {
-                        attack:15,
-                        roleFace:(this.host.x > this.host.targetrole.x) // 为true时，人面向右
-                    });
+					//普通攻击不进入晕眩状态
+                    //this.host.targetrole.fsm.setState(2, {
+                        //attack:15,
+                        //roleFace:(this.host.x > this.host.targetrole.x) // 为true时，人面向右
+                    //});
                 }
             },
             draw:function (render) {
@@ -438,9 +447,13 @@ Laro.register('PD', function (La) {
                 return this.animHash[id];
             }
         });
-		//Boss的测试类
+		//Boss的类
 		this.Boss=this.Master.extend(function(){
 			this.fsm = new La.AppFSM(this, statesList2);
+			this._timer=[0,0];//用于记录技能CD的两个变量
+			//设置技能自动施放
+		}).methods({
+			
 		});
 		
 });

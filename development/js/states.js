@@ -110,7 +110,7 @@ Laro.register('PD.$states', function (La) {
                 if (this.done && this.doneT >= 0 && this._t > this.doneT + this.delayAfter) {
                     //this.host.setState(3);
                     //调试用，把前面的四格漫画屏蔽了
-                    this.host.setState(2);
+                    this.host.setState(5);
                 }
             }
         });
@@ -592,7 +592,9 @@ Laro.register('PD.$states', function (La) {
 				PD.$boss.attack= 80;
                 PD.$boss.bloodBarW = 200;
                 PD.$boss.bloodBarOffset = -80;
-				PD.$boss.setState(6);
+				//设置每隔六秒放一次大招
+				PD.$boss.setState(0);
+				setInterval('PD.$boss.setState(6)',6000);
 
                 this.createMonsters(3);
 
