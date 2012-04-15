@@ -27,9 +27,11 @@ Laro.register('PD', function (La) {
 				}
             },
             draw:function (render) {
-                this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
-				for(var i=0;i<10;i++){
-				this.anim2[i].draw(render, Math.random()*800, Math.random()*800, 0, 1, null);}
+				for(var i=0;i<5;i++){
+				this.anim2[i].draw(render, Math.random()*960, Math.random()*640, 0, 1, null);}
+				this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
+				for(var j=5;j<10;j++){
+				this.anim2[j].draw(render, Math.random()*960, Math.random()*640, 0, 1, null);}
             },
             transition:function () {
                 if(this._t>5){this.host.setState(0);}
