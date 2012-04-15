@@ -500,7 +500,7 @@ Laro.register('PD', function (La) {
 		4, this.R_Skill1,
 		5, this.R_Skill2,
 	]
-	this.Role = La.Class(function (id, x, y, width, height) {
+	this.Role = La.Class(function (id, x, y, s_id,width, height) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
@@ -545,13 +545,13 @@ Laro.register('PD', function (La) {
 			if (PD.mouseOnIcon) {return}
 			PD.roleMousedown = true;
 			PD.currentRole = id;
-			PD.curRole = 'one';
+			PD.curRole = s_id;
 			PD[PD.currentRole].showCircle = true;
 		});
 		this.checkSprite.addEventListener('touchstart', function (x, y) {
 			if (PD.mouseOnIcon) {return }
 			PD.roleMousedown = true;
-			PD.curRole = 'one';
+			PD.curRole = s_id;
 			PD.currentRole = id;
 			PD[PD.currentRole].showCircle = true;
 		});
@@ -650,5 +650,7 @@ Laro.register('PD', function (La) {
 		}
 	});
 	
-	this.Role2 =this.Role.extend(function(){this.fsm = new La.AppFSM(this, statesList2);});
+	this.Role2 =this.Role.extend(function(){this.fsm = new La.AppFSM(this, statesList2);}).methods({
+		
+	});
 });

@@ -109,7 +109,7 @@ Laro.register('PD.$states', function (La) {
                 if (this.done && this.doneT >= 0 && this._t > this.doneT + this.delayAfter) {
                     //this.host.setState(3);
                     //调试用，把前面的四格漫画屏蔽了
-                    this.host.setState(5);
+                    this.host.setState(2);
                 }
             }
         });
@@ -447,7 +447,7 @@ Laro.register('PD.$states', function (La) {
                 PD.textures['skill_rain'] = PD.$res.getImage('skill_rain');
                 PD.textures['boss'] = PD.$res.getImage('boss');
 
-                PD.$role = new PD.Role('$role', 100, 400);
+                PD.$role = new PD.Role('$role', 100, 400,'one');
                 PD.$role.setState(0);
 
                 this.createMonsters(2);
@@ -574,15 +574,15 @@ Laro.register('PD.$states', function (La) {
                 PD.textures['GO'] = PD.$res.getImage('GO');
                 PD.textures['skill_rain'] = PD.$res.getImage('skill_rain');
 
-                PD.$role = new PD.Role('$role', 200, 400);
-                PD.$role.setState(0);
-
                 PD.skillHash = {
 			        'one':['skill1', 'skill2', 'skill3'],
 			        'two':['skill4', 'skill5']
 			    };
+				
+				PD.$role = new PD.Role('$role', 200, 400,'one');
+                PD.$role.setState(0);
 
-                PD.$role2 = new PD.Role2('$role2', 500, 400);
+                PD.$role2 = new PD.Role2('$role2', 500, 400,'two');
                 PD.$role2.setState(0);
                 
 				PD.$boss = new PD.Boss(800, 400);
@@ -714,10 +714,10 @@ Laro.register('PD.$states', function (La) {
                 PD.textures['GO'] = PD.$res.getImage('GO');
                 PD.textures['skill_rain'] = PD.$res.getImage('skill_rain');
 
-                PD.$role = new PD.Role('$role', 200, 400);
+                PD.$role = new PD.Role('$role', 200, 400,'one');
                 PD.$role.setState(0);
 
-                PD.$role2 = new PD.Role2('$role2', 500, 400);
+                PD.$role2 = new PD.Role2('$role2', 500, 400,'two');
                 PD.$role2.setState(0);
 
                 PD.$boss = new PD.Boss(800, 400);
