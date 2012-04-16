@@ -1,6 +1,39 @@
 /* 人物Role */
 Laro.register('PD', function (La) {
+	//定义死亡状态	
+	this.R_Dead=La.BaseState.extend(function(){}).methods({
+		enter:function (msg, fromState) {
+                console.log('dead');
+                this._t = 0;
+				//从舞台移除当前人物
+                if (PD.$role.nowLife <= 0) {
+					//清除技能列表
+					for (var i = 0; i < PD.stage.children.length; i++) {
+                    var child = PD.stage.children[i];
+                    if (child.type == 'skillIcon') {
+                        PD.stage.children.splice(i, 1);
+                        i--;
+                    }
+                    }
+                    PD.$fsm.$.setState(4);
+                }
+            },
+            leave:function () {
 
+            },
+            update:function (dt) {
+               // this._t += dt;
+               // this.anim.update(dt);
+                //this.a = Math.max(1-this._t/2, 0);
+
+            },
+            draw:function (render) {
+               // this.anim.draw(render, this.host.x, this.host.y, 0, this.a, null);
+            },
+            transition:function () {
+
+            }
+	});
 	// 人物state Class
 	this.R_Wait = La.BaseState.extend(function () {
 	
@@ -20,8 +53,7 @@ Laro.register('PD', function (La) {
 			this.anim.update(dt);
 			if (this._t > this.length) {
 				this.checkNearMonster();
-			}
-			
+			}	
 		},
 		checkNearMonster: function () {
 			var hasNear = false;
@@ -217,9 +249,9 @@ Laro.register('PD', function (La) {
 		},
 		transition: function () {
 			if(!this.host.nowLife){
-				this.host.setState(4);
+				this.host.setState(7);
 			}
-			if (this._t > this.length) {
+			else if (this._t > this.length) {
 				this.host.setState(0);
 			}
 		}
@@ -249,7 +281,7 @@ Laro.register('PD', function (La) {
 		},
 		transition: function () {
 			if(!this.host.nowLife){
-				this.host.setState(4);
+				this.host.setState(7);
 			}
 			if (this._t > this.length) {
 				this.host.setState(0);
@@ -522,7 +554,8 @@ Laro.register('PD', function (La) {
 		3, this.R_Attack,
 		4, this.R_Skill1,
 		5, this.R_Skill2,
-		6, this.R_BigSkill
+		6, this.R_BigSkill,
+		7, this.R_Dead
 	]
 	var statesList2 = [
 		0, this.R2_Wait,
@@ -531,6 +564,8 @@ Laro.register('PD', function (La) {
 		3, this.R2_Attack,
 		4, this.R2_Wait,
 		5, this.R2_Wait,
+		6, this.R2_Wait,
+		7, this.R_Dead
 	]
 	this.Role = La.Class(function (id, x, y, s_id,width, height) {
 		this.id = id;

@@ -189,7 +189,8 @@ Laro.register('PD', function (La) {
 					this.host.targetrole.nowLife -= this.host.attack||15 ;
 			        this.host.targetrole.nowLife = this.host.targetrole.nowLife >=0 ? this.host.targetrole.nowLife : 0;
 			this.host.targetrole.roleFaceRight = this.host.x > this.host.targetrole.x;
-					
+			if(this.host.targetrole.nowLife<=0){
+			this.host.targetrole.fsm.setState(7);}		
 					//普通攻击不进入晕眩状态
                     //this.host.targetrole.fsm.setState(2, {
                         //attack:15,
@@ -256,8 +257,8 @@ Laro.register('PD', function (La) {
         }).methods({
             enter:function (msg, fromState) {
                 console.log('dead');
-                this.anim = this.host.getAnimation(this.host.id);
-                this.anim.play();
+                //this.anim = this.host.getAnimation(this.host.id);
+                //this.anim.play();
                 this._t = 0;
                 this.a = 1;
                 for (var i = 0; i < PD.$monsters.length; i++) {
@@ -277,13 +278,13 @@ Laro.register('PD', function (La) {
 
             },
             update:function (dt) {
-                this._t += dt;
-                this.anim.update(dt);
+               // this._t += dt;
+               // this.anim.update(dt);
                 //this.a = Math.max(1-this._t/2, 0);
 
             },
             draw:function (render) {
-                this.anim.draw(render, this.host.x, this.host.y, 0, this.a, null);
+               // this.anim.draw(render, this.host.x, this.host.y, 0, this.a, null);
             },
             transition:function () {
                 console.log(PD.$monsters)
