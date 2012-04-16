@@ -189,6 +189,7 @@ Laro.register('PD', function (La) {
 					this.host.targetrole.nowLife -= this.host.attack||15 ;
 			        this.host.targetrole.nowLife = this.host.targetrole.nowLife >=0 ? this.host.targetrole.nowLife : 0;
 			this.host.targetrole.roleFaceRight = this.host.x > this.host.targetrole.x;
+					
 					//普通攻击不进入晕眩状态
                     //this.host.targetrole.fsm.setState(2, {
                         //attack:15,
@@ -269,7 +270,7 @@ Laro.register('PD', function (La) {
                 if (PD.$monsters.length == 0) {
                     //this.showGo();
                     //this.host.setState(5);
-                    PD.$fsm.$.setState(6)
+                    PD.$fsm.$.setState(6);
                 }
             },
             leave:function () {
@@ -462,8 +463,6 @@ Laro.register('PD', function (La) {
 		this.Boss=this.Master.extend(function(){
 			this.fsm = new La.AppFSM(this, statesList2);
             this.speed = 0.5;
-			this._timer=[0,0];//用于记录技能CD的两个变量
-			//设置技能自动施放
 		}).methods({
 			
 		});
