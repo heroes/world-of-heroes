@@ -125,7 +125,7 @@ Laro.register('PD', function (La) {
                 this.anim = this.host.getAnimation(this.host.id);
                 this.anim.play();
                 this._t = 0;
-                this.speed = 1;
+                this.speed = this.host.speed;
                 this.dis = 0;
             },
             leave:function () {
@@ -170,7 +170,7 @@ Laro.register('PD', function (La) {
                 this.anim = this.host.getAnimation(this.host.id);
                 this.anim.play();
                 this._t = 0;
-                this.speed = 1;
+                this.speed = this.host.speed;
                 this.dis = 0;
                 this.animationEnd = false;
 
@@ -214,7 +214,7 @@ Laro.register('PD', function (La) {
                 this.anim = this.host.getAnimation(this.host.id);
                 this.anim.play();
                 this._t = 0;
-                this.speed = 1;
+                this.speed = this.host.speed;
                 this.dis = 0;
                 this.animationEnd = false;
                 this.msg = msg;
@@ -355,6 +355,7 @@ Laro.register('PD', function (La) {
             this.height = height || 110;
             this.heath = this.fullHeath = 500;
             this.dead = false;
+            this.speed = 1;
 
             this.attack = 15;
 
@@ -459,6 +460,7 @@ Laro.register('PD', function (La) {
 		//Boss的类
 		this.Boss=this.Master.extend(function(){
 			this.fsm = new La.AppFSM(this, statesList2);
+            this.speed = 0.5;
 			this._timer=[0,0];//用于记录技能CD的两个变量
 			//设置技能自动施放
 		}).methods({
