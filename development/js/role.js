@@ -113,7 +113,7 @@ Laro.register('PD', function (La) {
 			this.anim = this.host.getAnimation('role_run');
 			this.anim.play();
 			this._t = 0;
-			this.speed = 5;
+			this.speed = 10;
 			this.dis = 0;
 		},
 		leave: function () {

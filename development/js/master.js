@@ -103,6 +103,7 @@ Laro.register('PD', function (La) {
                 this.dis = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
 				//假如人物2存在
 				if(PD.$role2){
+				var role = PD.$role2;	
 				this.dis2 = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
 					this.dis=this.dis>=this.dis2?this.dis2:this.dis;
 					this.host.targetrole=this.dis>=this.dis2?PD.$role2:PD.$role;
