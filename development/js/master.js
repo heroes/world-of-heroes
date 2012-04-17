@@ -1,7 +1,38 @@
 /* 怪物类 */
 Laro.register('PD', function (La) {
-
-    //Boss大招1
+	//Boss第二形态
+    this.Boss2_Skill_Extracting=La.BaseState.extend(function(){}).methods(
+		{
+			enter:function (msg, fromState) {
+                this.anim = this.host.getAnimation('boss_2_skill');
+                this.anim.play();
+                this._t = 0;
+            },
+            leave:function(){},
+			update:function (dt) {
+                this._t += dt;
+                this.anim.renderMirrored = (this.host.x < this.host.targetrole.x);
+                this.anim.update(dt);
+            },
+            draw:function (render) {
+                this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
+            },
+            transition:function () {
+                if(this._t>1){
+					PD.$role.fsm.setState(2, {
+                      attack:300,
+                      roleFace:(this.host.x > PD.$role.x) // 为true时，人面向右
+                });
+				PD.$role2.fsm.setState(2, {
+                      attack:300,
+                      roleFace:(this.host.x > PD.$role2.x) // 为true时，人面向右
+                });
+				this.host.setState(0);
+				}
+            }
+	}
+	);
+	//Boss大招1
 	this.Boss_Skill_Extracting=La.BaseState.extend(
         function () {
 
@@ -26,11 +57,11 @@ Laro.register('PD', function (La) {
 					this.anim2[i].update(dt);
 				}
 				PD.$role.fsm.setState(2, {
-                      attack:10,
+                      attack:5,
                       roleFace:(this.host.x > PD.$role.x) // 为true时，人面向右
                 });
 				PD.$role2.fsm.setState(2, {
-                      attack:10,
+                      attack:5,
                       roleFace:(this.host.x > PD.$role2.x) // 为true时，人面向右
                 });
             },
@@ -67,7 +98,17 @@ Laro.register('PD', function (La) {
                 this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
             },
             transition:function () {
-                if(this._t>5){this.host.setState(0);}
+                if(this._t>1){
+					PD.$role.fsm.setState(2, {
+                      attack:200,
+                      roleFace:(this.host.x > PD.$role.x) // 为true时，人面向右
+                });
+				PD.$role2.fsm.setState(2, {
+                      attack:200,
+                      roleFace:(this.host.x > PD.$role2.x) // 为true时，人面向右
+                });
+				this.host.setState(0);
+				}
             }
 			}
 		);
@@ -101,8 +142,8 @@ Laro.register('PD', function (La) {
 				var role = PD.$role;
 				//;
                 this.dis = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
-				//假如人物2存在
-				if(PD.$role2){
+				//假如人物2存在并且活着
+				if(PD.$role2&&PD.$role2.nowLife>=0){
 				var role = PD.$role2;	
 				this.dis2 = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
 					this.dis=this.dis>=this.dis2?this.dis2:this.dis;
@@ -342,6 +383,17 @@ Laro.register('PD', function (La) {
 		6, this.Boss_Skill_Extracting,
 		7, this.Boss_Skill2_Extracting
 	];
+	//BOSS第二形态的状态列表
+	var statesList3=[
+		0, this.M_Wait,
+        1, this.M_Run,
+        2, this.M_Attacked,
+        3, this.M_Beattacked,
+        4, this.M_Dead,
+        5, this.GoNext,
+		6, this.Boss2_Skill_Extracting,
+		7, this.Boss_Skill_Extracting
+	];
     //怪物的随机种类
     var masterCat = 0;
     var getMasterCatId = function(){
@@ -464,8 +516,7 @@ Laro.register('PD', function (La) {
 		this.Boss=this.Master.extend(function(){
 			this.fsm = new La.AppFSM(this, statesList2);
             this.speed = 0.5;
-		}).methods({
-			
 		});
 		
+		this.Boss2=this.Boss.extend(function(){this.fsm = new La.AppFSM(this, statesList3);});
 });

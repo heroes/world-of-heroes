@@ -5,7 +5,8 @@ Laro.register('PD', function (La) {
 		enter:function (msg, fromState) {
                 console.log('dead');
                 this._t = 0;
-				//从舞台移除当前人物
+				
+				//大侠死亡则游戏结束
                 if (PD.$role.nowLife <= 0) {
 					//清除技能列表
 					for (var i = 0; i < PD.stage.children.length; i++) {

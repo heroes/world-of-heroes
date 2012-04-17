@@ -45,7 +45,59 @@ g_data = {
 			],
 			filename: 'images/pie.png'
 		},
-		
+		//妖女第一形态被打
+		//妖女第二形态放技能
+		"boss_2_skill": {
+        "info": {
+        "nbrOfFrames": 2,
+        "type": "animation",
+        "framerate": 4,
+        "pivotx": 125,
+        "pivoty": 92,
+        "events": []
+        },
+       "data": [
+        [753,0,1003,183,753,0,1003,183],
+        [1004,0,1254,183,1004,0,1254,183],
+        //[1255,0,1505,183,1255,0,1505,183]
+        ],
+       "filename": "images/monster/boss_2.png"
+},
+		//妖女第二形态挨打
+		"boss_2_attacked": {
+        "info": {
+        "nbrOfFrames": 2,
+        "type": "animation",
+        "framerate": 4,
+        "pivotx": 125,
+        "pivoty": 92,
+        "events": []
+        },
+       "data": [
+        [1255,0,1505,183,1255,0,1505,183],
+		[1255,0,1505,183,1255,0,1505,183]
+        ],
+       "filename": "images/monster/boss_2.png"
+},
+		"boss_2": {
+        "info": {
+        "nbrOfFrames": 3,
+        "type": "animation",
+        "framerate": 4,
+        "pivotx": 125,
+        "pivoty": 92,
+        "events": []
+        },
+       "data": [
+        [0,0,250,183,0,0,250,183],
+        [251,0,501,183,251,0,501,183],
+        [502,0,752,183,502,0,752,183],
+        //[753,0,1003,183,753,0,1003,183],
+        //[1004,0,1254,183,1004,0,1254,183],
+        //[1255,0,1505,183,1255,0,1505,183]
+        ],
+       "filename": "images/monster/boss_2.png"
+},
 		// 人物周围的法术效果
 		"role_recover": {
 			"info": {

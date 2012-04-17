@@ -56,6 +56,7 @@ Laro.register('PD.$states', function (La) {
                     'images/monster/boss_left.png',
 					'images/monster/boss_lightning.png',
 					'images/monster/boss_skill1.png',
+					'images/monster/boss_2.png',
 					
 					'images/skillanim/role_recover.png',
 					'images/skillanim/role_defense.png',
@@ -108,9 +109,10 @@ Laro.register('PD.$states', function (La) {
             },
             transition:function () {
                 if (this.done && this.doneT >= 0 && this._t > this.doneT + this.delayAfter) {
-                    //this.host.setState(3);
-                    //调试用，把前面的四格漫画屏蔽了
-                    this.host.setState(5);
+                    this.host.setState(3);
+                    
+					//调试用，把前面的四格漫画屏蔽了
+                    //this.host.setState(9);
                 }
             }
         });
@@ -595,9 +597,8 @@ Laro.register('PD.$states', function (La) {
 				
 				//设置每隔十二秒放一次大招
 				PD.$boss.setState(0);
-				setInterval('PD.$boss.setState(6)',12000);
 
-                this.createMonsters(3);
+                //this.createMonsters(3);
 
                 // add skill icon
                 PD.curRole = 'one';
@@ -639,7 +640,17 @@ Laro.register('PD.$states', function (La) {
 
             },
             update:function (dt) {
-                this._t += 0;
+                this._t += dt;
+				if(this._t>6){
+					if(Math.random()*2>1){
+						PD.$boss.setState(6);
+					}
+					else
+					{
+						PD.$boss.setState(7);
+					}
+				this._t=0;	
+				}
                 PD.$role.update(dt);
                 PD.$role2.update(dt);
                 PD.$boss.update(dt);
@@ -703,6 +714,10 @@ Laro.register('PD.$states', function (La) {
             enter:function (msg, fromState) {
                 next_tag = 8;//将下一场景设置为漫画三
                 this._t = 0;
+				PD.skillHash = {
+			        'one':['skill1', 'skill2', 'skill3'],
+			        'two':['skill4', 'skill5']
+			    };
                 //get resources 放在全局 PD 里，以便其他类调用
                 PD.textures['map1'] = PD.$res.getImage('map1');
                 PD.textures['map2'] = PD.$res.getImage('map2');
@@ -724,9 +739,9 @@ Laro.register('PD.$states', function (La) {
                 PD.$role2 = new PD.Role2('$role2', 500, 400,'two');
                 PD.$role2.setState(0);
 
-                PD.$boss = new PD.Boss(800, 400);
-				PD.$boss.id='boss';
-				PD.$boss.heath = PD.$boss.fullHeath = 2000;
+                PD.$boss = new PD.Boss2(800, 400);
+				PD.$boss.id='boss_2';
+				PD.$boss.heath = PD.$boss.fullHeath = 3000;
 				PD.$boss.attack= 80;
                 PD.$boss.bloodBarW = 200;
                 PD.$boss.bloodBarOffset = -80;
