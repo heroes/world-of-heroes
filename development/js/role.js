@@ -67,7 +67,7 @@ Laro.register('PD', function (La) {
 				var dis = Math.sqrt(Math.pow(this.host.x - mo.x, 2) + Math.pow(this.host.y - mo.y, 2));
 				if (dis < 100) {
 					mo.setState(3, {
-						attack: 30
+						attack: 20
 					});
 					//mo.x += ((this.host.x > mo.x) ? -40 : 40);
 					hasNear = true;

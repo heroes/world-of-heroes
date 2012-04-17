@@ -98,12 +98,8 @@ Laro.register('PD', function (La) {
                 this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
             },
             transition:function () {
-                if(this._t>1){
-					PD.$role.fsm.setState(2, {
-                      attack:200,
-                      roleFace:(this.host.x > PD.$role.x) // 为true时，人面向右
-                });
-				PD.$role2.fsm.setState(2, {
+                if(this._t>2){
+				this.host.targetrole.fsm.setState(2, {
                       attack:200,
                       roleFace:(this.host.x > PD.$role2.x) // 为true时，人面向右
                 });

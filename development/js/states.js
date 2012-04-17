@@ -109,10 +109,10 @@ Laro.register('PD.$states', function (La) {
             },
             transition:function () {
                 if (this.done && this.doneT >= 0 && this._t > this.doneT + this.delayAfter) {
-                    this.host.setState(3);
+                    //this.host.setState(3);
                     
 					//调试用，把前面的四格漫画屏蔽了
-                    //this.host.setState(9);
+                    this.host.setState(5);
                 }
             }
         });
@@ -595,10 +595,9 @@ Laro.register('PD.$states', function (La) {
                 PD.$boss.bloodBarW = 200;
                 PD.$boss.bloodBarOffset = -80;
 				
-				//设置每隔十二秒放一次大招
 				PD.$boss.setState(0);
 
-                //this.createMonsters(3);
+                this.createMonsters(0);
 
                 // add skill icon
                 PD.curRole = 'one';
