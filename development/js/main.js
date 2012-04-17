@@ -9,6 +9,7 @@ Laro.register('PD', function (La) {
         'two':['skill3', 'skill4', 'skill5']
     };
     this.curRole = 'one';
+    this.$roles  = [];
 
     this.render = null;
     this.getUid = function () {
@@ -34,24 +35,24 @@ Laro.register('PD', function (La) {
         this.currentRole = '';
 
         this.stage.addEventListener('mouseup', function (x, y) {
-            if ((PD.$role && PD.$role.fsm.currentState != 1)
-                || (PD.$role && PD.$role.fsm.currentState == 1 && PD.roleMousedown)) {
+            if ((PD.$roles[PD.currentRole] && PD.$roles[PD.currentRole].fsm.currentState != 1)
+                || (PD.$roles[PD.currentRole] && PD.$roles[PD.currentRole].fsm.currentState == 1 && PD.roleMousedown)) {
                 if (PD.roleMousedown) {
-                    PD[PD.currentRole].startMove = true;
-                    PD[PD.currentRole].pieX = x;
-                    PD[PD.currentRole].pieY = y;
+                    PD.$roles[PD.currentRole].startMove = true;
+                    PD.$roles[PD.currentRole].pieX = x;
+                    PD.$roles[PD.currentRole].pieY = y;
                 }
             }
 
             PD.roleMousedown = false;
         });
         this.stage.addEventListener('touchend', function (x, y) {
-            if ((PD.$role && PD.$role.fsm.currentState != 1)
-                || (PD.$role && PD.$role.fsm.currentState == 1 && PD.roleMousedown)) {
+            if ((PD.$roles[PD.currentRole] && PD.$roles[PD.currentRole].fsm.currentState != 1)
+                || (PD.$roles[PD.currentRole] && PD.$roles[PD.currentRole].fsm.currentState == 1 && PD.roleMousedown)) {
                 if (PD.roleMousedown) {
-                    PD[PD.currentRole].startMove = true;
-                    PD[PD.currentRole].pieX = x;
-                    PD[PD.currentRole].pieY = y;
+                    PD.$roles[PD.currentRole].startMove = true;
+                    PD.$roles[PD.currentRole].pieX = x;
+                    PD.$roles[PD.currentRole].pieY = y;
                 }
             }
             PD.roleMousedown = false;
@@ -178,11 +179,11 @@ Laro.register('PD', function (La) {
         if (name == 'star') {
             cvs.style['display'] = 'none';
             PD.$loop.$.resume();
-            PD.$role.setState(6,'s');
+            PD.$roles[0].setState(6,'s');
         } if(name == 'v' ){
             cvs.style['display'] = 'none';
             PD.$loop.$.resume();
-            PD.$role.setState(6,'v');
+            PD.$roles[0].setState(6,'v');
         }else {
             // 技能释放失败
             cvs.style['display'] = 'none';
@@ -198,11 +199,11 @@ Laro.register('PD', function (La) {
 Laro.register('PD.$skill', function (La) {
 
     this['skill1'] = function () {
-        PD.$role && PD.$role.setState(4)
+        PD.$roles[0] && PD.$roles[0].setState(4)
     }
 
     this['skill2'] = function () {
-        PD.$role && PD.$role.setState(5)
+        PD.$roles[0] && PD.$roles[0].setState(5)
     }
 
     this['skill3'] = function () {
@@ -214,26 +215,25 @@ Laro.register('PD.$skill', function (La) {
 	// 大小姐技能
 	this['skill4'] = function () {
 		console.log('skill4');
-		PD.$role.nowLife = Math.min(PD.$role.nowLife + 200, PD.$role.life);
-		PD.$role2.nowLife = Math.min(PD.$role2.nowLife + 200, PD.$role2.life);
+        for(var i = 0,role;role = PD.$roles[i++];){
+            role.nowLife = Math.min(role.nowLife + 200, role.life);    
+            role.aroundAnimHash['recover'].play(false);
+        }
+    }
 		
-		PD.$role.aroundAnimHash['recover'].play(false);
-		PD.$role2.aroundAnimHash['recover'].play(false);
-	};
 	this['skill5'] = function () {
 		console.log('skill5');
-		PD.$role.aroundAnimHash['defense'].play();
-		PD.$role2.aroundAnimHash['defense'].play();
-		PD.$role.hurtParam = 0.5;
-		PD.$role2.hurtParam = 0.5;
-		
+		for(var i = 0,role;role = PD.$roles[i++];){
+            role.aroundAnimHash['defense'].play();    
+            role.hurtParam = 0.5;
+        }
 		clearTimeout(this.defenseTimer);
 		this.defenseTimer = setTimeout(function () {
-			PD.$role.aroundAnimHash['defense'].stop();
-			PD.$role2.aroundAnimHash['defense'].stop();
 			
-			PD.$role.hurtParam = 1;
-			PD.$role2.hurtParam = 1;
+            for(var i = 0,role;role = PD.$roles[i++];){
+                role.aroundAnimHash['defense'].stop();
+                role.hurtParam = 1;
+            }
 		}, 5000)
 	};
 });

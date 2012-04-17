@@ -450,8 +450,8 @@ Laro.register('PD.$states', function (La) {
                 PD.textures['skill_rain'] = PD.$res.getImage('skill_rain');
                 PD.textures['boss'] = PD.$res.getImage('boss');
 
-                PD.$role = new PD.Role('$role', 100, 400,'one');
-                PD.$role.setState(0);
+                PD.$roles[0] = new PD.Role('$role', 100, 400,'one',0);
+                PD.$roles[0].setState(0);
 
                 this.createMonsters(2);
 
@@ -503,7 +503,7 @@ Laro.register('PD.$states', function (La) {
             },
             update:function (dt) {
                 this._t += 0;
-                PD.$role.update(dt);
+                PD.$roles[0].update(dt);
                 this.updateMonsters(dt);
             },
             draw:function (render) {
@@ -513,14 +513,14 @@ Laro.register('PD.$states', function (La) {
                 render.drawImage(PD.textures['map1'], cx, cy, 0, 1, 1, false, false);
 
                 // 画控制人物的圆饼
-                PD.currentRole && PD[PD.currentRole].showCircle && this.drawPie(render);
-                PD.$role.draw(render);
+                PD.currentRole != 'undefined' && PD.$roles[PD.currentRole].showCircle && this.drawPie(render);
+                PD.$roles[0].draw(render);
                 this.drawMonsters(render);
 
             },
             drawPie:function (render) {
-                var x = PD.roleMousedown ? PD.MOUSEDOWN_X : PD[PD.currentRole].pieX;
-                var y = PD.roleMousedown ? PD.MOUSEDOWN_Y : PD[PD.currentRole].pieY;
+                var x = PD.roleMousedown ? PD.MOUSEDOWN_X : PD.$roles[PD.currentRole].pieX;
+                var y = PD.roleMousedown ? PD.MOUSEDOWN_Y : PD.$roles[PD.currentRole].pieY;
                 if (y < 170) {
                     y = 170
                 }
@@ -534,7 +534,7 @@ Laro.register('PD.$states', function (La) {
                 ctx.shadowOffsetY = 0;
                 ctx.shadowBlur = 8;
                 ctx.beginPath();
-                ctx.moveTo(PD[PD.currentRole].x, PD[PD.currentRole].y);
+                ctx.moveTo(PD.$roles[PD.currentRole].x, PD.$roles[PD.currentRole].y);
                 ctx.lineTo(x, y);
                 ctx.closePath();
                 ctx.strokeStyle = '#fff';
@@ -543,10 +543,10 @@ Laro.register('PD.$states', function (La) {
                 ctx.restore();
 
                 // 判断 左右
-                if (x >= PD.$role.x) {
-                    PD[PD.currentRole].roleFaceRight = 1;
+                if (x >= PD.$roles[0].x) {
+                    PD.$roles[PD.currentRole].roleFaceRight = 1;
                 } else {
-                    PD[PD.currentRole].roleFaceRight = 0;
+                    PD.$roles[PD.currentRole].roleFaceRight = 0;
                 }
             },
             transition:function () {
@@ -582,11 +582,11 @@ Laro.register('PD.$states', function (La) {
 			        'two':['skill4', 'skill5']
 			    };
 				
-				PD.$role = new PD.Role('$role', 200, 400,'one');
-                PD.$role.setState(0);
+				PD.$roles[0] = new PD.Role('$role', 200, 400,'one',0);
+                PD.$roles[0].setState(0);
 
-                PD.$role2 = new PD.Role2('$role2', 500, 400,'two');
-                PD.$role2.setState(0);
+                PD.$roles[1] = new PD.Role2('$role2', 500, 400,'two',1);
+                PD.$roles[1].setState(0);
                 
 				PD.$boss = new PD.Boss(800, 400);
 				PD.$boss.id='boss';
@@ -650,8 +650,9 @@ Laro.register('PD.$states', function (La) {
 					}
 				this._t=0;	
 				}
-                PD.$role.update(dt);
-                PD.$role2.update(dt);
+                for(var i = 0,role;role = PD.$roles[i++];){
+                   role.update(dt);
+                }
                 PD.$boss.update(dt);
                 this.updateMonsters(dt);
             },
@@ -662,17 +663,18 @@ Laro.register('PD.$states', function (La) {
                 render.drawImage(PD.textures['map2'], cx, cy, 0, 1, 1, false, false);
 
                 // 画控制人物的圆饼
-                PD.currentRole && PD[PD.currentRole].showCircle && this.drawPie(render);
+                PD.currentRole && PD.$roles[PD.currentRole].showCircle && this.drawPie(render);
 
                 PD.$boss.draw(render);
-                PD.$role.draw(render);
-                PD.$role2.draw(render);
+                for(var i = 0,role;role = PD.$roles[i++];){
+                   role.draw(render);
+                }
                 this.drawMonsters(render);
 
             },
             drawPie:function (render) {
-                var x = PD.roleMousedown ? PD.MOUSEDOWN_X : PD[PD.currentRole].pieX;
-                var y = PD.roleMousedown ? PD.MOUSEDOWN_Y : PD[PD.currentRole].pieY;
+                var x = PD.roleMousedown ? PD.MOUSEDOWN_X : PD.$roles[PD.currentRole].pieX;
+                var y = PD.roleMousedown ? PD.MOUSEDOWN_Y : PD.$roles[PD.currentRole].pieY;
                 if (y < 170) {
                     y = 170
                 }
@@ -686,7 +688,7 @@ Laro.register('PD.$states', function (La) {
                 ctx.shadowOffsetY = 0;
                 ctx.shadowBlur = 8;
                 ctx.beginPath();
-                ctx.moveTo(PD[PD.currentRole].x, PD[PD.currentRole].y);
+                ctx.moveTo(PD.$roles[PD.currentRole].x, PD.$roles[PD.currentRole].y);
                 ctx.lineTo(x, y);
                 ctx.closePath();
                 ctx.strokeStyle = '#fff';
@@ -695,10 +697,10 @@ Laro.register('PD.$states', function (La) {
                 ctx.restore();
 
                 // 判断 左右
-                if (x >= PD[PD.currentRole].x) {
-                    PD[PD.currentRole].roleFaceRight = 1;
+                if (x >= PD.$roles[PD.currentRole].x) {
+                    PD.$roles[PD.currentRole].roleFaceRight = 1;
                 } else {
-                    PD[PD.currentRole].roleFaceRight = 0;
+                    PD.$roles[PD.currentRole].roleFaceRight = 0;
                 }
             },
             transition:function () {
@@ -732,11 +734,11 @@ Laro.register('PD.$states', function (La) {
                 PD.textures['GO'] = PD.$res.getImage('GO');
                 PD.textures['skill_rain'] = PD.$res.getImage('skill_rain');
 
-                PD.$role = new PD.Role('$role', 200, 400,'one');
-                PD.$role.setState(0);
+                PD.$roles[0] = new PD.Role('$role', 200, 400,'one',0);
+                PD.$roles[0].setState(0);
 
-                PD.$role2 = new PD.Role2('$role2', 500, 400,'two');
-                PD.$role2.setState(0);
+                PD.$roles[1] = new PD.Role2('$role2', 500, 400,'two',1);
+                PD.$roles[1].setState(0);
 
                 PD.$boss = new PD.Boss2(800, 400);
 				PD.$boss.id='boss_2';
@@ -789,8 +791,9 @@ Laro.register('PD.$states', function (La) {
             },
             update:function (dt) {
                 this._t += 0;
-                PD.$role.update(dt);
-                PD.$role2.update(dt);
+                for(var i = 0,role;role = PD.$roles[i++];){
+                   role.update(dt);
+                }
                 PD.$boss.update(dt);
                 this.updateMonsters(dt);
             },
@@ -801,17 +804,18 @@ Laro.register('PD.$states', function (La) {
                 render.drawImage(PD.textures['map3'], cx, cy, 0, 1, 1, false, false);
 
                 // 画控制人物的圆饼
-                PD.currentRole && PD[PD.currentRole].showCircle && this.drawPie(render);
+                PD.currentRole && PD.$roles[PD.currentRole].showCircle && this.drawPie(render);
 
                 PD.$boss.draw(render);
-                PD.$role.draw(render);
-                PD.$role2.draw(render);
+                for(var i = 0,role;role = PD.$roles[i++];){
+                   role.draw(render);
+                }
                 this.drawMonsters(render);
 
             },
             drawPie:function (render) {
-                var x = PD.roleMousedown ? PD.MOUSEDOWN_X : PD[PD.currentRole].pieX;
-                var y = PD.roleMousedown ? PD.MOUSEDOWN_Y : PD[PD.currentRole].pieY;
+                var x = PD.roleMousedown ? PD.MOUSEDOWN_X : PD.$roles[PD.currentRole].pieX;
+                var y = PD.roleMousedown ? PD.MOUSEDOWN_Y : PD.$roles[PD.currentRole].pieY;
                 if (y < 170) {
                     y = 170
                 }
@@ -825,7 +829,7 @@ Laro.register('PD.$states', function (La) {
                 ctx.shadowOffsetX = 0;
                 ctx.shadowOffsetY = 0;
                 ctx.shadowBlur = 8;
-                ctx.moveTo(PD[PD.currentRole].x, PD[PD.currentRole].y);
+                ctx.moveTo(PD.$roles[PD.currentRole].x, PD.$roles[PD.currentRole].y);
                 ctx.lineTo(x, y);
                 ctx.closePath();
                 ctx.strokeStyle = '#fff';
@@ -834,10 +838,10 @@ Laro.register('PD.$states', function (La) {
                 ctx.restore();
 
                 // 判断 左右
-                if (x >= PD[PD.currentRole].x) {
-                    PD[PD.currentRole].roleFaceRight = 1;
+                if (x >= PD.$roles[PD.currentRole].x) {
+                    PD.$roles[PD.currentRole].roleFaceRight = 1;
                 } else {
-                    PD[PD.currentRole].roleFaceRight = 0;
+                    PD.$roles[PD.currentRole].roleFaceRight = 0;
                 }
             },
             transition:function () {

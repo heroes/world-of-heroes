@@ -19,15 +19,13 @@ Laro.register('PD', function (La) {
             },
             transition:function () {
                 if(this._t>1){
-					PD.$role.fsm.setState(2, {
-                      attack:300,
-                      roleFace:(this.host.x > PD.$role.x) // 为true时，人面向右
-                });
-				PD.$role2.fsm.setState(2, {
-                      attack:300,
-                      roleFace:(this.host.x > PD.$role2.x) // 为true时，人面向右
-                });
-				this.host.setState(0);
+                    for(var i = 0,role;role = PD.$roles[i++];){
+                       role.fsm.setState(2, {
+                              attack:300,
+                              roleFace:(this.host.x > role.x) // 为true时，人面向右
+                        });
+                    }
+    				this.host.setState(0);
 				}
             }
 	}
@@ -56,14 +54,13 @@ Laro.register('PD', function (La) {
 				for(var i=0;i<6;i++){
 					this.anim2[i].update(dt);
 				}
-				PD.$role.fsm.setState(2, {
-                      attack:5,
-                      roleFace:(this.host.x > PD.$role.x) // 为true时，人面向右
-                });
-				PD.$role2.fsm.setState(2, {
-                      attack:5,
-                      roleFace:(this.host.x > PD.$role2.x) // 为true时，人面向右
-                });
+                for(var i = 0,role;role = PD.$roles[i++];){
+                   role.fsm.setState(2, {
+                          attack:5,
+                          roleFace:(this.host.x > role.x) // 为true时，人面向右
+                    });
+                }
+
             },
             draw:function (render) {
 				for(var i=0;i<3;i++){
@@ -101,7 +98,7 @@ Laro.register('PD', function (La) {
                 if(this._t>2){
 				this.host.targetrole.fsm.setState(2, {
                       attack:200,
-                      roleFace:(this.host.x > PD.$role2.x) // 为true时，人面向右
+                      roleFace:(this.host.x > this.host.targetrole.x) // 为true时，人面向右
                 });
 				this.host.setState(0);
 				}
@@ -137,14 +134,15 @@ Laro.register('PD', function (La) {
 				//选择攻击距离自己最近的人物
 				var role = PD.$role;
 				//;
-                this.dis = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
-				//假如人物2存在并且活着
-				if(PD.$role2&&PD.$role2.nowLife>=0){
-				var role = PD.$role2;	
-				this.dis2 = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
-					this.dis=this.dis>=this.dis2?this.dis2:this.dis;
-					this.host.targetrole=this.dis>=this.dis2?PD.$role2:PD.$role;
-				}
+                var dis = 999;
+                for(var i = 0,role;role = PD.$roles[i++];){
+                    this.dis = Math.sqrt(Math.pow(role.x - this.host.x, 2) + Math.pow(role.y - this.host.y, 2));
+                    if(this.dis < dis){
+                        dis = this.dis;
+                        this.host.targetrole = role;
+                    }
+                }
+
 				if (this.dis - this.host.r_attack <= 0) {
                     this.host.fsm.setState(2);
                 } else if (this.dis - this.host.r_run <= 0) {
@@ -420,7 +418,7 @@ Laro.register('PD', function (La) {
 
             this.animHash = {};
 			// 设定一开始的默认攻击人物为大侠
-			this.targetrole=PD.$role;
+			this.targetrole=PD.$roles[0];
 
             this.fsm = new La.AppFSM(this, statesList);
             this.setState(0);

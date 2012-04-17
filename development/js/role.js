@@ -7,7 +7,7 @@ Laro.register('PD', function (La) {
                 this._t = 0;
 				
 				//大侠死亡则游戏结束
-                if (PD.$role.nowLife <= 0) {
+                if (PD.$roles[0].nowLife <= 0) {
 					//清除技能列表
 					for (var i = 0; i < PD.stage.children.length; i++) {
                     var child = PD.stage.children[i];
@@ -17,6 +17,13 @@ Laro.register('PD', function (La) {
                     }
                     }
                     PD.$fsm.$.setState(4);
+                    return;
+                }
+                for(var i = 0,role;role = PD.$roles[i++];){
+                   if(this.host == role){
+                   		PD.$roles.splice(i,1);
+                   		i--;
+                   }
                 }
             },
             leave:function () {
@@ -83,7 +90,7 @@ Laro.register('PD', function (La) {
 			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
 		},
 		transition: function () {
-			PD.currentRole == this.host.id && this.host.startMove && this.host.setState(1);
+			PD.currentRole == this.host.index && this.host.startMove && this.host.setState(1);
 		}
 	});
 	//人物2等待状态
@@ -135,7 +142,7 @@ Laro.register('PD', function (La) {
 			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
 		},
 		transition: function () {
-			PD.currentRole == this.host.id && this.host.startMove && this.host.setState(1);
+			PD.currentRole == this.host.index && this.host.startMove && this.host.setState(1);
 		}
 	});
 	//人物1行走状态
@@ -568,7 +575,7 @@ Laro.register('PD', function (La) {
 		6, this.R2_Wait,
 		7, this.R_Dead
 	]
-	this.Role = La.Class(function (id, x, y, s_id,width, height) {
+	this.Role = La.Class(function (id, x, y, s_id,index,width, height) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
@@ -576,7 +583,9 @@ Laro.register('PD', function (La) {
 		this.height = height || 128;
 		this.bloodBarW = 150;
 		this.bloodBarH = 10;
-		
+		this.index = index;
+
+
 		this.life = 500;
 		this.nowLife = 500;
 		//人物方向
@@ -612,16 +621,16 @@ Laro.register('PD', function (La) {
 		this.checkSprite.addEventListener('mousedown', function (x, y) {
 			if (PD.mouseOnIcon) {return}
 			PD.roleMousedown = true;
-			PD.currentRole = id;
+			PD.currentRole = index;
 			PD.curRole = s_id;
-			PD[PD.currentRole].showCircle = true;
+			PD.$roles[PD.currentRole].showCircle = true;
 		});
 		this.checkSprite.addEventListener('touchstart', function (x, y) {
 			if (PD.mouseOnIcon) {return }
 			PD.roleMousedown = true;
 			PD.curRole = s_id;
-			PD.currentRole = id;
-			PD[PD.currentRole].showCircle = true;
+			PD.currentRole = index;
+			PD.$roles[PD.currentRole].showCircle = true;
 		});
 		//this.checkSprite.addEventListener('mouseup', function () { PD.roleMousedown = false });
 		//this.checkSprite.addEventListener('touchend', function () { PD.roleMousedown = false });
@@ -636,7 +645,7 @@ Laro.register('PD', function (La) {
 			this.updateSkillAnim(dt);
 		},
 		draw: function (render) {
-			PD.currentRole == this.id && this.showCircle && this.drawCircle(render);
+			PD.currentRole == this.index && this.showCircle && this.drawCircle(render);
 			this.fsm.draw(render);
 			this.drawBloodBar(render);
 			this.drawSkillAnim(render);
