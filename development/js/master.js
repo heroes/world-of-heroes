@@ -406,7 +406,7 @@ Laro.register('PD', function (La) {
             this.height = height || 110;
             this.heath = this.fullHeath = 500;
             this.dead = false;
-            this.speed = 1;
+            this.speed = 0.1;
 
             this.attack = 15;
 
