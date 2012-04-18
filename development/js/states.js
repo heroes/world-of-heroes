@@ -466,7 +466,7 @@ Laro.register('PD.$states', function (La) {
                 PD.curRole = 'one';
                 PD.toggleSkillIcon();
 
-                this.music = PD.$res.getSound('OGG/stage1_sound.ogg');
+				this.music = PD.$res.getSound('OGG/stage1_sound.ogg');
                 this.music.setVolume(0.3);
                 this.music.play('default', true);
 
