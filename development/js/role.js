@@ -502,11 +502,14 @@ Laro.register('PD', function (La) {
 		enter: function (msg, fromState) {
 			console.log(msg);
             if(bigSkillLock){
-                alert("大招有20秒cd的，别那么快放！");
+                //alert("大招有20秒cd的，别那么快放！");
                 console.log("bigSkill is locked!");
                 return;
             }
             bigSkillLock = true;
+			this.music = PD.$res.getSound('OGG/star_fall.ogg');
+			this.music.setVolume(0.2);
+            this.music.play('default', false);
 			this.anim = this.host.getAnimation('role_sskill');
             if(msg == 'v'){
                 this.anim2=this.host.getAnimation('skill_rain_1');

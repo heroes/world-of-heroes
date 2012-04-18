@@ -70,7 +70,8 @@ Laro.register('PD.$states', function (La) {
                     'OGG/role_skill1.ogg',
                     'OGG/role_skill2.ogg',
                     'OGG/master_die.ogg',
-
+					'OGG/Bossbattle.ogg',
+					'OGG/star_fall.ogg'
                 ];
 
                 PD.loader.preload(images, La.curry(this.resourceLoadCallback, this));
@@ -114,7 +115,7 @@ Laro.register('PD.$states', function (La) {
                     //this.host.setState(3);
                     
 					//调试用，把前面的四格漫画屏蔽了
-                    this.host.setState(3);
+                    this.host.setState(5);
                 }
             }
         });
@@ -565,7 +566,11 @@ Laro.register('PD.$states', function (La) {
                 console.log('stage1');
                 next_tag = 9;//将下一场景设置为场景3
                 this._t = 0;
-                //get resources 放在全局 PD 里，以便其他类调用
+                
+				this.music = PD.$res.getSound('OGG/Bossbattle.ogg');
+                this.music.setVolume(0.3);
+                this.music.play('default', true);
+				
                 PD.textures['map1'] = PD.$res.getImage('map1');
                 PD.textures['map2'] = PD.$res.getImage('map2');
                 PD.textures['circle'] = PD.$res.getImage('circle');
