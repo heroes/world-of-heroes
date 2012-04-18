@@ -114,7 +114,7 @@ Laro.register('PD.$states', function (La) {
                     //this.host.setState(3);
                     
 					//调试用，把前面的四格漫画屏蔽了
-                    this.host.setState(5);
+                    this.host.setState(3);
                 }
             }
         });
@@ -792,7 +792,11 @@ Laro.register('PD.$states', function (La) {
 
             },
             update:function (dt) {
-                this._t += 0;
+				this._t += dt;
+				if(this._t>6){
+				  PD.$boss.setState(6);
+				this._t=0;	
+				}
                 for(var i = 0,role;role = PD.$roles[i++];){
                    role.update(dt);
                 }

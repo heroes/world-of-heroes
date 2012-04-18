@@ -6,6 +6,8 @@ Laro.register('PD', function (La) {
 			enter:function (msg, fromState) {
                 this.anim = this.host.getAnimation('boss_2_skill');
                 this.anim.play();
+				this.anim2 = this.host.getAnimation('stone_fall');
+				this.anim2.play();
                 this._t = 0;
             },
             leave:function(){},
@@ -13,13 +15,17 @@ Laro.register('PD', function (La) {
                 this._t += dt;
                 this.anim.renderMirrored = (this.host.x < this.host.targetrole.x);
                 this.anim.update(dt);
+				this.anim2.update(dt);
             },
             draw:function (render) {
+				this.anim2.draw(render, this.host.x, this.host.y-20, 0, 1, null);
                 this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
+				
             },
             transition:function () {
-                if(this._t>1){
+                if(this._t>=this.anim2.getLength()*2){
                     for(var i = 0,role;role = PD.$roles[i++];){
+						if(Math.abs(role.x-this.host.x)<250&&Math.abs(role.x-this.host.x)<70)
                        role.fsm.setState(2, {
                               attack:300,
                               roleFace:(this.host.x > role.x) // 为true时，人面向右
@@ -246,7 +252,7 @@ Laro.register('PD', function (La) {
                 }
             }
         });
-
+	
     //被攻击
     this.M_Beattacked = La.BaseState.extend(
         function () {
@@ -289,7 +295,36 @@ Laro.register('PD', function (La) {
                 }
             }
         });
-
+	this.Boss1_Beattacked=this.M_Beattacked.extend(function(){}).methods({
+		 enter:function (msg, fromState) {
+                this.anim = this.host.getAnimation('boss_atttacked');
+                this.anim.play();
+                this._t = 0;
+                this.speed = this.host.speed;
+                this.dis = 0;
+                this.animationEnd = false;
+                this.msg = msg;
+                this.host.heath -= this.msg.attack;
+                if (this.msg.offset) {
+                    this.host.x += this.msg.offset;
+                }
+            },
+	});
+	this.Boss2_Beattacked=this.M_Beattacked.extend(function(){}).methods({
+		 enter:function (msg, fromState) {
+                this.anim = this.host.getAnimation('boss_2_attacked');
+                this.anim.play();
+                this._t = 0;
+                this.speed = this.host.speed;
+                this.dis = 0;
+                this.animationEnd = false;
+                this.msg = msg;
+                this.host.heath -= this.msg.attack;
+                if (this.msg.offset) {
+                    this.host.x += this.msg.offset;
+                }
+            },
+	});
     this.M_Dead = La.BaseState.extend(
         function () {
 
@@ -375,7 +410,7 @@ Laro.register('PD', function (La) {
 		0, this.M_Wait,
         1, this.M_Run,
         2, this.M_Attacked,
-        3, this.M_Beattacked,
+        3, this.Boss1_Beattacked,
         4, this.M_Dead,
         5, this.GoNext,
 		6, this.Boss_Skill_Extracting,
@@ -386,11 +421,10 @@ Laro.register('PD', function (La) {
 		0, this.M_Wait,
         1, this.M_Run,
         2, this.M_Attacked,
-        3, this.M_Beattacked,
+        3, this.Boss2_Beattacked,
         4, this.M_Dead,
         5, this.GoNext,
-		6, this.Boss2_Skill_Extracting,
-		7, this.Boss_Skill_Extracting
+		6, this.Boss2_Skill_Extracting
 	];
     //怪物的随机种类
     var masterCat = 0;
