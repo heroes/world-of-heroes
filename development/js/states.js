@@ -57,6 +57,8 @@ Laro.register('PD.$states', function (La) {
 					'images/monster/boss_lightning.png',
 					'images/monster/boss_skill1.png',
 					'images/monster/boss_2.png',
+					'images/monster/stone.png',
+					'images/monster/buff.png',
 					
 					'images/skillanim/role_recover.png',
 					'images/skillanim/role_defense.png',
@@ -109,7 +111,7 @@ Laro.register('PD.$states', function (La) {
             },
             transition:function () {
                 if (this.done && this.doneT >= 0 && this._t > this.doneT + this.delayAfter) {
-                    this.host.setState(5);
+                    this.host.setState(3);
                     
 					//调试用，把前面的四格漫画屏蔽了
                     //this.host.setState(5);
