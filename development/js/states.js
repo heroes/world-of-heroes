@@ -109,7 +109,7 @@ Laro.register('PD.$states', function (La) {
             },
             transition:function () {
                 if (this.done && this.doneT >= 0 && this._t > this.doneT + this.delayAfter) {
-                    this.host.setState(3);
+                    this.host.setState(5);
                     
 					//调试用，把前面的四格漫画屏蔽了
                     //this.host.setState(5);
@@ -513,7 +513,7 @@ Laro.register('PD.$states', function (La) {
                 render.drawImage(PD.textures['map1'], cx, cy, 0, 1, 1, false, false);
 
                 // 画控制人物的圆饼
-                PD.currentRole != 'undefined' && PD.$roles[PD.currentRole].showCircle && this.drawPie(render);
+                PD.currentRole !== '' && PD.$roles[PD.currentRole].showCircle && this.drawPie(render);
                 PD.$roles[0].draw(render);
                 this.drawMonsters(render);
 
@@ -663,7 +663,7 @@ Laro.register('PD.$states', function (La) {
                 render.drawImage(PD.textures['map2'], cx, cy, 0, 1, 1, false, false);
 
                 // 画控制人物的圆饼
-                PD.currentRole && PD.$roles[PD.currentRole].showCircle && this.drawPie(render);
+                PD.currentRole !== '' && PD.$roles[PD.currentRole].showCircle && this.drawPie(render);
 
                 PD.$boss.draw(render);
                 for(var i = 0,role;role = PD.$roles[i++];){
@@ -804,7 +804,7 @@ Laro.register('PD.$states', function (La) {
                 render.drawImage(PD.textures['map3'], cx, cy, 0, 1, 1, false, false);
 
                 // 画控制人物的圆饼
-                PD.currentRole && PD.$roles[PD.currentRole].showCircle && this.drawPie(render);
+                PD.currentRole !== '' && PD.$roles[PD.currentRole].showCircle && this.drawPie(render);
 
                 PD.$boss.draw(render);
                 for(var i = 0,role;role = PD.$roles[i++];){

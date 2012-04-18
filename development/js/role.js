@@ -19,12 +19,22 @@ Laro.register('PD', function (La) {
                     PD.$fsm.$.setState(4);
                     return;
                 }
-                for(var i = 0,role;role = PD.$roles[i++];){
-                   if(this.host == role){
-                   		PD.$roles.splice(i,1);
-                   		i--;
-                   }
+                //去掉目标
+           		for(var n = 0, master;master = PD.$monsters[n++];){
+           			if(this.host == master.targetrole){
+               			master.targetrole = PD.$roles[0];
+           			}
+           		}
+           		//去掉点击绑定对象
+           		for (var i = 0; i < PD.stage.children.length; i++) {
+                    var child = PD.stage.children[i];
+                    if (child == this.host.checkSprite) {
+                        PD.stage.children.splice(i, 1);
+                        i--;
+                    }
                 }
+
+           		delete PD.$roles[this.host.index];
             },
             leave:function () {
 
@@ -288,9 +298,6 @@ Laro.register('PD', function (La) {
 			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
 		},
 		transition: function () {
-			if(!this.host.nowLife){
-				this.host.setState(7);
-			}
 			if (this._t > this.length) {
 				this.host.setState(0);
 			}
