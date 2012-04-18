@@ -83,6 +83,8 @@ Laro.register('PD', function (La) {
 			enter:function (msg, fromState) {
                 this.anim = this.host.getAnimation('boss_skill2');
                 this.anim.play();
+				this.anim2 = this.host.getAnimation('buff');
+				this.anim2.play();
                 this._t = 0;
             },
             leave:function(){},
@@ -90,9 +92,11 @@ Laro.register('PD', function (La) {
                 this._t += dt;
                 this.anim.renderMirrored = (this.host.x < this.host.targetrole.x);
                 this.anim.update(dt);
+				this.anim2.update(dt);
             },
             draw:function (render) {
                 this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
+				this.anim2.draw(render, this.host.targetrole.x, this.host.targetrole.y-100, 0, 1, null);
             },
             transition:function () {
                 if(this._t>2){

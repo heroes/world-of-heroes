@@ -45,7 +45,22 @@ g_data = {
 			],
 			filename: 'images/pie.png'
 		},
-		//妖女第一形态被打
+		"buff": {
+    "info": {
+        "nbrOfFrames": 2,
+        "name": "buff",
+        "type": "animation",
+        "framerate": 4,
+        "pivotx": 60,
+        "pivoty": 75,
+        "events": []
+    },
+    "data": [
+        [0,0,119,149,0,0,119,149],
+        [120,0,239,149,120,0,239,149]
+    ],
+    "filename": "images/monster/buff.png"
+},
 		//妖女第二形态放技能
 		"boss_2_skill": {
         "info": {

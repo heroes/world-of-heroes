@@ -111,10 +111,10 @@ Laro.register('PD.$states', function (La) {
             },
             transition:function () {
                 if (this.done && this.doneT >= 0 && this._t > this.doneT + this.delayAfter) {
-                    this.host.setState(3);
+                    //this.host.setState(3);
                     
 					//调试用，把前面的四格漫画屏蔽了
-                    //this.host.setState(5);
+                    this.host.setState(5);
                 }
             }
         });
