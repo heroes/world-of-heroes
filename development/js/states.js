@@ -383,7 +383,9 @@ Laro.register('PD.$states', function (La) {
                 });
             },
             leave:function () {
-
+                if(!this.music.audio.pasued){
+                    this.music.audio.pause();
+                }
             },
             update:function (dt) {
                 this._t += dt;
@@ -502,7 +504,9 @@ Laro.register('PD.$states', function (La) {
                 }
             },
             leave:function () {
-
+               if(!this.music.audio.pasued){
+                    this.music.audio.pause();
+                }
             },
             update:function (dt) {
                 this._t += 0;
@@ -643,7 +647,7 @@ Laro.register('PD.$states', function (La) {
                 }
             },
             leave:function () {
-
+                this.music.audio.pasue();
             },
             update:function (dt) {
                 this._t += dt;
