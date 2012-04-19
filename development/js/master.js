@@ -142,7 +142,7 @@ Laro.register('PD', function (La) {
                     this.host.setState(4)
                 }
 				//选择攻击距离自己最近的人物
-				var role = PD.$role;
+				//var role = PD.$roles;
 				//;
                 var dis = 999;
                 for(var i = 0,role;role = PD.$roles[i++];){

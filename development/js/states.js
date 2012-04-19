@@ -112,10 +112,10 @@ Laro.register('PD.$states', function (La) {
             },
             transition:function () {
                 if (this.done && this.doneT >= 0 && this._t > this.doneT + this.delayAfter) {
-                    this.host.setState(3);
+                    //this.host.setState(3);
                     
 					//调试用，把前面的四格漫画屏蔽了
-                    //this.host.setState(5);
+                    this.host.setState(5);
                 }
             }
         });
@@ -383,9 +383,9 @@ Laro.register('PD.$states', function (La) {
                 });
             },
             leave:function () {
-                if(!this.music.audio.pasued){
-                    this.music.audio.pause();
-                }
+                //if(!this.music.audio.pasued){
+                    this.music.pause();
+                //}
             },
             update:function (dt) {
                 this._t += dt;
@@ -504,9 +504,9 @@ Laro.register('PD.$states', function (La) {
                 }
             },
             leave:function () {
-               if(!this.music.audio.pasued){
-                    this.music.audio.pause();
-                }
+               //if(!this.music.audio.pasued){
+                    this.music.pause();
+                //}
             },
             update:function (dt) {
                 this._t += 0;
@@ -608,19 +608,14 @@ Laro.register('PD.$states', function (La) {
 				
 				PD.$boss.setState(0);
 
-                this.createMonsters(0);
+                this.createBoss();
 
                 // add skill icon
                 PD.curRole = 'one';
                 PD.toggleSkillIcon();
 
             },
-            createMonsters:function (n) {
-                for (var i = 0; i < n; i++) {
-                    var x = Math.random() * 900,
-                        y = Math.random() * 400 + 200;
-                    PD.$monsters.push(new PD.Master(x, y));
-                }
+            createBoss:function () {
                 PD.$monsters.push(PD.$boss);
             },
             updateMonsters:function (dt) {
@@ -647,7 +642,7 @@ Laro.register('PD.$states', function (La) {
                 }
             },
             leave:function () {
-                this.music.audio.pasue();
+                this.music.audio.pause();
             },
             update:function (dt) {
                 this._t += dt;
