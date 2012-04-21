@@ -64,6 +64,22 @@ Laro.register('PD.$states', function (La) {
 					'images/skillanim/role_defense.png',
 					'images/role/role2_skill.png',
 
+                    'images/comic/right.png',
+                    'images/comic/0.jpg',
+                    'images/comic/1.jpg',
+                    'images/comic/2.jpg',
+                    'images/comic/3.jpg',
+                    'images/comic/4.jpg',
+                    'images/comic/5.jpg',
+                    'images/comic/6.jpg',
+                    'images/comic/7.jpg',
+                    'images/comic/8.jpg',
+                    'images/comic/9.jpg',
+                    'images/comic/10.jpg',
+                    'images/comic/11.jpg',
+                    'images/comic/12.jpg',
+
+
                     //sound
                     'OGG/stage1_sound.ogg',
                     'OGG/role_attack.ogg',
@@ -112,10 +128,10 @@ Laro.register('PD.$states', function (La) {
             },
             transition:function () {
                 if (this.done && this.doneT >= 0 && this._t > this.doneT + this.delayAfter) {
-                    //this.host.setState(3);
+                    this.host.setState(3);
                     
 					//调试用，把前面的四格漫画屏蔽了
-                    this.host.setState(5);
+                    //this.host.setState(5);
                 }
             }
         });
@@ -126,62 +142,55 @@ Laro.register('PD.$states', function (La) {
         }).methods({
             enter:function (msg, fromState) {
                 console.log('comic1');
+                var t = this;
+                this.index = 0;
+                PD.textures['comic1'] = [];
 
-                this._t = 0;
-                this.delay = 2;
-                this.frameCount = 2;
-
-                PD.loader.loadedImages['images/comic/comic1.jpg'];
-                PD.textures['comic1'] = PD.loader.loadImage('images/comic/comic1.jpg');
+                for (var i = 0; i < 5; i++) {
+                    PD.loader.loadedImages['images/comic/'+i+'.jpg'];
+                    PD.textures['comic1'][i] = PD.loader.loadImage('images/comic/'+i+'.jpg');
+                };
+                PD.loader.loadedImages['images/comic/right.png'];
+                PD.textures['right'] = PD.loader.loadImage('images/comic/right.png');
                 //get resources 放在全局 PD 里，以便其他类调用
+                this.checkSprite = new La.$sprite(PD.stage.ctx, function () {
+                    this.x = 960 - 150;
+                    this.y = 640 - 350;
+                    this.width = 54;
+                    this.height = 52;
+                    this.draw = function () {
 
-                this.cameras = [
-                    [0, 0, 960, 640],
-                    [704, 0, 960, 640],
-                    [704, 606, 960, 640],
-                    [0, 560, 960, 640],
-                    [0, 606, 960, 640]
-                ];
-                this.currentCamera = 0;
-                this.nextCamera = 1;
-                this.currentArr = this.cameras[this.currentCamera].slice(0);
+                    };
+                });
+                PD.stage.addChild(this.checkSprite);
+                this.checkSprite.addEventListener('mousedown', function (x, y) {
+                    t.next = true;
+
+                });
+                this.checkSprite.addEventListener('touchstart', function (x, y) {
+                    t.next = true;
+                });
             },
             leave:function () {
 
             },
             update:function (dt) {
                 this._t += dt;
-                if (this._t > this.delay) {
-                    if (this.delay) {
-                        this.delay = 0;
-                        this._t = 0;
-                    }
-
-                    if (this.currentArr[0] == this.cameras[this.nextCamera][0] &&
-                        this.currentArr[1] == this.cameras[this.nextCamera][1] &&
-                        this.currentArr[2] == this.cameras[this.nextCamera][2] &&
-                        this.currentArr[3] == this.cameras[this.nextCamera][3]
-                        ) {
-                        if (this._t >= this.frameCount * 2) {
-                            this.currentCamera += 1;
-                            this.nextCamera += 1;
-                            this._t = 0;
-                            console.log(this.nextCamera);
-                        }
-                    } else {
-                        for (var i = 0; i < 4; i++) {
-                            this.currentArr[i] = this.cameras[this.currentCamera][i] + (this._t / this.frameCount >= 1 ? 1 : this._t / this.frameCount) * (this.cameras[this.nextCamera][i] - this.cameras[this.currentCamera][i]);
-                        }
-                    }
+                if(this.next){
+                    this.next = false;
+                    this.index++;
                 }
             },
             draw:function (render) {
                 var rw = render.getWidth(),
                     rh = render.getHeight();
-                render.context.drawImage(PD.textures['comic1'], this.currentArr[0], this.currentArr[1], this.currentArr[2], this.currentArr[3], 0, 0, rw, rh)
+                if(this.index < PD.textures['comic1'].length){
+                    render.context.drawImage(PD.textures['comic1'][this.index], 0, 0, rw, rh, 0, 0, rw, rh)
+                }
+                render.context.drawImage(PD.textures['right'], 0, 0, 54, 52, 810, 290, 54, 52);               
             },
             transition:function () {
-                if (this.nextCamera == this.cameras.length) {
+                if (this.index == PD.textures['comic1'].length) {
                     this.host.setState(2);
                 }
             }
@@ -189,9 +198,11 @@ Laro.register('PD.$states', function (La) {
 
     this.Comic2 = La.BaseState.extend(
         function () {
+
         }).methods({
             enter:function (msg, fromState) {
                 console.log('comic2');
+
                 for (var i = 0; i < PD.stage.children.length; i++) {
                     var child = PD.stage.children[i];
                     if (child.type == 'skillIcon') {
@@ -199,148 +210,193 @@ Laro.register('PD.$states', function (La) {
                         i--;
                     }
                 }
-                //PD.curRole = '';
-                //PD.toggleSkillIcon();
-                this._t = 0;
-                this.delay = 2;
-                this.frameCount = 2;
+                var t = this;
+                this.index = 0;
+                PD.textures['comic2'] = [];
 
-                PD.loader.loadedImages['images/comic/comic2.jpg'];
-                PD.textures['comic2'] = PD.loader.loadImage('images/comic/comic2.jpg');
+                for (var i = 5; i < 10; i++) {
+                    PD.loader.loadedImages['images/comic/'+i+'.jpg'];
+                    PD.textures['comic2'][i-5] = PD.loader.loadImage('images/comic/'+i+'.jpg');
+                };
+                PD.loader.loadedImages['images/comic/right.png'];
+                PD.textures['right'] = PD.loader.loadImage('images/comic/right.png');
                 //get resources 放在全局 PD 里，以便其他类调用
+                this.checkSprite = new La.$sprite(PD.stage.ctx, function () {
+                    this.x = 960 - 150;
+                    this.y = 640 - 350;
+                    this.width = 54;
+                    this.height = 52;
+                    this.draw = function () {
 
-                this.cameras = [
-                    [0, 0, 303, 202],
-                    [0, 0, 531, 354],
-                    [0, 116, 534, 356],
-                    [566, 0, 534, 356],
-                    [0, 443, 653, 435],
-                    [408, 355, 692, 461],
-                    [0, 819, 603, 402],
-                    [497, 819, 603, 402]
-                ];
-                this.currentCamera = 0;
-                this.nextCamera = 1;
-                this.currentArr = this.cameras[this.currentCamera].slice(0);
+                    };
+                });
+                PD.stage.addChild(this.checkSprite);
+                this.checkSprite.addEventListener('mousedown', function (x, y) {
+                    t.next = true;
+
+                });
+                this.checkSprite.addEventListener('touchstart', function (x, y) {
+                    t.next = true;
+                });
             },
             leave:function () {
 
             },
             update:function (dt) {
                 this._t += dt;
-                if (this._t > this.delay) {
-                    if (this.delay) {
-                        this.delay = 0;
-                        this._t = 0;
-                    }
-
-                    if (this.currentArr[0] == this.cameras[this.nextCamera][0] &&
-                        this.currentArr[1] == this.cameras[this.nextCamera][1] &&
-                        this.currentArr[2] == this.cameras[this.nextCamera][2] &&
-                        this.currentArr[3] == this.cameras[this.nextCamera][3]
-                        ) {
-                        if (this._t >= this.frameCount * 2) {
-                            this.currentCamera += 1;
-                            this.nextCamera += 1;
-                            this._t = 0;
-                            console.log(this.nextCamera);
-                        }
-                    } else {
-                        for (var i = 0; i < 4; i++) {
-                            this.currentArr[i] = this.cameras[this.currentCamera][i] + (this._t / this.frameCount >= 1 ? 1 : this._t / this.frameCount) * (this.cameras[this.nextCamera][i] - this.cameras[this.currentCamera][i]);
-                        }
-                    }
+                if(this.next){
+                    this.next = false;
+                    this.index++;
                 }
             },
             draw:function (render) {
                 var rw = render.getWidth(),
                     rh = render.getHeight();
-                //console.log(PD.textures['comic2'].width);
-                //console.log(PD.textures['comic2'].height);
-                //render.context.drawImage(PD.textures['comic2'], 0, 0, rw, rh, 0, 0, rw, rh);
-                render.context.drawImage(PD.textures['comic2'], this.currentArr[0], this.currentArr[1], this.currentArr[2], this.currentArr[3], 0, 0, rw, rh)
+                if(this.index < PD.textures['comic2'].length){
+                    render.context.drawImage(PD.textures['comic2'][this.index], 0, 0, rw, rh, 0, 0, rw, rh)
+                }
+                render.context.drawImage(PD.textures['right'], 0, 0, 54, 52, 810, 290, 54, 52);               
             },
             transition:function () {
-                if (this.nextCamera == this.cameras.length) {
+                if (this.index == PD.textures['comic2'].length) {
                     this.host.setState(5);
                 }
             }
         });
 
-//第三幅漫画
+    //第三幅漫画
     this.Comic3 = La.BaseState.extend(
-        function () {
-        }).methods({
-            enter:function (msg, fromState) {
-                console.log('comic3');
-                for (var i = 0; i < PD.stage.children.length; i++) {
-                    var child = PD.stage.children[i];
-                    if (child.type == 'skillIcon') {
-                        PD.stage.children.splice(i, 1);
-                        i--;
-                    }
-                }
-                //PD.curRole = '';
-                //PD.toggleSkillIcon();
-                this._t = 0;
-                this.delay = 2;
-                this.frameCount = 2;
+    function () {
 
-                PD.loader.loadedImages['images/comic/comic3.jpg'];
-                PD.textures['comic3'] = PD.loader.loadImage('images/comic/comic3.jpg');
-                //get resources 放在全局 PD 里，以便其他类调用
-
-                this.cameras = [
-                    [0, 0, 960, 640],
-                    [303, 0, 960, 640],
-                    [0, 640, 594, 396],
-                    [594, 640, 621, 414],
-                    [290, 1035, 970, 646]
-                ];
-                this.currentCamera = 0;
-                this.nextCamera = 1;
-                this.currentArr = this.cameras[this.currentCamera].slice(0);
-            },
-            leave:function () {
-
-            },
-            update:function (dt) {
-                this._t += dt;
-                if (this._t > this.delay) {
-                    if (this.delay) {
-                        this.delay = 0;
-                        this._t = 0;
-                    }
-
-                    if (this.currentArr[0] == this.cameras[this.nextCamera][0] &&
-                        this.currentArr[1] == this.cameras[this.nextCamera][1] &&
-                        this.currentArr[2] == this.cameras[this.nextCamera][2] &&
-                        this.currentArr[3] == this.cameras[this.nextCamera][3]
-                        ) {
-                        if (this._t >= this.frameCount * 2) {
-                            this.currentCamera += 1;
-                            this.nextCamera += 1;
-                            this._t = 0;
-                            console.log(this.nextCamera);
-                        }
-                    } else {
-                        for (var i = 0; i < 4; i++) {
-                            this.currentArr[i] = this.cameras[this.currentCamera][i] + (this._t / this.frameCount >= 1 ? 1 : this._t / this.frameCount) * (this.cameras[this.nextCamera][i] - this.cameras[this.currentCamera][i]);
-                        }
-                    }
-                }
-            },
-            draw:function (render) {
-                var rw = render.getWidth(),
-                    rh = render.getHeight();
-                render.context.drawImage(PD.textures['comic3'], this.currentArr[0], this.currentArr[1], this.currentArr[2], this.currentArr[3], 0, 0, rw, rh)
-            },
-            transition:function () {
-                if (this.nextCamera == this.cameras.length) {
-                    this.host.setState(4);
+    }).methods({
+        enter:function (msg, fromState) {
+            console.log('comic3');
+            for (var i = 0; i < PD.stage.children.length; i++) {
+                var child = PD.stage.children[i];
+                if (child.type == 'skillIcon') {
+                    PD.stage.children.splice(i, 1);
+                    i--;
                 }
             }
-        });
+            var t = this;
+            this.index = 0;
+            PD.textures['comic3'] = [];
+
+            for (var i = 10; i < 11; i++) {
+                PD.loader.loadedImages['images/comic/'+i+'.jpg'];
+                PD.textures['comic3'][i-10] = PD.loader.loadImage('images/comic/'+i+'.jpg');
+            };
+            PD.loader.loadedImages['images/comic/right.png'];
+            PD.textures['right'] = PD.loader.loadImage('images/comic/right.png');
+            //get resources 放在全局 PD 里，以便其他类调用
+            this.checkSprite = new La.$sprite(PD.stage.ctx, function () {
+                this.x = 960 - 150;
+                this.y = 640 - 350;
+                this.width = 54;
+                this.height = 52;
+                this.draw = function () {
+
+                };
+            });
+            PD.stage.addChild(this.checkSprite);
+            this.checkSprite.addEventListener('mousedown', function (x, y) {
+                t.next = true;
+
+            });
+            this.checkSprite.addEventListener('touchstart', function (x, y) {
+                t.next = true;
+            });
+        },
+        leave:function () {
+
+        },
+        update:function (dt) {
+            this._t += dt;
+            if(this.next){
+                this.next = false;
+                this.index++;
+            }
+        },
+        draw:function (render) {
+            var rw = render.getWidth(),
+                rh = render.getHeight();
+            if(this.index < PD.textures['comic3'].length){
+                render.context.drawImage(PD.textures['comic3'][this.index], 0, 0, rw, rh, 0, 0, rw, rh)
+            }
+            render.context.drawImage(PD.textures['right'], 0, 0, 54, 52, 810, 290, 54, 52);               
+        },
+        transition:function () {
+            if (this.index == PD.textures['comic3'].length) {
+                this.host.setState(9);
+            }
+        }
+    });
+
+    this.Comic4 = La.BaseState.extend(
+    function () {
+
+    }).methods({
+        enter:function (msg, fromState) {
+            console.log('comic4');
+            for (var i = 0; i < PD.stage.children.length; i++) {
+                var child = PD.stage.children[i];
+                if (child.type == 'skillIcon') {
+                    PD.stage.children.splice(i, 1);
+                    i--;
+                }
+            }
+            var t = this;
+            this.index = 0;
+            PD.textures['comic4'] = [];
+
+            for (var i = 11; i < 13; i++) {
+                PD.loader.loadedImages['images/comic/'+i+'.jpg'];
+                PD.textures['comic4'][i-11] = PD.loader.loadImage('images/comic/'+i+'.jpg');
+            };
+            PD.loader.loadedImages['images/comic/right.png'];
+            PD.textures['right'] = PD.loader.loadImage('images/comic/right.png');
+            //get resources 放在全局 PD 里，以便其他类调用
+            this.checkSprite = new La.$sprite(PD.stage.ctx, function () {
+                this.x = 960 - 150;
+                this.y = 640 - 350;
+                this.width = 54;
+                this.height = 52;
+                this.draw = function () {
+         
+                };
+            });
+            PD.stage.addChild(this.checkSprite);
+            this.checkSprite.addEventListener('mousedown', function (x, y) {
+                t.next = true;
+
+            });
+            this.checkSprite.addEventListener('touchstart', function (x, y) {
+                t.next = true;
+            });
+        },
+        leave:function () {
+
+        },
+        update:function (dt) {
+            this._t += dt;
+            if(this.next){
+                this.next = false;
+                this.index++;
+            }
+        },
+        draw:function (render) {
+            var rw = render.getWidth(),
+                rh = render.getHeight();
+            if(this.index < PD.textures['comic4'].length){
+                render.context.drawImage(PD.textures['comic4'][this.index], 0, 0, rw, rh, 0, 0, rw, rh)
+            }
+            render.context.drawImage(PD.textures['right'], 0, 0, 54, 52, 810, 290, 54, 52);               
+        },
+        transition:function () {
+
+        }
+    });
+
 
     this.Begin = La.BaseState.extend(
         function () {
@@ -903,13 +959,13 @@ Laro.register('PD.$fsm', function (La) {
         1, PD.$states.Comic1,
         2, PD.$states.Stage1,
         3, PD.$states.Begin,
-        4, PD.$states.END,
+        4, PD.$states.Comic4,
         5, PD.$states.Stage2,
         6, PD.$states.GoNext,
         7, PD.$states.Comic2,
         8, PD.$states.Comic3,
-        9, PD.$states.Stage3
-    ];
+        9, PD.$states.Stage3,
+        10, PD.$states.Comic4    ];
     //stateModes
     this.stateModes = {
         kStateActive:0,
