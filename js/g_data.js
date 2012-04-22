@@ -45,6 +45,7 @@ g_data = {
 			],
 			filename: 'images/pie.png'
 		},
+<<<<<<< HEAD
 		"stone_fall": {
     "info": {
         "nbrOfFrames": 10,
@@ -182,6 +183,8 @@ g_data = {
 			],
 			"filename": "images/skillanim/role_defense.png"
 		},
+=======
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 		
 		// role status
 		role_wait: {
@@ -198,6 +201,7 @@ g_data = {
 			],
 			filename: 'images/role/role-right.png'
 		},
+<<<<<<< HEAD
 		//人物2等待状态
 		role2_wait: {
 			info: {
@@ -311,6 +315,17 @@ g_data = {
 		role_sskill: {
 			info: {
 				"nbrOfFrames": 12,
+=======
+		skill_rain: {
+			data: [
+				[0, 0, 638, 647, 0, 0, 638, 647]
+			],
+			filename: 'images/s_skill.png'
+		},
+		role_sskill: {
+			info: {
+				"nbrOfFrames": 4,
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 				"pivoty": 150,
 				"framerate": 4,
 				"pivotx": 136,
@@ -320,6 +335,7 @@ g_data = {
 				[1818,0,2120,181,1818,0,2120,181],
 				[2121,0,2423,181,2121,0,2423,181],
 				[2424,0,2726,181,2424,0,2726,181],
+<<<<<<< HEAD
 				[2727,0,3029,181,2727,0,3029,181],
 				[1818,0,2120,181,1818,0,2120,181],
 				[2121,0,2423,181,2121,0,2423,181],
@@ -328,12 +344,15 @@ g_data = {
 				[1818,0,2120,181,1818,0,2120,181],
 				[2121,0,2423,181,2121,0,2423,181],
 				[2424,0,2726,181,2424,0,2726,181],
+=======
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 				[2727,0,3029,181,2727,0,3029,181]
 			],
 			filename: 'images/role/role-right.png'
 		},
 		boss: {
 			info: {
+<<<<<<< HEAD
 				"nbrOfFrames": 4,
                 "framerate": 4,
                 "pivotx": 240,
@@ -410,6 +429,25 @@ g_data = {
     ],
     "filename": 'images/monster/boss_lightning.png'
       },
+=======
+				"nbrOfFrames": 7,
+				"pivoty": 100,
+				"framerate": 4,
+				"pivotx": 240,
+				"events": []
+			},
+			data: [
+				[0,0,362,254,0,0,362,254],
+				[363,0,725,254,363,0,725,254],
+				[726,0,1088,254,726,0,1088,254],
+				[1089,0,1451,254,1089,0,1451,254],
+				[1452,0,1814,254,1452,0,1814,254],
+				[1815,0,2177,254,1815,0,2177,254],
+				[2178,0,2540,254,2178,0,2540,254]
+			],
+			filename: 'images/boss_left.png'
+		},
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 		role_run: {
 			info: {
 				"nbrOfFrames": 4,
@@ -441,6 +479,7 @@ g_data = {
 			],
 			filename: 'images/role/role-right.png'
 		},
+<<<<<<< HEAD
 		role2_attack: {
 			info: {
 				"nbrOfFrames": 3,
@@ -456,6 +495,8 @@ g_data = {
 			],
 			filename: 'images/role/role2.png'
 		},
+=======
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 		role_attacked: {
 			info: {
 				"nbrOfFrames": 2,
@@ -472,7 +513,11 @@ g_data = {
 		},
 		
 		// monster
+<<<<<<< HEAD
 		monster_0: {
+=======
+		monster: {
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 			info: {
 				"nbrOfFrames": 4,
 				"pivoty": 100,
@@ -488,6 +533,7 @@ g_data = {
 			],
 			filename: 'images/monster/left.png'
 		},
+<<<<<<< HEAD
         monster_1: {
             info: {
                 "nbrOfFrames":3,
@@ -503,6 +549,8 @@ g_data = {
             ],
             filename: 'images/monster/monster.png'
         },
+=======
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 		
 		// skill icon
 		skill1: {

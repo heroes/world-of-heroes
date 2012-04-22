@@ -1,5 +1,6 @@
 /* 人物Role */
 Laro.register('PD', function (La) {
+<<<<<<< HEAD
 	//定义死亡状态	
 	this.R_Dead=La.BaseState.extend(function(){}).methods({
 		enter:function (msg, fromState) {
@@ -52,12 +53,19 @@ Laro.register('PD', function (La) {
 
             }
 	});
+=======
+
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 	// 人物state Class
 	this.R_Wait = La.BaseState.extend(function () {
 	
 	}).methods({
 		enter: function (msg, fromState) {
 			this.anim = this.host.getAnimation('role_wait');
+<<<<<<< HEAD
+=======
+			
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 			this.anim.play();
 			this._t = 0;
 			this.length = this.anim.getLength();
@@ -67,6 +75,7 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this._t += dt;
+<<<<<<< HEAD
 			this.anim.renderMirrored = !this.host.roleFaceRight;
 			this.anim.update(dt);
 			if (this._t > this.length) {
@@ -119,6 +128,9 @@ Laro.register('PD', function (La) {
 		update: function (dt) {
 			this._t += dt;
 			this.anim.renderMirrored = !this.host.roleFaceRight;
+=======
+			this.anim.renderMirrored = !PD.roleFaceRight;
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 			this.anim.update(dt);
 			if (this._t > this.length) {
 				this.checkNearMonster();
@@ -144,7 +156,11 @@ Laro.register('PD', function (La) {
 				}
 			}
 			if (hasNear) {
+<<<<<<< HEAD
 				this.host.roleFaceRight = (this.host.x < mm.x);
+=======
+				PD.roleFaceRight = (this.host.x < mm.x);
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 				this.host.setState(3, mm);
 			}
 		},
@@ -152,10 +168,17 @@ Laro.register('PD', function (La) {
 			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
 		},
 		transition: function () {
+<<<<<<< HEAD
 			PD.currentRole == this.host.index && this.host.startMove && this.host.setState(1);
 		}
 	});
 	//人物1行走状态
+=======
+			PD.startMove && this.host.setState(1);
+		}
+	});
+	
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 	this.R_Run = La.BaseState.extend(function () {
 	
 	}).methods({
@@ -163,6 +186,7 @@ Laro.register('PD', function (La) {
 			this.anim = this.host.getAnimation('role_run');
 			this.anim.play();
 			this._t = 0;
+<<<<<<< HEAD
 			this.speed = 10;
 			this.dis = 0;
 		},
@@ -206,6 +230,8 @@ Laro.register('PD', function (La) {
 			this.anim = this.host.getAnimation('role2_run');
 			this.anim.play();
 			this._t = 0;
+=======
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 			this.speed = 5;
 			this.dis = 0;
 		},
@@ -214,6 +240,7 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this.speed = 200*dt;
+<<<<<<< HEAD
 			this.anim.renderMirrored = !this.host.roleFaceRight;
 			this.anim.update(dt);
 			
@@ -222,6 +249,16 @@ Laro.register('PD', function (La) {
 			//var angle = Math.atan((PD.MOUSEDOWN_X - this.host.x)/(PD.MOUSEDOWN_Y - this.host.y));
 			var spy = this.speed*(this.host.pieY - this.host.y)/this.dis;
 			var spx = this.speed*(this.host.pieX - this.host.x)/this.dis;
+=======
+			this.anim.renderMirrored = !PD.roleFaceRight;
+			this.anim.update(dt);
+			
+			this.dis = Math.sqrt(Math.pow(PD.pieX - this.host.x, 2) + Math.pow(PD.pieY - this.host.y, 2));
+			
+			//var angle = Math.atan((PD.MOUSEDOWN_X - this.host.x)/(PD.MOUSEDOWN_Y - this.host.y));
+			var spy = this.speed*(PD.pieY - this.host.y)/this.dis;
+			var spx = this.speed*(PD.pieX - this.host.x)/this.dis;
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 			
 			this.host.x += spx;
 			if (this.host.y + spy < 168) {
@@ -235,6 +272,7 @@ Laro.register('PD', function (La) {
 			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
 		},
 		transition: function () {
+<<<<<<< HEAD
 			if (this.dis <= 4 || Math.abs(this.host.x-this.host.pieX) <= 2) {
 				this.host.setState(0);
 				this.host.startMove = false;
@@ -242,6 +280,16 @@ Laro.register('PD', function (La) {
 			}
 		}
 	});
+=======
+			if (this.dis <= 4 || Math.abs(this.host.x-PD.pieX) <= 2) {
+				this.host.setState(0);
+				PD.startMove = false;
+				PD.showCircle = false;
+			}
+		}
+	});
+	
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 	this.R_Attacked = La.BaseState.extend(function () {
 	
 	}).methods({
@@ -250,16 +298,26 @@ Laro.register('PD', function (La) {
 			this.anim.play(false);
 			this.length = this.anim.getLength();
 			this._t = 0;
+<<<<<<< HEAD
 			this.host.nowLife -= msg.attack * (typeof this.host.hurtParam == 'number' ? this.host.hurtParam : 1);
 			this.host.nowLife = this.host.nowLife >=0 ? this.host.nowLife : 0;
 			this.host.roleFaceRight = msg.roleFace;
+=======
+			this.host.nowLife -= msg.attack;
+			this.host.nowLife = this.host.nowLife >=0 ? this.host.nowLife : 0;
+			PD.roleFaceRight = msg.roleFace;
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 		},
 		leave: function () {
 		
 		},
 		update: function (dt) {
 			this._t += dt;
+<<<<<<< HEAD
 			this.anim.renderMirrored = !this.host.roleFaceRight;
+=======
+			this.anim.renderMirrored = !PD.roleFaceRight;
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 			this.anim.update(dt);
 		},
 		draw: function (render) {
@@ -267,6 +325,7 @@ Laro.register('PD', function (La) {
 		},
 		transition: function () {
 			if(!this.host.nowLife){
+<<<<<<< HEAD
 				this.host.setState(7);
 			}
 			else if (this._t > this.length) {
@@ -298,11 +357,19 @@ Laro.register('PD', function (La) {
 			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
 		},
 		transition: function () {
+=======
+				this.host.setState(4);
+			}
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 			if (this._t > this.length) {
 				this.host.setState(0);
 			}
 		}
 	});
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 	// 普通攻击
 	this.R_Attack = La.BaseState.extend(function () {
 	
@@ -324,7 +391,11 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this._t += dt;
+<<<<<<< HEAD
 			this.anim.renderMirrored = !this.host.roleFaceRight;
+=======
+			this.anim.renderMirrored = !PD.roleFaceRight;
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 			this.anim.update(dt);
 			if (this.anim.currentFrame == 2) {
 				this.msg.x += ((this.host.x > this.msg.x) ? -5 : 5);
@@ -339,6 +410,7 @@ Laro.register('PD', function (La) {
 			}
 		}
 	});
+<<<<<<< HEAD
 		// 普通攻击
 	this.R2_Attack = La.BaseState.extend(function () {
 	
@@ -376,6 +448,9 @@ Laro.register('PD', function (La) {
 		}
 	});
 	//人物2施展技能状态
+=======
+	
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 	// 技能1
 	this.R_Skill1 = La.BaseState.extend(function () {
 	
@@ -416,7 +491,11 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this._t += dt;
+<<<<<<< HEAD
 			this.anim.renderMirrored = !this.host.roleFaceRight;
+=======
+			this.anim.renderMirrored = !PD.roleFaceRight;
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 			this.anim.update(dt);
 			
 		},
@@ -459,7 +538,11 @@ Laro.register('PD', function (La) {
 				if (dis < 100) {
 					mo.setState(3, {
 						attack: 130,
+<<<<<<< HEAD
 						offset: ((this.host.x > mo.x) ? 50 : 50)
+=======
+						offset: ((this.host.x > mo.x) ? -200 : 200)
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 					});
 					//mo.x += ((this.host.x > mo.x) ? -40 : 40);
 					hasNear = true;
@@ -467,9 +550,12 @@ Laro.register('PD', function (La) {
 
 					//补血
 					this.host.nowLife += 80;
+<<<<<<< HEAD
 					if (this.host.nowLife >= this.host.life) {
 						this.host.nowLife = this.host.life;
 					}
+=======
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 				}
 			}
 		},
@@ -478,7 +564,11 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this._t += dt;
+<<<<<<< HEAD
 			this.anim.renderMirrored = !this.host.roleFaceRight;
+=======
+			this.anim.renderMirrored = !PD.roleFaceRight;
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 			this.anim.update(dt);
 
 			if(this.anim.currentFrame == 3){
@@ -494,12 +584,18 @@ Laro.register('PD', function (La) {
 				this.host.setState(0);
 			}
 		}
+<<<<<<< HEAD
 	});
     var bigSkillLock = false;
+=======
+	});	
+	
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 	this.R_BigSkill = La.BaseState.extend(function () {
 	
 	}).methods({
 		enter: function (msg, fromState) {
+<<<<<<< HEAD
 			console.log(msg);
             if(bigSkillLock){
                 //alert("大招有20秒cd的，别那么快放！");
@@ -523,6 +619,11 @@ Laro.register('PD', function (La) {
            setTimeout(function(){bigSkillLock = false;},20000);
 			this.anim.play(false);
 			this.anim2.play(false);
+=======
+			console.log('S');
+			this.anim = this.host.getAnimation('role_sskill');
+			this.anim.play(false);
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 			this.length = this.anim.getLength();
 			this._t = 0;
 			this.pos = 0;
@@ -543,11 +644,15 @@ Laro.register('PD', function (La) {
 			this._t += dt;
 		//	this.anim.renderMirrored = !PD.roleFaceRight;
 			this.anim.update(dt);
+<<<<<<< HEAD
 			this.anim2.update(dt);
+=======
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 			this.pos += 200*dt;
 		},
 		draw: function (render) {
 			this.anim.draw(render, this.host.x, this.host.y, 0, 1, null);
+<<<<<<< HEAD
 //            for(var i=0;i<2;i++){
 //                var pos = Math.random()*960;
 //                this.anim2.draw(render, this.host.x+pos, this.host.y+124, 0, 1, null);
@@ -556,6 +661,9 @@ Laro.register('PD', function (La) {
             this.anim2.draw(render, 800, this.host.y+124, 0, 1, null);
             this.anim2.draw(render, 1200, this.host.y+124, 0, 1, null);
 			//render.drawImage(PD.textures['skill_rain'], this.host.x - 100, this.host.y - 250 + this.pos, 0,1,1, false, false);
+=======
+			render.drawImage(PD.textures['skill_rain'], this.host.x - 100, this.host.y - 250 + this.pos, 0,1,1, false, false);
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 		},
 		transition: function () {
 			if (this._t > 3) {
@@ -572,6 +680,7 @@ Laro.register('PD', function (La) {
 		3, this.R_Attack,
 		4, this.R_Skill1,
 		5, this.R_Skill2,
+<<<<<<< HEAD
 		6, this.R_BigSkill,
 		7, this.R_Dead
 	]
@@ -587,12 +696,19 @@ Laro.register('PD', function (La) {
 	]
 	this.Role = La.Class(function (id, x, y, s_id,index,width, height) {
 		this.id = id;
+=======
+		6, this.R_BigSkill
+	]
+	
+	this.Role = La.Class(function (x, y, width, height) {
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 		this.x = x;
 		this.y = y;
 		this.width = width || 106;
 		this.height = height || 128;
 		this.bloodBarW = 150;
 		this.bloodBarH = 10;
+<<<<<<< HEAD
 		this.index = index;
 
 
@@ -606,6 +722,13 @@ Laro.register('PD', function (La) {
 			'recover': this.getAnimation('role_recover'),
 			'defense': this.getAnimation('role_defense')
 		};
+=======
+		
+		this.life = 1000;
+		this.nowLife = 1000;
+		
+		this.animHash = {};
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 		
 		this.fsm = new La.AppFSM(this, statesList);
 		
@@ -631,16 +754,24 @@ Laro.register('PD', function (La) {
 		this.checkSprite.addEventListener('mousedown', function (x, y) {
 			if (PD.mouseOnIcon) {return}
 			PD.roleMousedown = true;
+<<<<<<< HEAD
 			PD.currentRole = index;
 			PD.curRole = s_id;
 			PD.$roles[PD.currentRole].showCircle = true;
+=======
+			PD.showCircle = true;
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 		});
 		this.checkSprite.addEventListener('touchstart', function (x, y) {
 			if (PD.mouseOnIcon) {return }
 			PD.roleMousedown = true;
+<<<<<<< HEAD
 			PD.curRole = s_id;
 			PD.currentRole = index;
 			PD.$roles[PD.currentRole].showCircle = true;
+=======
+			PD.showCircle = true;
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 		});
 		//this.checkSprite.addEventListener('mouseup', function () { PD.roleMousedown = false });
 		//this.checkSprite.addEventListener('touchend', function () { PD.roleMousedown = false });
@@ -652,6 +783,7 @@ Laro.register('PD', function (La) {
 		},
 		update: function (dt) {
 			this.fsm.update(dt);
+<<<<<<< HEAD
 			this.updateSkillAnim(dt);
 		},
 		draw: function (render) {
@@ -701,6 +833,25 @@ Laro.register('PD', function (La) {
             ctx.closePath();
 
             ctx.restore();
+=======
+		},
+		draw: function (render) {
+			
+			PD.showCircle && this.drawCircle(render);
+			this.fsm.draw(render);
+			this.drawBloodBar(render);
+		},
+		drawBloodBar: function (render) {
+			var ctx = render.context;
+			ctx.save();
+			ctx.globalAlpha = 0.7;
+			ctx.fillStyle = '#000';
+			ctx.fillRect(this.x - this.bloodBarW/2-2, this.y-this.height-20-2, this.bloodBarW+4, this.bloodBarH+4);
+			
+			ctx.fillStyle = 'green';
+			ctx.fillRect(this.x - this.bloodBarW/2, this.y-this.height-20, this.bloodBarW*this.nowLife/this.life, this.bloodBarH)
+			ctx.restore();
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
 		},
 		drawCircle: function (render) {
 			render.drawImage(PD.textures['circle'], this.x-this.width/2, this.y-30, 0, 0, 1, false, false)
@@ -737,5 +888,10 @@ Laro.register('PD', function (La) {
 		}
 	});
 	
+<<<<<<< HEAD
 	this.Role2 =this.Role.extend(function(){this.fsm = new La.AppFSM(this, statesList2);}).methods({});
 });
+=======
+	
+});
+>>>>>>> 2f79a095800447d3b514a8de6ee2d39c59409f90
