@@ -77,6 +77,8 @@ Laro.register('PD.$states', function (La) {
                     'images/comic/10.jpg',
                     'images/comic/11.jpg',
                     'images/comic/12.jpg',
+					'images/comic/s1.jpg',
+					'images/comic/s2.jpg',
 
 
                     //sound
@@ -145,7 +147,7 @@ Laro.register('PD.$states', function (La) {
                 this.index = 0;
                 PD.textures['comic1'] = [];
 
-                for (var i = 0; i < 5; i++) {
+                for (var i = 0; i < 6; i++) {
                     PD.loader.loadedImages['images/comic/'+i+'.jpg'];
                     PD.textures['comic1'][i] = PD.loader.loadImage('images/comic/'+i+'.jpg');
                 };
@@ -212,9 +214,9 @@ Laro.register('PD.$states', function (La) {
                 this.index = 0;
                 PD.textures['comic2'] = [];
 
-                for (var i = 5; i < 10; i++) {
+                for (var i = 6; i < 12; i++) {
                     PD.loader.loadedImages['images/comic/'+i+'.jpg'];
-                    PD.textures['comic2'][i-5] = PD.loader.loadImage('images/comic/'+i+'.jpg');
+                    PD.textures['comic2'][i-6] = PD.loader.loadImage('images/comic/'+i+'.jpg');
                 };
                 PD.loader.loadedImages['images/comic/right.png'];
                 PD.textures['right'] = PD.loader.loadImage('images/comic/right.png');
@@ -280,10 +282,8 @@ Laro.register('PD.$states', function (La) {
             this.index = 0;
             PD.textures['comic3'] = [];
 
-            for (var i = 10; i < 11; i++) {
-                PD.loader.loadedImages['images/comic/'+i+'.jpg'];
-                PD.textures['comic3'][i-10] = PD.loader.loadImage('images/comic/'+i+'.jpg');
-            };
+            PD.loader.loadedImages['images/comic/12.jpg'];
+            PD.textures['comic3'][0] = PD.loader.loadImage('images/comic/12.jpg');
             PD.loader.loadedImages['images/comic/right.png'];
             PD.textures['right'] = PD.loader.loadImage('images/comic/right.png');
             //get resources 放在全局 PD 里，以便其他类调用
@@ -347,9 +347,9 @@ Laro.register('PD.$states', function (La) {
             this.index = 0;
             PD.textures['comic4'] = [];
 
-            for (var i = 11; i < 13; i++) {
+            for (var i = 13; i < 15; i++) {
                 PD.loader.loadedImages['images/comic/'+i+'.jpg'];
-                PD.textures['comic4'][i-11] = PD.loader.loadImage('images/comic/'+i+'.jpg');
+                PD.textures['comic4'][i-13] = PD.loader.loadImage('images/comic/'+i+'.jpg');
             };
             PD.loader.loadedImages['images/comic/right.png'];
             PD.textures['right'] = PD.loader.loadImage('images/comic/right.png');
@@ -391,7 +391,9 @@ Laro.register('PD.$states', function (La) {
             render.context.drawImage(PD.textures['right'], 0, 0, 54, 52, 810, 290, 54, 52);               
         },
         transition:function () {
-
+			 if (this.index == PD.textures['comic4'].length) {
+                this.host.setState(0);
+             }
         }
     });
 
@@ -963,7 +965,7 @@ Laro.register('PD.$fsm', function (La) {
         7, PD.$states.Comic2,
         8, PD.$states.Comic3,
         9, PD.$states.Stage3,
-        10, PD.$states.Comic4    ];
+        10, PD.$states.Comic4];
     //stateModes
     this.stateModes = {
         kStateActive:0,
