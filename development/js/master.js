@@ -49,6 +49,12 @@ Laro.register('PD', function (La) {
 				 this.anim2[i] = this.host.getAnimation('light');
 				 this.anim2[i].play();
 				}
+				for(var j = 0,role;role = PD.$roles[j++];){
+                   		role.fsm.setState(2, {
+                          attack:300,
+                          roleFace:(this.host.x > role.x) // 为true时，人面向右
+                    });
+                }
                 this.anim.play();
                 this._t = 0;
 			},
@@ -60,13 +66,6 @@ Laro.register('PD', function (La) {
 				for(var i=0;i<6;i++){
 					this.anim2[i].update(dt);
 				}
-                for(var i = 0,role;role = PD.$roles[i++];){
-                   role.fsm.setState(2, {
-                          attack:3,
-                          roleFace:(this.host.x > role.x) // 为true时，人面向右
-                    });
-                }
-
             },
             draw:function (render) {
 				for(var i=0;i<3;i++){
@@ -76,7 +75,9 @@ Laro.register('PD', function (La) {
 				this.anim2[j].draw(render, Math.random()*960, Math.random()*640, 0, 1, null);}
             },
             transition:function () {
-                if(this._t>2){this.host.setState(0);}
+                if(this._t>2){
+					this.host.setState(0);
+				}
             }
 			}
 		);
