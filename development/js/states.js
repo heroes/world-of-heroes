@@ -1,7 +1,6 @@
 var next_tag = 7;
 Laro.register('PD.$states', function (La) {
     var pkg = this;
-
     // Loading states
     this.Loading = La.BaseState.extend(
         function () {
@@ -131,7 +130,7 @@ Laro.register('PD.$states', function (La) {
                     this.host.setState(3);
                     
 					//调试用，把前面的四格漫画屏蔽了
-                    //this.host.setState(5);
+                    //this.host.setState(9);
                 }
             }
         });
@@ -159,7 +158,6 @@ Laro.register('PD.$states', function (La) {
                     this.width = 54;
                     this.height = 52;
                     this.draw = function () {
-
                     };
                 });
                 PD.stage.addChild(this.checkSprite);
@@ -308,7 +306,7 @@ Laro.register('PD.$states', function (La) {
             });
         },
         leave:function () {
-
+			
         },
         update:function (dt) {
             this._t += dt;
@@ -624,7 +622,7 @@ Laro.register('PD.$states', function (La) {
         }).methods({
             enter:function (msg, fromState) {
                 console.log('stage1');
-                next_tag = 9;//将下一场景设置为场景3
+                next_tag = 8;//将下一场景设置为场景3
                 this._t = 0;
                 
 				this.music = PD.$res.getSound('OGG/Bossbattle.ogg');
@@ -649,10 +647,10 @@ Laro.register('PD.$states', function (La) {
 			        'two':['skill4', 'skill5']
 			    };
 				
-				PD.$roles[0] = new PD.Role('$role', 200, 400,'one',0);
+				PD.$roles[0] = new PD.Role('$role', 500, 400,'one',0);
                 PD.$roles[0].setState(0);
 
-                PD.$roles[1] = new PD.Role2('$role2', 500, 400,'two',1);
+                PD.$roles[1] = new PD.Role2('$role2', 200, 400,'two',1);
                 PD.$roles[1].setState(0);
                 
 				PD.$boss = new PD.Boss(800, 400);
@@ -775,7 +773,7 @@ Laro.register('PD.$states', function (La) {
 
         }).methods({
             enter:function (msg, fromState) {
-                next_tag = 8;//将下一场景设置为漫画三
+                next_tag = 10;//将下一场景设置为漫画四
                 this._t = 0;
 				PD.skillHash = {
 			        'one':['skill1', 'skill2', 'skill3'],
@@ -796,10 +794,10 @@ Laro.register('PD.$states', function (La) {
                 PD.textures['GO'] = PD.$res.getImage('GO');
                 PD.textures['skill_rain'] = PD.$res.getImage('skill_rain');
 
-                PD.$roles[0] = new PD.Role('$role', 200, 400,'one',0);
+                PD.$roles[0] = new PD.Role('$role', 500, 400,'one',0);
                 PD.$roles[0].setState(0);
 
-                PD.$roles[1] = new PD.Role2('$role2', 500, 400,'two',1);
+                PD.$roles[1] = new PD.Role2('$role2', 200, 400,'two',1);
                 PD.$roles[1].setState(0);
 
                 PD.$boss = new PD.Boss2(800, 400);
@@ -807,7 +805,7 @@ Laro.register('PD.$states', function (La) {
 				PD.$boss.heath = PD.$boss.fullHeath = 3000;
 				PD.$boss.attack= 80;
                 PD.$boss.bloodBarW = 200;
-                PD.$boss.bloodBarOffset = -80;
+                PD.$boss.bloodBarOffset = 0;
 				PD.$boss.setState(6);
 
                 this.createMonsters(3);
@@ -849,7 +847,7 @@ Laro.register('PD.$states', function (La) {
                 }
             },
             leave:function () {
-
+				
             },
             update:function (dt) {
 				this._t += dt;
@@ -959,7 +957,7 @@ Laro.register('PD.$fsm', function (La) {
         1, PD.$states.Comic1,
         2, PD.$states.Stage1,
         3, PD.$states.Begin,
-        4, PD.$states.Comic4,
+        4, PD.$states.END,
         5, PD.$states.Stage2,
         6, PD.$states.GoNext,
         7, PD.$states.Comic2,
