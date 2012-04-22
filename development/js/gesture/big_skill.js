@@ -30,17 +30,19 @@
 			if (oldY - e.pageY < 3 && oldY - e.pageY > -3) {
 				return;
 			}
+			var canvasRect = document.querySelector("#canvas").getClientRects()[0];
+                        var orginX = canvasRect.left, orginY = canvasRect.top;
 			var touch = e.touches[0];
-			ctx_big.moveTo(oldX,oldY);
+			ctx_big.moveTo(oldX-orginX,oldY-orginY);
 			oldX = touch.pageX;
 			oldY = touch.pageY;
-			ctx_big.lineTo(oldX,oldY);
+			ctx_big.lineTo(oldX-orginX,oldY-orginY);
 			ctx_big.stroke();
 			ctx_big.shadowColor = 'rgba(169,236,255,0.25)';
 			ctx_big.shadowOffsetX = 0;
 			ctx_big.shadowOffsetY = 0;
 			ctx_big.shadowBlur = 10;
-			_points[_points.length] = new Point(oldX,oldY);
+			_points[_points.length] = new Point(oldX-orginX,oldY-orginY);
 		}, false);
 		
 		document.getElementById('big_skill').addEventListener('touchend', function(e) {
@@ -84,12 +86,15 @@
 			if (oldY - e.pageY < 3 && oldY - e.pageY > -3) {
 				return;
 			}
-			ctx_big.moveTo(oldX,oldY);
+			var canvasRect = document.querySelector("#canvas").getClientRects()[0];
+                        var orginX = canvasRect.left, orginY = canvasRect.top;
+			ctx_big.moveTo(oldX-orginX,oldY-orginY);
 			oldX = e.pageX;
 			oldY = e.pageY;
-			ctx_big.lineTo(oldX,oldY);
+			ctx_big.lineTo(oldX-orginX,oldY-orginY);
 			ctx_big.stroke();
-			_points[_points.length] = new Point(oldX,oldY);
+
+			_points[_points.length] = new Point(oldX-orginX,oldY-orginY);
 		}, false);
 		
 		document.getElementById('big_skill').addEventListener('mouseup', function(e) {
