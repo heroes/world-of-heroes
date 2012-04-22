@@ -39,9 +39,6 @@ Laro.register('PD.$states', function (La) {
                     'images/monster/left.png',
                     'images/monster/right.png',
                     'images/monster/monster.png',
-                    'images/comic/comic1.jpg',
-                    'images/comic/comic2.jpg',
-                    'images/comic/comic3.jpg',
                     'images/start-bg.jpg',
                     'images/start-btn.png',
                     'images/end.jpg',
@@ -77,8 +74,8 @@ Laro.register('PD.$states', function (La) {
                     'images/comic/10.jpg',
                     'images/comic/11.jpg',
                     'images/comic/12.jpg',
-					'images/comic/s1.jpg',
-					'images/comic/s2.jpg',
+					'images/comic/13.jpg',
+					'images/comic/14.jpg',
 
 
                     //sound
