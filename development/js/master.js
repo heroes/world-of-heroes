@@ -62,7 +62,7 @@ Laro.register('PD', function (La) {
 				}
                 for(var i = 0,role;role = PD.$roles[i++];){
                    role.fsm.setState(2, {
-                          attack:5,
+                          attack:3,
                           roleFace:(this.host.x > role.x) // 为true时，人面向右
                     });
                 }
