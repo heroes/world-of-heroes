@@ -201,7 +201,7 @@ g_data = {
 		//人物2等待状态
 		role2_wait: {
 			info: {
-				"nbrOfFrames": 3,
+				"nbrOfFrames": 2,
 				"pivoty": 123,
 				"framerate": 4,
 				"pivotx": 80,
@@ -209,8 +209,7 @@ g_data = {
 			},
 			data: [
 				[0,0,139,132,0,0,139,132],
-				[140,0,279,132,140,0,279,132],
-				[280,0,419,132,280,0,419,132]
+				[140,0,279,132,140,0,279,132]
 			],
 			filename: 'images/role/role2.png'
 		},
