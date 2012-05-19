@@ -45,7 +45,7 @@ g_data = {
 			],
 			filename: 'images/pie.png'
 		},
-		"stone_fall": {
+"stone_fall": {
     "info": {
         "nbrOfFrames": 10,
         "name": "stone_fall",
